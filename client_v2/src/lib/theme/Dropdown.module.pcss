@@ -8,8 +8,11 @@
     line-height: 21px;
     font-weight: var(--weight-regular);
     color: var(--default-main-text);
-    border-radius: 8px;
-    box-shadow: var(--main-box-shadow);
+    border-radius: var(--radius-md);
+    /* Was box-shadow: var(--main-box-shadow), but that token is a colour, and
+     * box-shadow with only a colour is invalid — the menu had no shadow at
+     * all. */
+    box-shadow: var(--elev-2);
     background-color: var(--default-dropdown-menu-background);
     max-width: 281px;
     cursor: default;
@@ -57,10 +60,13 @@
     border: 0;
     outline: 0;
 
-    &:hover,
+    &:hover {
+        background-color: var(--hovered-dropdown-menu-background);
+    }
+
     &:focus-visible {
         background-color: var(--hovered-dropdown-menu-background);
-        outline: 0;
+        box-shadow: var(--focus-ring);
     }
 
     &:active {

@@ -69,7 +69,8 @@
     border-radius: 8px;
     padding: 8px 16px;
     background-color: var(--default-cards-background);
-    box-shadow: 8px 8px 24px 0 rgba(0, 0, 0, 0.1);
+    /* A 10% black offset shadow disappears on a near-black page. */
+    box-shadow: var(--elev-3);
     transition: background-color var(--t2);
 
     @media (min-width: 768px) {

@@ -43,6 +43,27 @@ select {
     font-family: var(--font-family-base);
 }
 
+/* Baseline keyboard focus.
+ *
+ * A tab sweep found focus visible on 3 of 14 reachable elements: several
+ * component resets clear the platform outline without replacing it, and the
+ * DIV-based triggers never had one.  This gives every reachable element a ring
+ * by default; components that style their own focus still override it.
+ *
+ * :focus-visible rather than :focus, so a mouse click does not leave a ring
+ * behind. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible,
+[role='button']:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: var(--radius-sm);
+}
+
 h1,
 h2,
 h3,

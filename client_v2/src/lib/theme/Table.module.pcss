@@ -128,6 +128,13 @@
     padding: 0;
     cursor: pointer;
     background: none;
+    /* outline: 0 above removes the platform ring; without a replacement this
+     * control simply has no keyboard focus state.  One shared ring, so focus
+     * is never a per-component afterthought. */
+    &:focus-visible {
+        box-shadow: var(--focus-ring);
+    }
+
     transition: background-color var(--t2);
     color: var(--default-gray-icons);
     border-radius: 4px;

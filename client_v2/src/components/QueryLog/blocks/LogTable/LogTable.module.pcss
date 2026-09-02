@@ -31,7 +31,7 @@
 
     &:hover,
     &:focus {
-        background-color: var(--page-background-additional);
+        background-color: var(--hovered-page-background);
     }
 
     &:last-child {
@@ -107,11 +107,16 @@
     min-width: 0;
 }
 
+/* Carries the latency under the status.  formatElapsedMs deliberately keeps
+ * two decimals below 1ms — a sub-millisecond answer came from the local filter
+ * rather than an upstream, which is worth knowing — so the column mixes "0.43
+ * ms" with "239 ms".  Tabular figures are what make those line up. */
 .secondaryLine {
     color: var(--default-description-text);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-variant-numeric: tabular-nums;
 }
 
 .date {
@@ -161,10 +166,16 @@
     flex-shrink: 0;
 }
 
+/* This is the screen where a single query gets inspected, so it is where
+ * telling a real domain from a typosquat matters most.  Same reasoning as the
+ * dashboard tables: a proportional face hides rn against m and l against 1. */
 .domain {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-family: var(--font-family-monospace);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
 }
 
 .statusCell,
@@ -261,6 +272,9 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     color: var(--default-main-text);
+    font-family: var(--font-family-monospace);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
 }
 
 .clientName {
@@ -268,6 +282,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     color: var(--default-description-text);
+    font-family: var(--font-family-monospace);
+    letter-spacing: -0.01em;
 }
 
 .clientLocationDivider {
