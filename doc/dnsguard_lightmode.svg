@@ -1,0 +1,13 @@
+<svg width="300" height="48" viewBox="0 0 300 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect y="8" width="32" height="32" rx="8" fill="url(#g_light)"/>
+  <path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M9 15h6.6a9 9 0 0 1 0 18H9V15Zm4.1 3.9v10.2h2.5a5.1 5.1 0 0 0 0-10.2h-2.5Z"/>
+  <text x="44" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+        font-size="26" font-weight="700" letter-spacing="-0.5">
+    <tspan fill="#67B279">DNS</tspan><tspan fill="#1B2A21">Guard</tspan>
+  </text>
+  <defs>
+    <linearGradient id="g_light" x1="16" y1="8" x2="16" y2="40" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#67B279"/><stop offset="1" stop-color="#589968"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -1,8 +1,8 @@
 &nbsp;
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="doc/adguard_home_darkmode.svg">
-    <img alt="DNSGuard" src="doc/adguard_home_lightmode.svg" width="300px">
+    <source media="(prefers-color-scheme: dark)" srcset="doc/dnsguard_darkmode.svg">
+    <img alt="DNSGuard" src="doc/dnsguard_lightmode.svg" width="300px">
   </picture>
 </p>
 <h3 align="center">Privacy protection center for you and your devices</h3>
