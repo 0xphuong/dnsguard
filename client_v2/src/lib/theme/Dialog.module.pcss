@@ -1,5 +1,5 @@
 .body {
-    padding: 8px 16px;
+    padding: var(--space-2) var(--space-5);
     line-height: 1.5;
     color: var(--default-main-text);
     overflow-wrap: break-word;
@@ -11,18 +11,20 @@
 }
 
 .description {
-    padding: 8px 16px;
+    padding: var(--space-2) var(--space-5);
+    color: var(--default-description-text);
 }
 
 .footer {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 16px;
-    padding: 16px;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5) var(--space-5);
 
     @media (min-width: 768px) {
         flex-wrap: nowrap;
+        justify-content: flex-end;
     }
 
     &_inner {
@@ -31,13 +33,17 @@
 
     .button {
         width: auto;
-        min-width: 200px;
-        font-size: 16px;
+        /* Was min-width: 200px.  Two of those exceed the 344px dialog and
+         * force the footer to wrap, so the primary action ends up stacked
+         * under the cancel.  Let flex size them and keep a thumb-sized
+         * floor. */
+        min-width: 112px;
+        font-size: var(--fs-text-t2);
         font-weight: var(--weight-medium);
         flex: 1;
 
         @media (min-width: 768px) {
-            flex: initial;
+            flex: 0 0 auto;
         }
     }
 }
@@ -46,15 +52,31 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
+    gap: var(--space-2);
 }
 
 .buttonLoader {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     color: var(--gray-0);
 }
 
+/* Was a bare colour with no affordance: nothing changed under the pointer, so
+ * the only hint it was a control came from the cursor. */
 .close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
     color: var(--default-gray-icons);
+    transition:
+        background-color var(--t2),
+        color var(--t2);
+
+    &:hover {
+        background-color: var(--hovered-page-background);
+        color: var(--default-main-text);
+    }
 }

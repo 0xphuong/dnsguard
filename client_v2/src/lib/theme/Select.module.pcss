@@ -23,29 +23,36 @@
 .groupBadgeStyles,
 .overflowCounter {
     color: var(--default-main-text);
-    margin-left: 10px;
-    font-size: 14px;
+    margin-left: var(--space-2);
+    font-size: var(--fs-text-t3);
 }
 
 .overflowCounter {
-    width: 25px;
-    height: 25px;
-    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-sm);
+    font-variant-numeric: tabular-nums;
 
     &.mobile {
         border-radius: 20px;
 
         @media (min-width: 1024px) {
-            border-radius: 5px;
+            border-radius: var(--radius-sm);
             margin: 0 auto 0;
         }
     }
 }
 
 .option {
-    padding: 12px 16px 12px 16px;
-    transition: all var(--t2);
-    font-size: 16px;
+    position: relative;
+    padding: var(--space-3) var(--space-4);
+    /* transition: all animates layout properties too, so a hover could shift
+     * the row.  Only the paint needs to move. */
+    transition: background-color var(--t2);
+    font-size: var(--fs-text-t2);
     color: var(--default-main-text);
     cursor: pointer;
 
@@ -57,6 +64,16 @@
     &_selected {
         background-color: var(--pressed-dropdown-menu-background);
         color: var(--default-main-text);
+
+        /* A background one step darker is easy to miss when scanning a long
+         * menu; the accent bar says which row is current at a glance. */
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 2px;
+            background-color: var(--default-main-button);
+        }
     }
 
     &_disabled {
@@ -73,13 +90,13 @@
     &_empty {
         display: flex;
         align-items: center;
-        gap: 12px;
-        padding: 16px 12px;
-        font-size: 16px;
+        gap: var(--space-3);
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--fs-text-t2);
     }
 
     &_empty {
-        padding: 16px;
+        padding: var(--space-4);
         cursor: default;
 
         &:hover,
@@ -124,7 +141,7 @@
 }
 
 .dropdownIndicator {
-    padding: 0 12px 0 8px;
+    padding: 0 var(--space-3) 0 var(--space-2);
     cursor: pointer;
 }
 
@@ -151,7 +168,7 @@
 }
 
 .clearIndicatorEnd {
-    padding-right: 12px;
+    padding-right: var(--space-3);
 }
 
 .clearIcon {
@@ -164,12 +181,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px;
-    min-height: 280px;
+    padding: var(--space-6);
+    /* 280px of empty menu for one spinner; the menu jumped that far open and
+     * then collapsed once the options arrived. */
+    min-height: 160px;
 
     .menuLoader {
-        width: 56px;
-        height: 56px;
+        width: 40px;
+        height: 40px;
         color: var(--default-link);
     }
 }
@@ -187,25 +206,36 @@
 .dropdownTrigger {
     display: flex;
     align-items: center;
-    height: 56px;
-    padding: 0 12px 0 16px;
-    font-size: 16px;
+    height: 48px;
+    padding: 0 var(--space-3) 0 var(--space-4);
+    font-size: var(--fs-text-t2);
     color: var(--default-main-text);
-    border: 1px solid var(--default-item-divider);
-    border-radius: 8px;
+    /* Reads as an input rather than a card: same inset surface the text
+     * fields use, and the inactive stroke rather than the card divider. */
+    background-color: var(--default-input-background);
+    border: 1px solid var(--default-inactive-input-stroke);
+    border-radius: var(--radius-md);
     overflow: hidden;
     cursor: pointer;
+    transition:
+        border-color var(--t2),
+        background-color var(--t2);
+
+    &:hover {
+        border-color: var(--default-active-input-stroke);
+    }
 
     .dropdownIcon {
         margin-left: auto;
     }
 
     @media (min-width: 1024px) {
-        height: 40px;
+        height: 36px;
     }
 
     &.disabled {
         cursor: default;
+        border-color: var(--default-inactive-input-stroke);
     }
 }
 
@@ -214,8 +244,8 @@
     align-items: center;
     width: 100%;
     max-width: calc(100% - 24px);
-    padding-right: 8px;
-    gap: 8px;
+    padding-right: var(--space-2);
+    gap: var(--space-2);
 }
 
 .dropdownText {
@@ -227,7 +257,7 @@
 }
 
 .empty {
-    padding: 8px;
+    padding: var(--space-2);
     text-align: left;
     color: var(--default-description-text);
 }

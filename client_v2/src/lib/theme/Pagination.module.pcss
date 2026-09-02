@@ -2,13 +2,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-    padding: 24px 0;
+    gap: var(--space-4);
+    padding: var(--space-5) 0;
 
     @media (min-width: 768px) {
         flex-direction: row;
         justify-content: space-between;
-        padding: 16px 0;
+        padding: var(--space-4) 0;
     }
 
     & .dropdownShowOnPage {
@@ -17,9 +17,10 @@
         display: inline-flex;
         align-items: center;
         justify-content: space-between;
-        padding: 4px 12px;
+        padding: var(--space-1) var(--space-3);
         border: 1px solid var(--default-item-divider);
-        border-radius: 8px;
+        border-radius: var(--radius-md);
+        background-color: var(--default-input-background);
 
         @media (min-width: 768px) {
             width: fit-content;
@@ -32,7 +33,7 @@
 .pagesContainer {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-1);
 }
 
 .limitContainer {
@@ -60,28 +61,31 @@
 }
 
 .button {
-    width: 27px;
-    height: 24px;
-    padding: 0;
+    /* Was 27x24, which cleared WCAG 2.5.8's 24px floor by three pixels in one
+     * axis and none in the other. */
+    min-width: 32px;
+    height: 32px;
+    padding: 0 var(--space-1);
     color: var(--default-main-text);
     background: none;
     border: 0;
     outline: 0;
-    font-size: 16px;
-    border-radius: 4px;
+    font-size: var(--fs-text-t2);
+    /* Page numbers are the one place tabular figures stop the row from
+     * shifting as the digit count grows. */
+    font-variant-numeric: tabular-nums;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    /* outline: 0 above removes the platform ring; without a replacement this
-     * control simply has no keyboard focus state.  One shared ring, so focus
-     * is never a per-component afterthought. */
-    &:focus-visible {
-        box-shadow: var(--focus-ring);
-    }
+    transition:
+        background-color var(--t2),
+        color var(--t2);
 
-
-    &:hover,
-    &:focus {
-        background-color: var(--hovered-main-button);
-        color: var(--default-primary-button-text);
+    /* Hover used to paint the button solid green — the same treatment as the
+     * current page, so hovering made it look like you had already moved.
+     * Hover raises the surface; only the current page is green. */
+    &:hover {
+        background-color: var(--hovered-page-background);
+        color: var(--default-main-text);
     }
 
     &:disabled {
@@ -104,7 +108,8 @@
 
         &:hover,
         &:focus {
-            background-color: var(--hovered-main-button);
+            background-color: var(--default-main-button);
+            color: var(--default-primary-button-text);
         }
 
         &:disabled {
@@ -122,14 +127,18 @@
     width: 100%;
     justify-content: space-between;
 
-    @media (--s-viewport) {
+    /* Was @media (--s-viewport).  No postcss-custom-media is configured, so
+     * the browser could not parse the condition and dropped the whole block —
+     * this never applied.  768px is the breakpoint its siblings use. */
+    @media (min-width: 768px) {
         width: auto;
         justify-content: flex-start;
     }
 }
 
 .summary {
-    margin: 0 8px;
-    line-height: 24px;
+    margin: 0 var(--space-2);
+    line-height: var(--lh-t2-normal);
+    font-variant-numeric: tabular-nums;
     color: var(--default-description-text);
 }
