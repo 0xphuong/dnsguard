@@ -72,8 +72,12 @@ export function useChart(
 /**
  * Chart.js plugin that draws a vertical cursor line in the given color
  * at the active hover position. Matches recharts' `cursor` prop behavior.
+ *
+ * The colour is a getter rather than a value so the line follows the active
+ * theme: the plugin is registered once when the chart is created, but it is
+ * read on every draw.
  */
-export function createCursorLinePlugin(color: string): Plugin<'line'> {
+export function createCursorLinePlugin(color: () => string): Plugin<'line'> {
     return {
         id: 'cursorLine',
         afterDraw: (chart: Chart<'line'>) => {
@@ -87,7 +91,7 @@ export function createCursorLinePlugin(color: string): Plugin<'line'> {
             ctx.beginPath();
             ctx.moveTo(x, top);
             ctx.lineTo(x, bottom);
-            ctx.strokeStyle = color;
+            ctx.strokeStyle = color();
             ctx.lineWidth = 1;
             ctx.stroke();
             ctx.restore();

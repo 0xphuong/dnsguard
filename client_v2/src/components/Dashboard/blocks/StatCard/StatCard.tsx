@@ -21,6 +21,7 @@ import {
     createExternalTooltipHandler,
 } from 'panel/helpers/useChart';
 import intl from 'panel/common/intl';
+import { useThemeTokens, withAlpha } from 'panel/helpers/useThemeToken';
 import theme from 'panel/lib/theme';
 
 import s from './StatCard.module.pcss';
@@ -42,11 +43,14 @@ export const CARDS_THEME = {
     ADULT: 'adult',
 };
 
-export const CARDS_COLORS = {
-    QUERIES: '#7F7F7F',
-    ADS: '#E07575',
-    THREATS: '#F5A623',
-    ADULT: '#9B59B6',
+// The chart colours live in CSS so that light and dark can differ; canvas
+// cannot read custom properties, so the card resolves them at runtime.  See
+// useThemeTokens for why the resolution is tied to the data-theme attribute.
+const CARD_TOKENS: Record<(typeof CARDS_THEME)[keyof typeof CARDS_THEME], string> = {
+    [CARDS_THEME.QUERIES]: '--chart-queries',
+    [CARDS_THEME.ADS]: '--chart-ads',
+    [CARDS_THEME.THREATS]: '--chart-threats',
+    [CARDS_THEME.ADULT]: '--chart-adult',
 };
 
 const formatDate = (date: Date): string => {
@@ -61,7 +65,6 @@ export type StatCardProps = {
     value: number;
     label: string;
     data: number[];
-    color: string;
     percentValue?: number;
     cardTheme: (typeof CARDS_THEME)[keyof typeof CARDS_THEME];
     linkTo?: RoutePathKey;
@@ -69,6 +72,29 @@ export type StatCardProps = {
 };
 
 export const StatCard = (props: StatCardProps) => {
+    const tokens = useThemeTokens({
+        queries: CARD_TOKENS[CARDS_THEME.QUERIES],
+        ads: CARD_TOKENS[CARDS_THEME.ADS],
+        threats: CARD_TOKENS[CARDS_THEME.THREATS],
+        adult: CARD_TOKENS[CARDS_THEME.ADULT],
+    });
+
+    // Falls back to the light-theme grey until the tokens resolve on mount, so
+    // the first paint never draws an invisible line.
+    const color = () => {
+        const t = tokens();
+        switch (props.cardTheme) {
+            case CARDS_THEME.ADS:
+                return t.ads || '#e9653a';
+            case CARDS_THEME.THREATS:
+                return t.threats || '#d58500';
+            case CARDS_THEME.ADULT:
+                return t.adult || '#a870b2';
+            default:
+                return t.queries || '#7f7f7f';
+        }
+    };
+
     // Ensure the chart has at least 2 data points
     const paddedData = () => (props.data.length < 2 ? [0, ...props.data] : props.data);
 
@@ -84,7 +110,7 @@ export const StatCard = (props: StatCardProps) => {
             datasets: [
                 {
                     data: data,
-                    borderColor: props.color,
+                    borderColor: color(),
                     borderWidth: 1,
                     backgroundColor: (context: ScriptableContext<'line'>) => {
                         const ctx = context.chart.ctx;
@@ -94,22 +120,22 @@ export const StatCard = (props: StatCardProps) => {
                             0,
                             context.chart.height || 100,
                         );
-                        gradient.addColorStop(0, `${props.color}4D`);
-                        gradient.addColorStop(1, `${props.color}00`);
+                        gradient.addColorStop(0, withAlpha(color(), 0.3));
+                        gradient.addColorStop(1, withAlpha(color(), 0));
                         return gradient;
                     },
                     fill: true,
                     clip: false as const,
                     pointRadius: 0,
                     pointHoverRadius: 4,
-                    pointHoverBackgroundColor: props.color,
+                    pointHoverBackgroundColor: color(),
                     tension: 0.4,
                 },
             ],
         };
     });
 
-    const cursorLinePlugin = createCursorLinePlugin(untrack(() => props.color));
+    const cursorLinePlugin = createCursorLinePlugin(color);
 
     const externalTooltipHandler = createExternalTooltipHandler(
         () => tooltipEl,
@@ -167,35 +193,27 @@ export const StatCard = (props: StatCardProps) => {
         >
             <div class={s.statCardInner}>
                 <div class={s.statCardHeader}>
-                    <div class={s.statCardHeaderLeft}>
-                        <div class={s.statCardValue}>{formatNumber(props.value)}</div>
-                    </div>
-
-                    <Show when={props.cardTheme !== CARDS_THEME.QUERIES}>
-                        <div class={cn(theme.text.t3, theme.text.t2_tablet, s.statCardPercent)}>
-                            {percent().toFixed(0)}%
-                        </div>
-                    </Show>
-
                     <div class={cn(theme.text.t4, s.statCardLabel)}>
                         <Show when={props.linkTo} fallback={props.label}>
-                            <Link to={props.linkTo} query={props.query} class={s.statLabelLink}>
+                            <Link to={props.linkTo!} query={props.query} class={s.statLabelLink}>
                                 {props.label}
                             </Link>
                         </Show>
                     </div>
+
+                    <Show when={props.cardTheme !== CARDS_THEME.QUERIES}>
+                        <div class={cn(theme.text.t4, s.statCardPercent)}>
+                            {percent().toFixed(0)}%
+                        </div>
+                    </Show>
                 </div>
+
+                <div class={s.statCardValue}>{formatNumber(props.value)}</div>
+
                 <div class={s.statCardChart}>
                     <div ref={setTooltipRef} class={s.chartTooltip} />
                     <canvas ref={setCanvasRef} />
                 </div>
-            </div>
-            <div class={cn(theme.text.t3, s.statCardLabel)}>
-                <Show when={props.linkTo} fallback={props.label}>
-                    <Link to={props.linkTo!} query={props.query} class={s.statLabelLink}>
-                        {props.label}
-                    </Link>
-                </Show>
             </div>
         </div>
     );

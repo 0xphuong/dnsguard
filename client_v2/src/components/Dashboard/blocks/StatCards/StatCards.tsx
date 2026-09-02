@@ -3,7 +3,7 @@ import { RoutePath } from 'panel/components/Routes/Paths';
 import { QUERY_LOG_REASON_FILTER, QUERY_LOG_STATUS_FILTER } from 'panel/helpers/constants';
 
 import s from '../StatCard/StatCard.module.pcss';
-import { StatCard, CARDS_THEME, CARDS_COLORS } from '../StatCard';
+import { StatCard, CARDS_THEME } from '../StatCard';
 
 type Props = {
     numDnsQueries: number;
@@ -30,7 +30,6 @@ export const StatCards = (props: Props) => {
                 value={props.numDnsQueries}
                 label={intl.getMessage('dns_query')}
                 data={props.dnsQueries}
-                color={CARDS_COLORS.QUERIES}
                 cardTheme={CARDS_THEME.QUERIES}
                 linkTo={RoutePath.QueryLog}
             />
@@ -38,7 +37,6 @@ export const StatCards = (props: Props) => {
                 value={props.numBlockedFiltering}
                 label={intl.getMessage('ads_blocked_card')}
                 data={props.blockedFiltering}
-                color={CARDS_COLORS.ADS}
                 percentValue={blockedPercent()}
                 cardTheme={CARDS_THEME.ADS}
                 linkTo={RoutePath.QueryLog}
@@ -48,7 +46,6 @@ export const StatCards = (props: Props) => {
                 value={props.numReplacedSafebrowsing}
                 label={intl.getMessage('blocked_threats_chart')}
                 data={props.replacedSafebrowsing}
-                color={CARDS_COLORS.THREATS}
                 percentValue={threatsPercent()}
                 cardTheme={CARDS_THEME.THREATS}
                 linkTo={RoutePath.QueryLog}
@@ -58,7 +55,6 @@ export const StatCards = (props: Props) => {
                 value={props.numReplacedParental}
                 label={intl.getMessage('stats_adult')}
                 data={props.replacedParental}
-                color={CARDS_COLORS.ADULT}
                 percentValue={parentalPercent()}
                 cardTheme={CARDS_THEME.ADULT}
                 linkTo={RoutePath.QueryLog}

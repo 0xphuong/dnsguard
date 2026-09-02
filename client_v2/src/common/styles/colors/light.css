@@ -132,4 +132,14 @@
     --fills-switch-knob-disabled: var(--gray-50);
     /* Logo */
     --default-logo-color: var(--gray-100);
+    /* Data visualisation
+     *
+     * These are the only colours the charts read.  They are separate from the
+     * --default-*-link text tokens because a 1px data line and a text label
+     * need different weights to stay legible against the card surface. */
+    --chart-queries: var(--gray-60);
+    --chart-ads: var(--red-50);
+    --chart-threats: var(--orange-50);
+    --chart-adult: var(--product-secondary-50);
+    --chart-grid: var(--gray-20);
 }

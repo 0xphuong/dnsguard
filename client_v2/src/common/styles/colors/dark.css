@@ -132,4 +132,14 @@
     --fills-switch-knob-disabled: var(--gray-50);
     /* Logo */
     --default-logo-color: var(--gray-0);
+    /* Data visualisation
+     *
+     * One step lighter than the light theme: on the dark card surface the
+     * light-theme values drop to roughly 4:1, which clears WCAG 1.4.11 but
+     * reads faint for a hairline chart stroke. */
+    --chart-queries: var(--gray-40);
+    --chart-ads: var(--red-30);
+    --chart-threats: var(--orange-30);
+    --chart-adult: var(--product-secondary-30);
+    --chart-grid: var(--gray-80);
 }
