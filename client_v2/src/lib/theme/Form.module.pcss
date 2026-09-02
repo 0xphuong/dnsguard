@@ -45,6 +45,16 @@
     color: var(--default-error-link);
 }
 
+/* Separates a destructive action from the settings it destroys, so the eye has
+ * to cross a boundary to reach it.  Shared, because the settings and DNS pages
+ * both end a section with one. */
+.dangerRow {
+    display: flex;
+    margin-top: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--default-item-divider);
+}
+
 .actionRow {
     padding: var(--space-2) var(--space-4);
 

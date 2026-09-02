@@ -68,6 +68,7 @@ export const PrivateReverse = () => {
                         title={intl.getMessage('dns_private_reverse_servers_title')}
                         description={intl.getMessage('dns_private_reverse_servers_desc')}
                         value={privateReverseValue()}
+                        valueMono
                         onClick={serversDialog.openDialog}
                     />
 

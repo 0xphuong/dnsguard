@@ -7,6 +7,8 @@ import cn from 'clsx';
 
 import { PageLoader } from 'panel/common/ui/Loader';
 import theme from 'panel/lib/theme';
+
+import s from './DnsSettings.module.pcss';
 import { Upstream } from './Upstream';
 import { Access } from './Access';
 import { ServerConfig } from './ServerConfig';
@@ -20,7 +22,7 @@ export const DnsSettings = () => {
 
     return (
         <div class={theme.layout.container}>
-            <div class={cn(theme.layout.containerIn, theme.layout.containerIn_one_col)}>
+            <div class={cn(theme.layout.containerIn, theme.layout.containerIn_one_col, s.wide)}>
                 <h1 class={cn(theme.layout.title, theme.title.h4, theme.title.h3_tablet)}>
                     {intl.getMessage('dns_settings')}
                 </h1>
@@ -29,10 +31,12 @@ export const DnsSettings = () => {
                     when={!(dnsConfigState.processingGetConfig || accessState.processing)}
                     fallback={<PageLoader />}
                 >
-                    <Upstream />
-                    <ServerConfig />
-                    <Cache />
-                    <Access />
+                    <div class={s.columns}>
+                        <Upstream />
+                        <ServerConfig />
+                        <Cache />
+                        <Access />
+                    </div>
                 </Show>
             </div>
         </div>

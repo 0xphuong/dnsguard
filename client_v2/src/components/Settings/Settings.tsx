@@ -293,7 +293,7 @@ export const Settings = () => {
                                     onClick={() => setLogsIgnoredModalOpen(true)}
                                 />
 
-                                <div class={cn(s.actionRow, s.dangerRow)}>
+                                <div class={cn(s.actionRow, theme.form.dangerRow)}>
                                     <Button
                                         variant="secondary-danger"
                                         class={s.clearButton}
@@ -379,7 +379,7 @@ export const Settings = () => {
                                     onClick={() => setStatsIgnoredModalOpen(true)}
                                 />
 
-                                <div class={cn(s.actionRow, s.dangerRow)}>
+                                <div class={cn(s.actionRow, theme.form.dangerRow)}>
                                     <Button
                                         variant="secondary-danger"
                                         class={s.clearButton}

@@ -1,0 +1,25 @@
+/* The page measured 2954px tall — the longest in the app, nearly three
+ * viewports — inside a 584px column with about 800px empty beside it.  Its
+ * four sections pair off naturally, so two columns from 1280px roughly halve
+ * the scroll without moving a single control.
+ *
+ * Grid rather than column-count: a fragmented column can separate a section
+ * from its heading, and the dialogs each row opens are position: fixed, so
+ * they never become grid items. */
+.columns {
+    @media (min-width: 1280px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 var(--space-6);
+        align-items: start;
+    }
+}
+
+/* The shared containerIn_one_col caps content at 584px and ten pages depend
+ * on it, so it is widened here only, and only where the second column
+ * appears.  Doubled selector so it wins regardless of emit order. */
+.wide.wide {
+    @media (min-width: 1280px) {
+        max-width: 1080px;
+    }
+}

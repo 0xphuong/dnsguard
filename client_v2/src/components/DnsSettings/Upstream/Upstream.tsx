@@ -64,6 +64,7 @@ export const Upstream = () => {
                 title={intl.getMessage('dns_server_addresses')}
                 description={intl.getMessage('dns_server_addresses_desc')}
                 value={serverAddressesValue()}
+                valueMono
                 onClick={serverAddressesDialog.openDialog}
             />
 
@@ -73,6 +74,7 @@ export const Upstream = () => {
                 title={intl.getMessage('dns_fallback_servers')}
                 description={intl.getMessage('dns_fallback_dns_desc')}
                 value={fallbackServersValue()}
+                valueMono
                 onClick={fallbackDialog.openDialog}
             />
 
@@ -82,6 +84,7 @@ export const Upstream = () => {
                 title={intl.getMessage('dns_bootstrap_servers')}
                 description={intl.getMessage('dns_bootstrap_dns_desc')}
                 value={bootstrapServersValue()}
+                valueMono
                 onClick={bootstrapDialog.openDialog}
             />
 
@@ -98,7 +101,6 @@ export const Upstream = () => {
                 checked={dnsConfigState.use_private_ptr_resolvers}
                 onChange={() => togglePrivatePtrResolvers()}
                 onClick={() => navigate(Paths.DnsPrivateReverse)}
-                divider
             />
 
             <SettingRow
@@ -107,6 +109,7 @@ export const Upstream = () => {
                 title={intl.getMessage('dns_upstream_timeout')}
                 description={intl.getMessage('dns_upstream_timeout_desc')}
                 value={timeoutValue()}
+                valueMono
                 onClick={timeoutDialog.openDialog}
             />
 

@@ -37,6 +37,8 @@ export const Cache = () => {
                 variant="switch"
                 id="cache_enabled"
                 title={intl.getMessage('dns_cache_title')}
+                titleAs="h2"
+                titleId="dns-cache-title"
                 titleClass={cn(theme.title.h5, theme.title.h4_tablet, theme.text.bold, s.title)}
                 descriptionClass={s.description}
                 align="center"
@@ -51,6 +53,7 @@ export const Cache = () => {
                 title={intl.getMessage('dns_cache_size')}
                 description={intl.getMessage('dns_cache_size_desc')}
                 value={cacheSizeValue()}
+                valueMono
                 disabled={!dnsConfigState.cache_enabled}
                 onClick={cacheSizeDialog.openDialog}
             />
@@ -61,6 +64,7 @@ export const Cache = () => {
                 title={intl.getMessage('dns_override_min_ttl')}
                 description={intl.getMessage('dns_override_min_ttl_desc')}
                 value={minTtlValue()}
+                valueMono
                 disabled={!dnsConfigState.cache_enabled}
                 onClick={minTtlDialog.openDialog}
             />
@@ -71,6 +75,7 @@ export const Cache = () => {
                 title={intl.getMessage('dns_override_max_ttl')}
                 description={intl.getMessage('dns_override_max_ttl_desc')}
                 value={maxTtlValue()}
+                valueMono
                 disabled={!dnsConfigState.cache_enabled}
                 onClick={maxTtlDialog.openDialog}
             />
@@ -85,7 +90,7 @@ export const Cache = () => {
                 onChange={() => toggleOptimisticCaching()}
             />
 
-            <div class={theme.form.actionRow}>
+            <div class={cn(theme.form.actionRow, theme.form.dangerRow)}>
                 <Button
                     variant="secondary-danger"
                     onClick={() => setShowClearConfirm(true)}

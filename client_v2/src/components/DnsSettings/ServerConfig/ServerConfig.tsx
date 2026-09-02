@@ -48,6 +48,7 @@ export const ServerConfig = () => {
                 title={intl.getMessage('dns_rate_limit')}
                 description={intl.getMessage('dns_rate_limit_desc')}
                 value={rateLimitValue()}
+                valueMono
                 onClick={rateLimitDialog.openDialog}
             />
 
@@ -57,6 +58,7 @@ export const ServerConfig = () => {
                 title={intl.getMessage('dns_rate_limit_allowlist')}
                 description={intl.getMessage('dns_rate_limit_allowlist_desc')}
                 value={getUpstreamServersSummary(dnsConfigState.ratelimit_whitelist)}
+                valueMono
                 onClick={allowlistDialog.openDialog}
             />
 
@@ -68,6 +70,7 @@ export const ServerConfig = () => {
                 value={String(
                     dnsConfigState.ratelimit_subnet_len_ipv4 ?? IPV4_SUBNET_PREFIX.DEFAULT,
                 )}
+                valueMono
                 onClick={subnetV4Dialog.openDialog}
             />
 
@@ -79,6 +82,7 @@ export const ServerConfig = () => {
                 value={String(
                     dnsConfigState.ratelimit_subnet_len_ipv6 ?? IPV6_SUBNET_PREFIX.DEFAULT,
                 )}
+                valueMono
                 onClick={subnetV6Dialog.openDialog}
             />
 
@@ -99,7 +103,6 @@ export const ServerConfig = () => {
                 checked={dnsConfigState.edns_cs_enabled}
                 onChange={() => toggleEdnsCsEnabled()}
                 onClick={ednsDialog.openDialog}
-                divider
             />
 
             <SettingRow

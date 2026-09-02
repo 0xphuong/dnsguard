@@ -34,6 +34,14 @@ type Props = {
      */
     titleAs?: 'div' | 'h2' | 'h3';
     titleId?: string;
+    /**
+     * Sets the value line in the monospace face with tabular figures.  Opt-in
+     * rather than default, because the same slot carries prose summaries
+     * elsewhere — "Last 90 days" has no business being monospaced — while on
+     * the DNS page it holds resolver URLs, IPv4 and IPv6 literals, and
+     * numbers with units.
+     */
+    valueMono?: boolean;
     largeTitle?: boolean;
     inputClass?: string;
 };
@@ -153,8 +161,14 @@ export const SettingRow = (props: Props) => {
                     </Show>
                     <Show when={props.value}>
                         <div
+                            /* The value line is clamped to two lines and then
+                             * ellipsised, so a longer list of bootstrap servers
+                             * or allowed clients loses content with nothing to
+                             * recover it from. */
+                            title={props.value}
                             class={cn(s.value, theme.text.t3, {
                                 [s.valueDisabled]: props.disabled,
+                                [s.valueMono]: props.valueMono,
                             })}
                         >
                             {props.value}

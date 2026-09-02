@@ -36,6 +36,7 @@ export const Access = () => {
                 title={intl.getMessage('dns_allowed_clients')}
                 description={intl.getMessage('dns_allowed_clients_desc')}
                 value={allowedClientsValue()}
+                valueMono
                 onClick={allowedDialog.openDialog}
             />
 
@@ -45,6 +46,7 @@ export const Access = () => {
                 title={intl.getMessage('dns_disallowed_clients')}
                 description={intl.getMessage('dns_disallowed_clients_desc')}
                 value={disallowedClientsValue()}
+                valueMono
                 disabled={allowedClientsOn()}
                 onClick={disallowedClientsDialog.openDialog}
             />
@@ -55,6 +57,7 @@ export const Access = () => {
                 title={intl.getMessage('dns_disallowed_domains')}
                 description={intl.getMessage('dns_disallowed_domains_desc')}
                 value={disallowedDomainsValue()}
+                valueMono
                 onClick={disallowedDomainsDialog.openDialog}
             />
 
