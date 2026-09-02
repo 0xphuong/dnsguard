@@ -24,7 +24,7 @@ export const Logo = memo(({ className }: Props) => {
                 d="M9.28 11.28h6.81a9.28 9.28 0 0 1 0 18.56H9.28V11.28Zm4.23 4.02v10.5h2.58a5.25 5.25 0 0 0 0-10.5h-2.58Z"
             />
             <text x="43" y="28" fontSize="24" fontWeight="700" letterSpacing="-0.5">
-                <tspan fill="#67B279">DNS</tspan>
+                <tspan fill="#2B93C9">DNS</tspan>
                 <tspan fill="currentColor">Guard</tspan>
             </text>
             <defs>
@@ -36,8 +36,8 @@ export const Logo = memo(({ className }: Props) => {
                     y2="37"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stopColor="#67B279" />
-                    <stop offset="1" stopColor="#589968" />
+                    <stop stopColor="#2B93C9" />
+                    <stop offset="1" stopColor="#2482B3" />
                 </linearGradient>
             </defs>
         </svg>

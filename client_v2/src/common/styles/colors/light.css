@@ -57,7 +57,9 @@
     --pressed-danger-button: var(--red-70);
     --disabled-danger-button: var(--red-30);
     /* Link */
-    --default-link: var(--product-primary-50);
+    /* -50 measures 3.43:1 on white, short of AA for text.  -70 clears it at
+     * 5.52:1 while keeping the chroma that -80 loses. */
+    --default-link: var(--product-primary-70);
     --hovered-link: var(--product-primary-60);
     --pressed-link: var(--product-primary-70);
     --visited-link: var(--product-primary-80);
@@ -147,4 +149,12 @@
     --chart-threats: var(--orange-60);
     --chart-adult: var(--product-secondary-50);
     --chart-grid: var(--gray-20);
+    /* Success / allowed
+     *
+     * statusGreen and statusBlue in the query log both resolved to the brand
+     * colour, so a resolved query and an informational one rendered
+     * identically.  Green now carries the first on its own. */
+    --default-success-text: var(--success-80);
+    --default-success-icon: var(--success-70);
+    --fills-success: var(--success-70);
 }

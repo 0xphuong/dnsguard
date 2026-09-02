@@ -1,15 +1,33 @@
 :root {
-    --product-primary-0: #f7fbf8;
-    --product-primary-10: #d9ecde;
-    --product-primary-20: #bedfc6;
-    --product-primary-30: #a2d0ad;
-    --product-primary-40: #84c193;
-    --product-primary-50: #67b279;
-    --product-primary-60: #5b9f6b;
-    --product-primary-70: #4e8c5d;
-    --product-primary-80: #42794f;
-    --product-primary-90: #366642;
-    --product-primary-100: #22482c;
+    --product-primary-0: #f5fafd;
+    --product-primary-10: #d4eaf6;
+    --product-primary-20: #aed8ef;
+    --product-primary-30: #7cc4e8;
+    --product-primary-40: #4aabdb;
+    --product-primary-50: #2b93c9;
+    --product-primary-60: #2482b3;
+    --product-primary-70: #1e6f9b;
+    --product-primary-80: #1a5d82;
+    --product-primary-90: #164b69;
+    --product-primary-100: #0f3448;
+    /* SUCCESS
+     *
+     * This is the green the brand used to be.  Keeping it as its own ramp is
+     * the point of moving the brand to azure: green now says one thing —
+     * allowed, healthy, resolved — instead of also standing in for links,
+     * switches and the primary button. */
+    --success-0: #f7fbf8;
+    --success-10: #d9ecde;
+    --success-20: #bedfc6;
+    --success-30: #a2d0ad;
+    --success-40: #84c193;
+    --success-50: #67b279;
+    --success-60: #5b9f6b;
+    --success-70: #4e8c5d;
+    --success-80: #42794f;
+    --success-90: #366642;
+    --success-100: #22482c;
+
     --product-secondary-0: #f5edf5;
     --product-secondary-10: #dec8e1;
     --product-secondary-20: #ccaad1;

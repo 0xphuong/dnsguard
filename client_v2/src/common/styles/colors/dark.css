@@ -57,7 +57,9 @@
     --pressed-danger-button: var(--red-70);
     --disabled-danger-button: var(--red-30);
     /* Link */
-    --default-link: var(--product-primary-50);
+    /* -50 measures 4.25:1 on the popup surface, just short of AA; the menus
+     * are where links appear most. */
+    --default-link: var(--product-primary-40);
     --hovered-link: var(--product-primary-60);
     --pressed-link: var(--product-primary-70);
     --visited-link: var(--product-primary-30);
@@ -145,4 +147,8 @@
     --chart-threats: var(--orange-30);
     --chart-adult: var(--product-secondary-30);
     --chart-grid: var(--gray-80);
+    /* Success / allowed — see the light theme for why this exists. */
+    --default-success-text: var(--success-40);
+    --default-success-icon: var(--success-40);
+    --fills-success: var(--success-50);
 }
