@@ -1,0 +1,77 @@
+# Docker Compose deployment for the image built from docker/build.Dockerfile.
+#
+# IMPORTANT: build.Dockerfile does NOT compile anything.  It only copies an
+# already-built binary from ${DIST_DIR}/docker/.  Stage it first:
+#
+#	sh ./docker/prepare-dist.sh
+#
+# Then:
+#
+#	docker compose build
+#	docker compose up -d
+#
+# The web UI is on http://<host>:3000 for the initial setup wizard, and moves to
+# port 80 once the setup is finished.
+
+services:
+  dnsguard:
+    build:
+      context: .
+      dockerfile: ./docker/build.Dockerfile
+      args:
+        DIST_DIR: ${DIST_DIR:-dist}
+        BUILD_DATE: ${BUILD_DATE:-1970-01-01T00:00:00Z}
+        VERSION: ${VERSION:-v0.0.0}
+        VCS_REF: ${VCS_REF:-unknown}
+    # image: ${DOCKER_IMAGE_NAME:-dnsguard-dev}:${DOCKER_IMAGE_TAG:-local}
+    container_name: dnsguard
+    restart: unless-stopped
+
+    volumes:
+      - ${WORK_DIR:-./docker/data/work}:/opt/dnsguard/work
+      - ${CONF_DIR:-./docker/data/conf}:/opt/dnsguard/conf
+
+    ports:
+      # 53   : DNS (plain)
+      - "553:53/tcp"
+      - "553:53/udp"
+      # 67/68: DHCP server / client.  Only useful with network_mode: host, see
+      # the note at the bottom of this file.
+      - "67:67/udp"
+      - "68:68/udp"
+      # 80   : HTTP (main web UI, after setup)
+      - "80:80/tcp"
+      # 443  : HTTPS, DNS-over-HTTPS (incl. HTTP/3), DNSCrypt
+      - "443:443/tcp"
+      - "443:443/udp"
+      # 3000 : HTTP(S) web UI (initial setup wizard; alt, incl. HTTP/3)
+      - "3000:3000/tcp"
+      - "3000:3000/udp"
+      # 853  : DNS-over-TLS, DNS-over-QUIC
+      - "853:853/tcp"
+      - "853:853/udp"
+      # 5443 : DNSCrypt (alt)
+      - "5443:5443/tcp"
+      - "5443:5443/udp"
+      # 6060 : pprof.  Debug only — do not expose publicly.
+      # - "6060:6060/tcp"
+      #
+      # 784 and 8853 were the legacy DNS-over-QUIC ports.  Current versions use
+      # 853/udp instead; uncomment only if your config still binds them.
+      # - "784:784/udp"
+      # - "8853:8853/udp"
+
+    # Needed for the built-in DHCP server (raw sockets, broadcast).  Harmless
+    # otherwise; drop it if you do not use DHCP.
+    cap_add:
+      - NET_ADMIN
+
+# NOTE on DHCP: ports 67/68 published through the default bridge network do not
+# see the broadcast traffic DHCP relies on.  If you want DNSGuard to serve
+# DHCP on your LAN, delete the `ports:` block above and use host networking
+# instead:
+#
+#     network_mode: host
+#
+# On Linux, the host also has to have port 53 free — systemd-resolved usually
+# holds it (see `DNSStubListener=no` in /etc/systemd/resolved.conf).

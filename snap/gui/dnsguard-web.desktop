@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=DNSGuard
+Comment=Network-wide ads & trackers blocking DNS server
+Exec=dnsguard.dnsguard-web
+Icon=${SNAP}/meta/gui/dnsguard-web.png
+Terminal=false
