@@ -43,7 +43,7 @@ export default defineConfig({
     webServer: process.env.CI
         ? {
               stdout: 'pipe',
-              command: `./AdGuardHome --local-frontend -v -c ${CONFIG_FILE_PATH}`,
+              command: `./DNSGuard --local-frontend -v -c ${CONFIG_FILE_PATH}`,
               url: 'http://127.0.0.1:3000',
               cwd: '..',
               timeout: 10000,

@@ -7,7 +7,7 @@
   'version': '0.107'
   'contact':
     'name': 'DNSGuard'
-    'url': 'https://github.com/AdguardTeam/AdGuardHome'
+    'url': 'https://github.com/0xphuong/dnsguard'
 
 'servers':
 - 'url': '/control'
@@ -159,7 +159,7 @@
       - 'global'
       'operationId': 'getVersionJson'
       'summary': >
-        Gets information about the latest available version of AdGuard
+        Gets information about the latest available version of DNSGuard
       'requestBody':
         'content':
           'application/json':

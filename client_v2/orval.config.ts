@@ -1,7 +1,7 @@
 import { defineConfig } from 'orval';
 
 export default defineConfig({
-    adguardHome: {
+    dnsguard: {
         input: {
             target: '../openapi/openapi.yaml',
         },

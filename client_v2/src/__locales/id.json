@@ -349,7 +349,7 @@
   "try_again": "Coba lagi",
   "tuesday": "Selasa",
   "unavailable_dhcp": "DHCP tidak tersedia",
-  "unavailable_dhcp_desc": "Adguard Home tidak dapat menjalankan server DHCP pada OS Anda",
+  "unavailable_dhcp_desc": "DNSGuard tidak dapat menjalankan server DHCP pada OS Anda",
   "unblock": "Buka blokir",
   "update_button": "Perbarui",
   "update_filters_disable": "Nonaktifkan",

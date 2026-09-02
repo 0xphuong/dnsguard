@@ -2,7 +2,7 @@
 
 This document explains how to set up a development environment for the
 `client_v2` frontend, run it locally, and contribute code. It is intended for
-developers working on the next-generation AdGuard Home web UI.
+developers working on the next-generation DNSGuard web UI.
 
 For code guidelines, architecture, and project structure, see
 [AGENTS.md](./AGENTS.md). For user-facing documentation, see the root
@@ -30,7 +30,7 @@ For code guidelines, architecture, and project structure, see
     - [Adding a Translation Key](#adding-a-translation-key)
     - [Debugging in VS Code](#debugging-in-vs-code)
   - [Troubleshooting](#troubleshooting)
-    - [Dev server cannot find `../AdguardHome.yaml`](#dev-server-cannot-find-adguardhomeyaml)
+    - [Dev server cannot find `../dnsguard.yaml`](#dev-server-cannot-find-dnsguardyaml)
     - [API requests return 404 or connection refused](#api-requests-return-404-or-connection-refused)
     - [E2e tests fail to start](#e2e-tests-fail-to-start)
     - ["Multiple instances of Solid" errors in tests](#multiple-instances-of-solid-errors-in-tests)
@@ -45,8 +45,8 @@ Before you begin, install the following tools:
 - **Node.js** 20 LTS or newer. The project uses `@types/node` 22; a current
   LTS release is recommended.
 - **npm** 10.x or newer (bundled with Node.js).
-- **An AdGuard Home backend** running locally. The dev server proxies
-  `/control` API requests to it, so a built `AdGuardHome` binary in the
+- **An DNSGuard backend** running locally. The dev server proxies
+  `/control` API requests to it, so a built `DNSGuard` binary in the
   repository root (or any reachable instance) is required for the UI to
   function. See the root [README.md](../README.md) and
   [HACKING.md](../HACKING.md) for building the Go backend.
@@ -61,8 +61,8 @@ Playwright, TypeScript) is installed locally via `npm install`.
 All commands in this guide are run from the `client_v2/` directory.
 
 ```sh
-git clone https://github.com/AdguardTeam/AdGuardHome.git
-cd AdGuardHome/client_v2
+git clone https://github.com/0xphuong/dnsguard.git
+cd dnsguard/client_v2
 npm install
 ```
 
@@ -72,9 +72,9 @@ does not, run `npx playwright install` manually before running e2e tests.
 ### Running the Dev Server
 
 The dev server reads the backend host and port from the root
-`AdguardHome.yaml` file (the `bind_host` and `bind_port` fields) and proxies
+`dnsguard.yaml` file (the `bind_host` and `bind_port` fields) and proxies
 `/control` requests to that backend. Make sure a backend config exists at
-`../AdguardHome.yaml` and that the AdGuard Home backend is running.
+`../dnsguard.yaml` and that the DNSGuard backend is running.
 
 Start the dev server:
 
@@ -195,9 +195,9 @@ npm run test:e2e:debug          # debug mode
 npm run test:e2e:codegen        # generate tests by recording actions
 ```
 
-E2E specs live in `tests/e2e/`. They run against a real AdGuard Home backend
+E2E specs live in `tests/e2e/`. They run against a real DNSGuard backend
 that Playwright starts automatically (see the `webServer` config in
-`playwright.config.ts`). The `./AdGuardHome` binary must be present in the
+`playwright.config.ts`). The `./DNSGuard` binary must be present in the
 repository root for this to work. E2E tests are **not** part of
 `npm run check`; run them explicitly.
 
@@ -273,10 +273,10 @@ stores.
 
 ## Troubleshooting
 
-### Dev server cannot find `../AdguardHome.yaml`
+### Dev server cannot find `../dnsguard.yaml`
 
 The dev server reads the backend host and port from the root
-`AdguardHome.yaml`. Make sure the file exists at the repository root and
+`dnsguard.yaml`. Make sure the file exists at the repository root and
 contains `bind_host` and `bind_port`. If it is missing, the server falls back
 to `0.0.0.0:80` and the proxy will not reach the backend. Start the backend or
 create the config file.
@@ -284,12 +284,12 @@ create the config file.
 ### API requests return 404 or connection refused
 
 The dev server proxies `/control` to the backend at `bind_host:bind_port`.
-Verify the AdGuard Home backend is running and that the port in
-`AdguardHome.yaml` matches the running instance.
+Verify the DNSGuard backend is running and that the port in
+`dnsguard.yaml` matches the running instance.
 
 ### E2e tests fail to start
 
-E2e tests require the `./AdGuardHome` binary in the repository root. Build the
+E2e tests require the `./DNSGuard` binary in the repository root. Build the
 backend first (see [HACKING.md](../HACKING.md)). Playwright starts the backend
 automatically; if a server is already running on port 3000, stop it first:
 
@@ -323,8 +323,8 @@ by Webpack, Vitest, and ESLint.
 
 - [AGENTS.md](./AGENTS.md) — code guidelines, architecture, and project
   structure
-- [README.md](../README.md) — AdGuard Home project overview and user manual
-- [HACKING.md](../HACKING.md) — AdGuard Home developer guidelines (Go backend)
+- [README.md](../README.md) — DNSGuard project overview and user manual
+- [HACKING.md](../HACKING.md) — DNSGuard developer guidelines (Go backend)
 - [CONTRIBUTING.md](../CONTRIBUTING.md) — contribution workflow
 - [CHANGELOG.md](../CHANGELOG.md) — changelog
 - [AdGuard Code Guidelines](https://github.com/AdguardTeam/CodeGuidelines) —

@@ -11,7 +11,7 @@
 
   It operates as a DNS server that re-routes tracking domains to a "black hole,"
   thus preventing your devices from connecting to those servers. It's based
-  on software we use for our public AdGuard DNS servers -- both share a lot
+  on AdGuard Home, which shares a lot
   of common code.
 'grade': 'stable'
 'confinement': 'strict'

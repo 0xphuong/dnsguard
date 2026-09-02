@@ -47,7 +47,7 @@ trailing_newlines() (
 		-o -name '*.woff2' \
 		-o -name '*.zip' \
 		-o -name 'DNSGuard' \
-		-o -name 'adguard-home' \
+		-o -name 'dnsguard' \
 		')' \
 		-print \
 		| while read -r f; do
@@ -75,7 +75,7 @@ trailing_whitespace() {
 		-o -name '*.woff2' \
 		-o -name '*.zip' \
 		-o -name 'DNSGuard' \
-		-o -name 'adguard-home' \
+		-o -name 'dnsguard' \
 		')' \
 		-print \
 		| while read -r f; do

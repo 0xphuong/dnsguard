@@ -6,7 +6,7 @@
 'plan':
     'project-key': 'AGH'
     'key': 'AGHSNAP'
-    'name': 'AdGuard Home - Build and publish Snapcraft release'
+    'name': 'DNSGuard - Build and publish Snapcraft release'
 # Make sure to sync any changes with the branch overrides below.
 'variables':
     # This variable is used to override Docker caching, for example to rerun a
@@ -32,19 +32,19 @@
 'Build packages':
     'artifacts':
       - 'name': 'i386_snap'
-        'pattern': 'AdGuardHome_i386.snap'
+        'pattern': 'DNSGuard_i386.snap'
         'shared': true
         'required': true
       - 'name': 'amd64_snap'
-        'pattern': 'AdGuardHome_amd64.snap'
+        'pattern': 'DNSGuard_amd64.snap'
         'shared': true
         'required': true
       - 'name': 'armhf_snap'
-        'pattern': 'AdGuardHome_armhf.snap'
+        'pattern': 'DNSGuard_armhf.snap'
         'shared': true
         'required': true
       - 'name': 'arm64_snap'
-        'pattern': 'AdGuardHome_arm64.snap'
+        'pattern': 'DNSGuard_arm64.snap'
         'shared': true
         'required': true
     'key': 'BP'
@@ -130,7 +130,7 @@
         'after-inactive-days': 30
     'integration':
         'push-on-success': false
-        'merge-from': 'AdGuard Home - Build and publish Snapcraft release'
+        'merge-from': 'DNSGuard - Build and publish Snapcraft release'
     'link-to-jira': true
 
 'notifications':

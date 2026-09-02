@@ -31,7 +31,7 @@ Please do:
 
 Please make sure that the issue is not a duplicate or a question.  If it’s a duplicate, please react to the original issue with a thumbs up.  If it’s a question, please look through our [Wiki] and, if you haven’t found the answer, post it to the GitHub [Discussions] page.
 
-[Discussions]: https://github.com/AdguardTeam/AdGuardHome/discussions/categories/q-a
+[Discussions]: https://github.com/0xphuong/dnsguard/discussions
 [Wiki]:        https://github.com/AdguardTeam/AdGuardHome/wiki
 
 ### Follow the issue template

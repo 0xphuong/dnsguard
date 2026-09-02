@@ -515,8 +515,8 @@ handle_existing() {
 		return 0
 	fi
 
-	existing_adguard_home="$(ls -1 -A "$agh_dir")"
-	if [ "$existing_adguard_home" != '' ]; then
+	existing_dnsguard="$(ls -1 -A "$agh_dir")"
+	if [ "$existing_dnsguard" != '' ]; then
 		log 'the existing DNSGuard installation is detected'
 
 		if [ "$reinstall" -ne '1' ] && [ "$uninstall" -ne '1' ]; then

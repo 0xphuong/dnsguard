@@ -13,10 +13,10 @@
     'url': 'https://github.com/AdguardTeam/HostlistsRegistry'
   - 'about': >
         Please use GitHub Discussions for questions
-    'name': 'Q&A Discussions'
+    'name': 'Q&A Discussions (upstream AdGuard Home)'
     'url': 'https://github.com/AdguardTeam/AdGuardHome/discussions'
   - 'about': >
-        Please check our Wiki for configuration file description, frequently
+        Please check upstream's Wiki for configuration file description, frequently
         asked questions, and other documentation
-    'name': 'Wiki'
+    'name': 'Wiki (upstream AdGuard Home)'
     'url': 'https://github.com/AdguardTeam/AdGuardHome/wiki'

@@ -214,7 +214,7 @@ const renderDnsDevicesList = () => (
                     {intl.getMessage('setup_devices_dns_other_list_1', {
                         a: (text: string) => (
                             <a
-                                href="https://github.com/AdguardTeam/AdGuardHome"
+                                href="https://github.com/0xphuong/dnsguard"
                                 target="_blank"
                                 class={s.dnsLink}
                                 rel="noopener noreferrer"

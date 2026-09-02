@@ -21,28 +21,28 @@ func TestUpdater_VersionInfo(t *testing.T) {
   "announcement": "DNSGuard v0.103.0-beta.2 is now available!",
   "announcement_url": "https://github.com/0xphuong/dnsguard/internal/releases",
   "selfupdate_min_version": "v0.0",
-  "download_windows_amd64": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_windows_amd64.zip",
-  "download_windows_386": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_windows_386.zip",
-  "download_darwin_amd64": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_darwin_amd64.zip",
-  "download_darwin_386": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_darwin_386.zip",
-  "download_linux_amd64": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_linux_amd64.tar.gz",
-  "download_linux_386": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_linux_386.tar.gz",
-  "download_linux_arm": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_linux_armv6.tar.gz",
-  "download_linux_armv5": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_linux_armv5.tar.gz",
-  "download_linux_armv6": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_linux_armv6.tar.gz",
-  "download_linux_armv7": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_linux_armv7.tar.gz",
-  "download_linux_arm64": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_linux_arm64.tar.gz",
-  "download_linux_mips": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_linux_mips_softfloat.tar.gz",
-  "download_linux_mipsle": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_linux_mipsle_softfloat.tar.gz",
-  "download_linux_mips64": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_linux_mips64_softfloat.tar.gz",
-  "download_linux_mips64le": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_linux_mips64le_softfloat.tar.gz",
-  "download_freebsd_386": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_freebsd_386.tar.gz",
-  "download_freebsd_amd64": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_freebsd_amd64.tar.gz",
-  "download_freebsd_arm": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_freebsd_armv6.tar.gz",
-  "download_freebsd_armv5": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_freebsd_armv5.tar.gz",
-  "download_freebsd_armv6": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_freebsd_armv6.tar.gz",
-  "download_freebsd_armv7": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_freebsd_armv7.tar.gz",
-  "download_freebsd_arm64": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_freebsd_arm64.tar.gz"
+  "download_windows_amd64": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_windows_amd64.zip",
+  "download_windows_386": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_windows_386.zip",
+  "download_darwin_amd64": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_darwin_amd64.zip",
+  "download_darwin_386": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_darwin_386.zip",
+  "download_linux_amd64": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_linux_amd64.tar.gz",
+  "download_linux_386": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_linux_386.tar.gz",
+  "download_linux_arm": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_linux_armv6.tar.gz",
+  "download_linux_armv5": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_linux_armv5.tar.gz",
+  "download_linux_armv6": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_linux_armv6.tar.gz",
+  "download_linux_armv7": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_linux_armv7.tar.gz",
+  "download_linux_arm64": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_linux_arm64.tar.gz",
+  "download_linux_mips": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_linux_mips_softfloat.tar.gz",
+  "download_linux_mipsle": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_linux_mipsle_softfloat.tar.gz",
+  "download_linux_mips64": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_linux_mips64_softfloat.tar.gz",
+  "download_linux_mips64le": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_linux_mips64le_softfloat.tar.gz",
+  "download_freebsd_386": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_freebsd_386.tar.gz",
+  "download_freebsd_amd64": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_freebsd_amd64.tar.gz",
+  "download_freebsd_arm": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_freebsd_armv6.tar.gz",
+  "download_freebsd_armv5": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_freebsd_armv5.tar.gz",
+  "download_freebsd_armv6": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_freebsd_armv6.tar.gz",
+  "download_freebsd_armv7": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_freebsd_armv7.tar.gz",
+  "download_freebsd_arm64": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_freebsd_arm64.tar.gz"
 }`
 
 	counter := 0
@@ -107,8 +107,8 @@ func TestUpdater_VersionInfo_others(t *testing.T) {
   "announcement": "DNSGuard v0.103.0-beta.2 is now available!",
   "announcement_url": "https://github.com/0xphuong/dnsguard/internal/releases",
   "selfupdate_min_version": "v0.0",
-  "download_linux_armv7": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_linux_armv7.tar.gz",
-  "download_linux_mips_softfloat": "https://github.com/0xphuong/dnsguard/releases/latest/download/AdGuardHome_linux_mips_softfloat.tar.gz"
+  "download_linux_armv7": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_linux_armv7.tar.gz",
+  "download_linux_mips_softfloat": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_linux_mips_softfloat.tar.gz"
 }`
 
 	handler := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {

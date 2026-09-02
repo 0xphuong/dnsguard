@@ -37,7 +37,7 @@ To set up a test environment for DHCP server you will need:
 
 ### Configure server
 
-1. Edit server configuration file `AdGuardHome.yaml`, for example:
+1. Edit server configuration file `dnsguard.yaml`, for example:
 
     ```yaml
     dhcp:
@@ -62,7 +62,7 @@ To set up a test environment for DHCP server you will need:
 2. Start the server:
 
     ```sh
-    ./AdGuardHome -v
+    ./DNSGuard -v
     ```
 
     There should be a message in log which shows that DHCP server is ready:

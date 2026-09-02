@@ -3,7 +3,7 @@
 'plan':
     'project-key': 'AGH'
     'key': 'AGHBSNAPSPECS'
-    'name': 'AdGuard Home - Build and publish release'
+    'name': 'DNSGuard - Build and publish release'
 # Make sure to sync any changes with the branch overrides below.
 'variables':
     # This variable is used to override Docker caching, for example to rerun a
@@ -47,7 +47,7 @@
 
 'Build frontend':
     'artifacts':
-      - 'name': 'AdGuardHome frontend'
+      - 'name': 'DNSGuard frontend'
         'pattern': 'build/**'
         'shared': true
         'required': true
@@ -79,10 +79,10 @@
 
 'Make release':
     'artifact-subscriptions':
-      - 'artifact': 'AdGuardHome frontend'
+      - 'artifact': 'DNSGuard frontend'
     # TODO(a.garipov): Use more fine-grained artifact rules.
     'artifacts':
-      - 'name': 'AdGuardHome dists'
+      - 'name': 'DNSGuard dists'
         'pattern': 'dist/**'
         'shared': true
         'required': true
@@ -118,7 +118,7 @@
                 set +x
                 export GPG_KEY_PASSPHRASE="${bamboo_gpgPassword}"
                 export GPG_SECRET_KEY="${bamboo_gpgSecretKeyPart1}${bamboo_gpgSecretKeyPart2}"
-                export SIGNER_API_KEY="${bamboo_adguardHomeWinSignerSecretApiKey}"
+                export SIGNER_API_KEY="${bamboo_dnsguardWinSignerSecretApiKey}"
                 set -x
 
                 docker build \
@@ -191,7 +191,7 @@
                     CHANNEL="${bamboo_channel}" \
                     REVISION="${bamboo_repository_revision_number}" \
                     DIST_DIR='dist' \
-                    DOCKER_IMAGE_NAME='adguard/adguardhome' \
+                    DOCKER_IMAGE_NAME='0xphuong/dnsguard' \
                     DOCKER_PUSH='1' \
                     VERBOSE='1' \
                     sh ./scripts/make/build-docker.sh
@@ -221,7 +221,7 @@
                 CHANNEL="${bamboo_channel}"
                 export CHANNEL
 
-                ../bamboo-deploy-publisher/deploy.sh adguard-home-"$CHANNEL"
+                ../bamboo-deploy-publisher/deploy.sh dnsguard-"$CHANNEL"
 
 'Publish to GitHub Releases':
     'key': 'PTGR'
@@ -257,7 +257,7 @@
 
                 env\
                         GITHUB_TOKEN="${bamboo_githubPublicRepoPassword}"\
-                        ../bamboo-deploy-publisher/deploy.sh adguard-home-github
+                        ../bamboo-deploy-publisher/deploy.sh dnsguard-github
 
 'triggers':
     # Don't use minute values that end with a zero or a five as these are often
@@ -270,7 +270,7 @@
         'after-inactive-days': 30
     'integration':
         'push-on-success': false
-        'merge-from': 'AdGuard Home   - Build and publish release'
+        'merge-from': 'DNSGuard   - Build and publish release'
     'link-to-jira': true
 
 'notifications':

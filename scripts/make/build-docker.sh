@@ -41,9 +41,9 @@ readonly docker_platforms
 build_date="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
 readonly build_date
 
-# Set DOCKER_IMAGE_NAME to 'adguard/adguard-home' if you want (and are allowed)
+# Set DOCKER_IMAGE_NAME to '0xphuong/dnsguard' if you want (and are allowed)
 # to push to DockerHub.
-docker_image_name="${DOCKER_IMAGE_NAME:-adguardhome-dev}"
+docker_image_name="${DOCKER_IMAGE_NAME:-dnsguard-dev}"
 readonly docker_image_name
 
 # Set DOCKER_PUSH to '1' if you want (and are allowed) to push to DockerHub.

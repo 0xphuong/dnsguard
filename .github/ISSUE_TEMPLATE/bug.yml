@@ -21,7 +21,7 @@
                 help](https://github.com/AdguardTeam/AdGuardHome/discussions/categories/q-a)
             'required': true
           - 'label': >
-                I have set up AdGuard Home correctly and [configured clients to
+                I have set up DNSGuard correctly and [configured clients to
                 use it](https://github.com/AdguardTeam/AdGuardHome/wiki/Clients).
                 (Use the
                 [Discussions](https://github.com/AdguardTeam/AdGuardHome/discussions/categories/q-a)
@@ -65,7 +65,7 @@
     'validations':
         'required': true
   - 'attributes':
-        'description': 'How did you install AdGuard Home?'
+        'description': 'How did you install DNSGuard?'
         'label': 'Installation'
         'options':
           - 'GitHub releases or script from README'
@@ -78,20 +78,20 @@
     'validations':
         'required': true
   - 'attributes':
-        'description': 'How did you setup AdGuard Home?'
+        'description': 'How did you setup DNSGuard?'
         'label': 'Setup'
         'options':
           - 'On one machine'
           - 'On a router, DHCP is handled by the router'
-          - 'On a router, DHCP is handled by AdGuard Home'
+          - 'On a router, DHCP is handled by DNSGuard'
           - 'Other (please mention in the description)'
     'id': 'setup'
     'type': 'dropdown'
     'validations':
         'required': true
   - 'attributes':
-        'description': 'What version of AdGuard Home are you using?'
-        'label': 'AdGuard Home version'
+        'description': 'What version of DNSGuard are you using?'
+        'label': 'DNSGuard version'
     'id': 'version'
     'type': 'input'
     'validations':

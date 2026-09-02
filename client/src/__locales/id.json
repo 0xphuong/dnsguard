@@ -721,7 +721,7 @@
   "tuesday_short": "Sel",
   "type_table_header": "Tipe",
   "unavailable_dhcp": "DHCP tidak tersedia",
-  "unavailable_dhcp_desc": "Adguard Home tidak dapat menjalankan server DHCP pada OS Anda",
+  "unavailable_dhcp_desc": "DNSGuard tidak dapat menjalankan server DHCP pada OS Anda",
   "unblock": "Buka Blokir",
   "unblock_all": "Buka semua blokir",
   "unblock_for_this_client_only": "Jangan diblok hanya untuk klien ini",

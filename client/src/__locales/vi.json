@@ -364,7 +364,7 @@
   "filtered_custom_rules": "Được lọc bởi các quy tắc lọc tùy chỉnh",
   "filtering_rules_learn_more": "<0>Tìm hiểu thêm</0> về việc tạo danh sách chặn máy chủ của riêng bạn.",
   "filters": "Bộ lọc",
-  "filters_and_hosts_hint": "AdGuard home hiểu các quy tắc chặn quảng cáo đơn giản và cú pháp file hosts",
+  "filters_and_hosts_hint": "DNSGuard hiểu các quy tắc chặn quảng cáo đơn giản và cú pháp file hosts",
   "filters_block_toggle_hint": "Bạn có thể thiết lập quy tắc chặn tại cài đặt <a>Bộ lọc</a>.",
   "filters_configuration": "Cấu hình bộ lọc",
   "filters_enable": "Kích hoạt bộ lọc",

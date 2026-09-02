@@ -55,7 +55,7 @@ export const STATS_NAMES = {
 };
 
 export const REPOSITORY = {
-    URL: 'https://github.com/AdguardTeam/AdGuardHome',
+    URL: 'https://github.com/0xphuong/dnsguard',
     TRACKERS_DB:
         'https://github.com/AdguardTeam/AdGuardHome/tree/master/client/src/helpers/trackers/trackers.json',
     ISSUES: 'https://github.com/AdguardTeam/AdGuardHome/issues/new/choose',

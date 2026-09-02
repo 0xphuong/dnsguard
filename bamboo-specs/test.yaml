@@ -3,7 +3,7 @@
 'plan':
     'project-key': 'AGH'
     'key': 'AHBRTSPECS'
-    'name': 'AdGuard Home - Build and run tests'
+    'name': 'DNSGuard - Build and run tests'
 'variables':
     # This variable is used to override Docker caching, for example to rerun a
     # flaky test suite.
@@ -107,7 +107,7 @@
 
 'Build frontend':
     'artifacts':
-      - 'name': 'AdGuardHome frontend'
+      - 'name': 'DNSGuard frontend'
         'pattern': 'build/**'
         'shared': true
         'required': true
@@ -139,22 +139,22 @@
 
 'Artifact':
     'artifact-subscriptions':
-      - 'artifact': 'AdGuardHome frontend'
+      - 'artifact': 'DNSGuard frontend'
     'artifacts':
-      - 'name': 'AdGuardHome_windows_amd64'
-        'pattern': 'dist/AdGuardHome_windows_amd64.zip'
+      - 'name': 'DNSGuard_windows_amd64'
+        'pattern': 'dist/DNSGuard_windows_amd64.zip'
         'shared': true
         'required': true
-      - 'name': 'AdGuardHome_darwin_amd64'
-        'pattern': 'dist/AdGuardHome_darwin_amd64.zip'
+      - 'name': 'DNSGuard_darwin_amd64'
+        'pattern': 'dist/DNSGuard_darwin_amd64.zip'
         'shared': true
         'required': true
-      - 'name': 'AdGuardHome_darwin_arm64'
-        'pattern': 'dist/AdGuardHome_darwin_arm64.zip'
+      - 'name': 'DNSGuard_darwin_arm64'
+        'pattern': 'dist/DNSGuard_darwin_arm64.zip'
         'shared': true
         'required': true
-      - 'name': 'AdGuardHome_linux_amd64'
-        'pattern': 'dist/AdGuardHome_linux_amd64.tar.gz'
+      - 'name': 'DNSGuard_linux_amd64'
+        'pattern': 'dist/DNSGuard_linux_amd64.tar.gz'
         'shared': true
         'required': true
     'key': 'ART'
@@ -208,8 +208,8 @@
 
 'Test e2e':
     'artifact-subscriptions':
-      - 'artifact': 'AdGuardHome_linux_amd64'
-      - 'artifact': 'AdGuardHome frontend'
+      - 'artifact': 'DNSGuard_linux_amd64'
+      - 'artifact': 'DNSGuard frontend'
     'key': 'E2ETEST'
     'other':
         'clean-working-dir': true
@@ -224,9 +224,9 @@
 
                 set -e -f -u -x
 
-                tar -xzf dist/AdGuardHome_linux_amd64.tar.gz -C /tmp
+                tar -xzf dist/DNSGuard_linux_amd64.tar.gz -C /tmp
 
-                mv /tmp/AdGuardHome/AdGuardHome ./AdGuardHome
+                mv /tmp/DNSGuard/DNSGuard ./DNSGuard
 
                 docker info
 
@@ -246,7 +246,7 @@
         'after-inactive-days': 5
     'integration':
         'push-on-success': false
-        'merge-from': 'AdGuard Home - Build and run tests'
+        'merge-from': 'DNSGuard - Build and run tests'
     'link-to-jira': true
 
 'notifications':

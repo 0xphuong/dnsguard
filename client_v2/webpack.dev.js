@@ -11,7 +11,7 @@ const DEFAULT_PORT = 80;
 
 const importConfig = () => {
     try {
-        const doc = yaml.load(fs.readFileSync('../AdguardHome.yaml', 'utf8'));
+        const doc = yaml.load(fs.readFileSync('../dnsguard.yaml', 'utf8'));
         const { bind_host, bind_port } = doc;
         return {
             bind_host,

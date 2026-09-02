@@ -359,7 +359,7 @@ vulnerabilities, supply-chain risk, and long-term maintenance cost.
 ## Configuration & Documentation
 
 - **Runtime configuration**: The dev server (`webpack.dev.js`) reads the
-  backend host/port from the root `AdguardHome.yaml` and proxies `/control`
+  backend host/port from the root `dnsguard.yaml` and proxies `/control`
   requests to it. The dev server runs on `backendPort + 8000`.
 - **Build configuration**: `BUILD_ENV` (`dev`/`prod`) is set via `cross-env`
   in npm scripts and read from `constants.js`. `BASE_URL = 'control'` is the
