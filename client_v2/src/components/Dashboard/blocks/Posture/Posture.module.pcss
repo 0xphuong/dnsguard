@@ -7,6 +7,7 @@
     border: 1px solid var(--default-item-divider);
     border-radius: var(--radius-md);
     background-color: var(--default-cards-background);
+    box-shadow: var(--elev-1);
     margin: 0 var(--space-4) var(--space-4);
     overflow: hidden;
 
@@ -132,8 +133,11 @@
     transform: translateY(-1px);
 }
 
+/* The one glow in the interface, on the one fact that matters: a live filter.
+ * Nothing else earns it. */
 .dotOn {
     background-color: var(--fills-switch-on-default);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--fills-switch-on-default) 22%, transparent);
 }
 
 .dotOff {

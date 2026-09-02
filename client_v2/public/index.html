@@ -27,11 +27,15 @@
                         }
                     }
                 } catch (e) {}
-                if (!theme || theme === 'auto') {
+                if (theme === 'auto') {
                     var prefersDark =
                         window.matchMedia &&
                         window.matchMedia('(prefers-color-scheme: dark)').matches;
                     theme = prefersDark ? 'dark' : 'light';
+                } else if (!theme) {
+                    // Never chose one: dark is what the palette is tuned for.
+                    // 'auto' still means follow the OS.
+                    theme = 'dark';
                 }
                 document.documentElement.dataset.theme = theme;
                 document.documentElement.style.colorScheme = theme;

@@ -41,13 +41,21 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--default-item-divider);
     background-color: var(--default-cards-background);
-    transition: border-color var(--t2);
+    box-shadow: var(--elev-1);
+    transition:
+        border-color var(--t2),
+        box-shadow var(--t2),
+        transform var(--t2);
 
+    /* Lifts by one pixel on hover: enough to read as a plane you can act on,
+     * small enough not to shift the row. */
     &:hover {
         border-color: var(--default-active-input-stroke);
+        box-shadow: var(--elev-2);
+        transform: translateY(-1px);
     }
 }
 
@@ -89,18 +97,19 @@
 
 .statCardValue {
     padding: var(--space-1) var(--space-3) 0;
-    font-size: 24px;
-    line-height: var(--lh-h4-normal);
+    font-size: var(--fs-display-sm);
+    line-height: var(--lh-display-sm);
+    letter-spacing: var(--tracking-display);
     color: var(--default-main-text);
-    font-weight: var(--weight-semi-bold);
+    font-weight: var(--weight-bold);
     /* Counts change on every refresh; without tabular figures the number
      * reflows and the four tiles stop lining up. */
     font-variant-numeric: tabular-nums;
 
     @media (min-width: 768px) {
         padding: var(--space-1) var(--space-4) 0;
-        font-size: var(--fs-title-h3);
-        line-height: var(--lh-h3-normal);
+        font-size: var(--fs-display-md);
+        line-height: var(--lh-display-md);
     }
 }
 

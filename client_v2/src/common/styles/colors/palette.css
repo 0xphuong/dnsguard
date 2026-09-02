@@ -39,6 +39,11 @@
     --gray-40: #c0c0c0;
     --gray-50: #a4a4a4;
     --gray-60: #7f7f7f;
+    /* Sits between -60 and -70 for one reason: a light-theme placeholder.
+     * gray-50 measured 2.49:1 on white, and gray-60 still only reaches 4.00,
+     * while gray-70 is dark enough to read as a filled value rather than a
+     * hint.  This clears 4.5:1 on both the card and the page. */
+    --gray-65: #6f6f6f;
     --gray-70: #5b5b5b;
     --gray-80: #3d3d3d;
     --gray-90: #1f1f1f;
@@ -65,4 +70,29 @@
     --red-80: #bc3f15;
     --red-90: #a13612;
     --red-100: #77280d;
+
+    /* SURFACES
+     *
+     * The themes used to invert one neutral ramp, which gave dark only two
+     * levels and a hard jump from #1f1f1f to #3d3d3d — enough to make a card
+     * read as washed grey rather than as a raised plane.  These are a
+     * dedicated elevation ladder, faintly cool so the green accent reads as
+     * the one saturated thing on screen.  Adjacent steps sit at 1.05-1.45
+     * contrast: visible as depth, never as a border. */
+    --surface-950: #0b0d11;
+    --surface-900: #10131a;
+    --surface-850: #151922;
+    --surface-800: #1b2029;
+    --surface-700: #232935;
+    --surface-600: #2f3646;
+    --surface-500: #3f4859;
+    --surface-400: #556075;
+
+    --surface-0: #ffffff;
+    --surface-25: #fbfcfd;
+    --surface-50: #f6f8fa;
+    --surface-100: #eef1f5;
+    --surface-150: #e5e9ef;
+    --surface-200: #d9dfe7;
+    --surface-300: #c3ccd8;
 }

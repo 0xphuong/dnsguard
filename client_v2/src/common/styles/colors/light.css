@@ -1,18 +1,18 @@
 :root {
     /* Page background */
-    --default-page-background: var(--gray-0);
-    --hovered-page-background: var(--gray-10);
-    --pressed-page-background: var(--gray-20);
-    --page-background-additional: var(--gray-10);
-    --page-background-additional-pressed: var(--gray-30);
+    --default-page-background: var(--surface-50);
+    --hovered-page-background: var(--surface-100);
+    --pressed-page-background: var(--surface-150);
+    --page-background-additional: var(--surface-100);
+    --page-background-additional-pressed: var(--surface-200);
     /* Cards background */
-    --default-cards-background: var(--gray-0);
+    --default-cards-background: var(--surface-0);
     /* Popup background */
-    --default-popup-background: var(--gray-0);
+    --default-popup-background: var(--surface-0);
     /* Footer background */
     --default-footer-background: var(--gray-80);
     /* Item divider */
-    --default-item-divider: var(--gray-30);
+    --default-item-divider: var(--surface-200);
     /* Main text */
     --default-main-text: var(--gray-80);
     --disabled-main-text: var(--gray-50);
@@ -21,16 +21,16 @@
     /* Forms */
     --default-labels: var(--gray-70);
     /* Input */
-    --default-input-background: var(--gray-10);
+    --default-input-background: var(--surface-100);
     --default-active-input-stroke: var(--gray-50);
-    --default-inactive-input-stroke: var(--gray-30);
-    --default-placeholder: var(--gray-50);
-    --default-input-on-card-background: var(--gray-10);
+    --default-inactive-input-stroke: var(--surface-200);
+    --default-placeholder: var(--gray-65);
+    --default-input-on-card-background: var(--surface-100);
     --disabled-input-on-card-background: var(--gray-10);
     /* Dropdown */
-    --default-dropdown-menu-background: var(--gray-0);
-    --hovered-dropdown-menu-background: var(--gray-10);
-    --pressed-dropdown-menu-background: var(--gray-20);
+    --default-dropdown-menu-background: var(--surface-0);
+    --hovered-dropdown-menu-background: var(--surface-100);
+    --pressed-dropdown-menu-background: var(--surface-150);
     /* Main button */
     --default-main-button: var(--product-primary-50);
     --hovered-main-button: var(--product-primary-60);
@@ -62,14 +62,19 @@
     --pressed-link: var(--product-primary-70);
     --visited-link: var(--product-primary-80);
     /* Attention link */
-    --default-attention-link: var(--orange-50);
-    --hovered-attention-link: var(--orange-60);
-    --pressed-attention-link: var(--orange-70);
-    --disabled-attention-link: var(--orange-30);
+    /* These three carry text — counts, "Ads blocked", "6 blocked total" — so
+     * they need 4.5:1, not the 3:1 a graphic gets.  At -50 they measured
+     * 2.92:1, 3.29:1 and 3.73:1 on white, all below AA.  The chart strokes are
+     * separate --chart-* tokens, so darkening the text does not dull the
+     * lines. */
+    --default-attention-link: var(--orange-80);
+    --hovered-attention-link: var(--orange-90);
+    --pressed-attention-link: var(--orange-90);
+    --disabled-attention-link: var(--orange-40);
     /* Additional link */
-    --default-additional-link: var(--product-secondary-50);
+    --default-additional-link: var(--product-secondary-70);
     /* Error link */
-    --default-error-link: var(--red-50);
+    --default-error-link: var(--red-80);
     /* Icons */
     --default-product-icon: var(--product-primary-50);
     --default-black-icons: var(--gray-80);
@@ -139,7 +144,7 @@
      * need different weights to stay legible against the card surface. */
     --chart-queries: var(--gray-60);
     --chart-ads: var(--red-50);
-    --chart-threats: var(--orange-50);
+    --chart-threats: var(--orange-60);
     --chart-adult: var(--product-secondary-50);
     --chart-grid: var(--gray-20);
 }

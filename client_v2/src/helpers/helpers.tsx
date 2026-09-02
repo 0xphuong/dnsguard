@@ -798,8 +798,12 @@ export const setTheme = (theme: string): void => {
  * @returns {string}
  */
 
+// Dark is the default this product is designed against: it runs on a screen
+// someone glances at in a rack or on a home server, and the palette is tuned
+// dark-first.  The server profile still wins once it loads; this only covers
+// the first paint and anyone who never chose a theme.
 export const getTheme = () =>
-    LocalStorageHelper.getItem<string>(LOCAL_STORAGE_KEYS.THEME) || THEMES.light;
+    LocalStorageHelper.getItem<string>(LOCAL_STORAGE_KEYS.THEME) || THEMES.dark;
 
 /**
  * Sets UI theme.

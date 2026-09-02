@@ -4,6 +4,7 @@
     border-radius: var(--radius-lg);
     padding: 8px 0 0;
     background-color: var(--default-cards-background);
+    box-shadow: var(--elev-1);
     border: 1px solid var(--default-item-divider);
     overflow: hidden;
 
@@ -120,11 +121,20 @@
     flex-shrink: 0;
 }
 
+/* Domains and upstream URLs are machine identifiers, and telling
+ * google-analytics.com from goog1e-analytics.com is the whole job here.  A
+ * proportional face hides exactly the differences that matter — rn against m,
+ * l against 1 — so identifiers get the monospace stack.  Mono sets wider, so
+ * these truncate a little sooner; every one of them now carries a title with
+ * the full value. */
 .domainName {
     color: var(--default-main-text);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-family: var(--font-family-monospace);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
 }
 
 .queryCount {

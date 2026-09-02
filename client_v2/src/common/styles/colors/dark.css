@@ -1,36 +1,36 @@
 [data-theme='dark'] {
     /* Page background */
-    --default-page-background: var(--gray-90);
-    --hovered-page-background: var(--gray-80);
-    --pressed-page-background: var(--gray-70);
-    --page-background-additional: var(--gray-80);
-    --page-background-additional-pressed: var(--gray-70);
+    --default-page-background: var(--surface-950);
+    --hovered-page-background: var(--surface-850);
+    --pressed-page-background: var(--surface-800);
+    --page-background-additional: var(--surface-900);
+    --page-background-additional-pressed: var(--surface-800);
     /* Cards background */
-    --default-cards-background: var(--gray-80);
+    --default-cards-background: var(--surface-800);
     /* Popup background */
-    --default-popup-background: var(--gray-90);
+    --default-popup-background: var(--surface-700);
     /* Footer background */
-    --default-footer-background: var(--gray-80);
+    --default-footer-background: var(--surface-900);
     /* Item divider */
-    --default-item-divider: var(--gray-70);
+    --default-item-divider: var(--surface-600);
     /* Main text */
-    --default-main-text: var(--gray-20);
+    --default-main-text: var(--gray-10);
     --disabled-main-text: var(--gray-50);
     /* Description text */
-    --default-description-text: var(--gray-30);
+    --default-description-text: var(--gray-40);
     /* Forms */
-    --default-labels: var(--gray-30);
+    --default-labels: var(--gray-40);
     /* Input */
-    --default-input-background: var(--gray-80);
-    --default-active-input-stroke: var(--gray-50);
-    --default-inactive-input-stroke: var(--gray-70);
+    --default-input-background: var(--surface-900);
+    --default-active-input-stroke: var(--surface-400);
+    --default-inactive-input-stroke: var(--surface-600);
     --default-placeholder: var(--gray-50);
-    --default-input-on-card-background: var(--gray-70);
-    --disabled-input-on-card-background: var(--gray-70);
+    --default-input-on-card-background: var(--surface-700);
+    --disabled-input-on-card-background: var(--surface-700);
     /* Dropdown */
-    --default-dropdown-menu-background: var(--gray-80);
-    --hovered-dropdown-menu-background: var(--gray-70);
-    --pressed-dropdown-menu-background: var(--gray-60);
+    --default-dropdown-menu-background: var(--surface-700);
+    --hovered-dropdown-menu-background: var(--surface-600);
+    --pressed-dropdown-menu-background: var(--surface-500);
     /* Main button */
     --default-main-button: var(--product-primary-50);
     --hovered-main-button: var(--product-primary-60);
@@ -62,14 +62,17 @@
     --pressed-link: var(--product-primary-70);
     --visited-link: var(--product-primary-30);
     /* Attention link */
-    --default-attention-link: var(--orange-50);
-    --hovered-attention-link: var(--orange-60);
-    --pressed-attention-link: var(--orange-70);
-    --disabled-attention-link: var(--orange-30);
+    /* The dark theme inherited the light theme's values verbatim, which left
+     * them at 3.30:1, 3.72:1 and 2.91:1 on the card surface.  Dark needs the
+     * opposite direction from light: lighter, not darker. */
+    --default-attention-link: var(--orange-40);
+    --hovered-attention-link: var(--orange-30);
+    --pressed-attention-link: var(--orange-20);
+    --disabled-attention-link: var(--orange-60);
     /* Additional link */
-    --default-additional-link: var(--product-secondary-50);
+    --default-additional-link: var(--product-secondary-20);
     /* Error link */
-    --default-error-link: var(--red-50);
+    --default-error-link: var(--red-30);
     /* Icons */
     --default-product-icon: var(--product-primary-50);
     --default-black-icons: var(--gray-20);
