@@ -1,19 +1,46 @@
+/* Six cards can be empty at once on a fresh install.  At 64px of icon plus
+ * centred copy inside a fixed-height card that produced six tall panels of
+ * nothing; now the card sizes to its content, so this stays deliberately
+ * short and lets an empty card collapse instead of dominating the grid. */
 .emptyState {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    height: 100%;
-    padding-bottom: 24px;
-    text-align: center;
+    justify-content: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-5) var(--space-5);
+    text-align: left;
 }
 
 .emptyStateIcon {
-    width: 64px;
-    height: 64px;
+    flex: none;
+    width: 24px;
+    height: 24px;
     color: var(--default-gray-icons);
 }
 
 .emptyStateText {
-    max-width: 300px;
+    min-width: 0;
+    color: var(--default-description-text);
+}
+
+/* The page-level empty state replaces the whole grid rather than sitting in a
+ * card, so it keeps the centred treatment and gets room to breathe. */
+.emptyStatePage {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    gap: var(--space-4);
+    padding: var(--space-6) var(--space-4);
+    text-align: center;
+
+    & .emptyStateIcon {
+        width: 48px;
+        height: 48px;
+    }
+
+    & .emptyStateText {
+        max-width: 320px;
+    }
 }

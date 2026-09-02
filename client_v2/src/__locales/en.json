@@ -469,6 +469,7 @@
   "list_updated": "| %count% list updated | %count% lists updated",
   "login": "Log in",
   "logout": "Log out",
+  "logs": "Logs",
   "make_static": "Make static",
   "make_static_desc": "This action converts a dynamic address to a static one",
   "milliseconds_abbreviation": "ms",
@@ -522,6 +523,11 @@
   "plain_dns_addresses": "Plain DNS server addresses",
   "port_53_faq_link": "Port 53 is often occupied by \"DNSStubListener\" or \"systemd-resolved\" services. Please read <a>this instruction</a> on how to resolve this.",
   "port_in_use": "This port is already in use",
+  "posture_active": "Active",
+  "posture_avg_response": "Avg. response",
+  "posture_listening": "Listening",
+  "posture_not_configured": "Not configured",
+  "posture_paused": "Paused",
   "privacy_policy": "Privacy policy",
   "processing_time_ms": "%value% ms",
   "protection": "Protection",
@@ -884,6 +890,5 @@
   "yes_disable": "Yes, disable",
   "yes_disallow": "Yes, disallow",
   "yes_remove": "Yes, remove",
-  "yes_reset": "Yes, reset",
-  "logs": "Logs"
+  "yes_reset": "Yes, reset"
 }

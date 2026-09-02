@@ -1,0 +1,172 @@
+/* One bordered strip with internal dividers rather than a row of cards: the
+ * segments are facets of a single answer, and nesting cards inside the page's
+ * card grid would add a second frame around content that needs none. */
+.posture {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--default-item-divider);
+    border-radius: var(--radius-md);
+    background-color: var(--default-cards-background);
+    margin: 0 var(--space-4) var(--space-4);
+    overflow: hidden;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+        /* Protection carries a control, so it gets the wider track. */
+        grid-template-columns: 1.6fr 1fr 1fr 0.8fr 1fr;
+        margin: 0 0 var(--space-4);
+    }
+}
+
+.segment {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--default-item-divider);
+    border-left: 1px solid var(--default-item-divider);
+
+    /* Suppress the outer edges so the dividers read as internal rules rather
+     * than a double border against the strip's own outline. */
+    &:nth-child(2n + 1) {
+        border-left: none;
+    }
+
+    &:nth-child(-n + 2) {
+        border-top: none;
+    }
+
+    @media (min-width: 768px) {
+        &:nth-child(2n + 1) {
+            border-left: 1px solid var(--default-item-divider);
+        }
+
+        &:nth-child(3n + 1) {
+            border-left: none;
+        }
+
+        &:nth-child(-n + 3) {
+            border-top: none;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        border-top: none;
+
+        &:nth-child(3n + 1) {
+            border-left: 1px solid var(--default-item-divider);
+        }
+
+        &:first-child {
+            border-left: none;
+        }
+    }
+}
+
+.segmentProtection {
+    @media (min-width: 1024px) {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+    }
+}
+
+.segmentBody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+}
+
+.label {
+    color: var(--default-description-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stateRow {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    min-width: 0;
+}
+
+.value {
+    font-size: var(--fs-text-t2);
+    line-height: var(--lh-t2-condenced);
+    font-weight: var(--weight-medium);
+    color: var(--default-main-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Ports, counts and latencies are machine values: tabular figures keep them
+ * from shifting as they change, which they do on every refresh. */
+.valueMono {
+    font-variant-numeric: tabular-nums;
+}
+
+.valueMuted {
+    color: var(--default-description-text);
+    font-weight: var(--weight-regular);
+}
+
+.countdown {
+    color: var(--default-description-text);
+    font-variant-numeric: tabular-nums;
+}
+
+.dot {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    /* Nudged off the baseline so it centres against the cap height. */
+    transform: translateY(-1px);
+}
+
+.dotOn {
+    background-color: var(--fills-switch-on-default);
+}
+
+.dotOff {
+    background-color: var(--default-error-link);
+}
+
+.dotWarn {
+    background-color: var(--default-attention-link);
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex: none;
+}
+
+.dropdownTrigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--default-gray-icons);
+
+    &:disabled {
+        cursor: default;
+        opacity: 0.4;
+    }
+}
+
+.protectionMenu {
+    padding: var(--space-1) 0;
+}

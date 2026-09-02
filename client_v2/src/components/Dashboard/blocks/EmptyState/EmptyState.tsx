@@ -41,7 +41,14 @@ export const EmptyState = (props: Props) => {
     const state = () => getEmptyState(props.mode || 'default');
 
     return (
-        <div class={cn(s.emptyState, props.class)} data-testid="dashboard-empty-state">
+        <div
+            class={cn(
+                s.emptyState,
+                { [s.emptyStatePage]: props.mode === 'disabled' },
+                props.class,
+            )}
+            data-testid="dashboard-empty-state"
+        >
             <Icon icon={state().icon} class={s.emptyStateIcon} />
             <div class={cn(theme.text.t2, s.emptyStateText)}>{state().message}</div>
         </div>

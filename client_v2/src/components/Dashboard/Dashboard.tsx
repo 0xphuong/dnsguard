@@ -5,9 +5,11 @@ import { PageLoader } from 'panel/common/ui/Loader';
 import { dashboardState, toggleProtection, getClients } from 'panel/stores/dashboard';
 import { statsState, getStats, getStatsConfig } from 'panel/stores/stats';
 import { accessState, getAccessList } from 'panel/stores/access';
+import { encryptionState, getTlsStatus } from 'panel/stores/encryption';
 import { ONE_SECOND_IN_MS, HOUR, DAY, STATS_INTERVALS_DAYS } from 'panel/helpers/constants';
 
 import { Header, getPeriodLabel } from './blocks/Header/Header';
+import { Posture } from './blocks/Posture';
 import { StatCards } from './blocks/StatCards';
 import { EmptyState } from './blocks/EmptyState/EmptyState';
 import { GeneralStatistics } from './blocks/GeneralStatistics';
@@ -94,6 +96,10 @@ export const Dashboard = () => {
         getStatsConfig();
         getClients();
         getAccessList();
+        // The posture row needs to know which encrypted protocols are live.
+        // handleTLSStatus only marshals already-cached config, so this costs a
+        // round trip and no server work.
+        getTlsStatus();
     });
 
     const handleRefreshStats = () => {
@@ -123,15 +129,29 @@ export const Dashboard = () => {
         <div class={theme.layout.container}>
             <div class={theme.layout.containerIn}>
                 <Header
-                    protectionEnabled={!!dashboardState.protectionEnabled}
-                    processingProtection={dashboardState.processingProtection}
-                    remainingTime={remainingTime()}
                     selectedPeriod={selectedPeriod()}
                     periodOptions={periodOptions()}
                     isLoading={isLoading()}
-                    onToggleProtection={handleToggleProtection}
                     onRefreshStats={handleRefreshStats}
                     onPeriodChange={handlePeriodChange}
+                />
+
+                <Posture
+                    protectionEnabled={!!dashboardState.protectionEnabled}
+                    processingProtection={dashboardState.processingProtection}
+                    remainingTime={remainingTime()}
+                    encryptionEnabled={!!encryptionState.enabled}
+                    portHttps={encryptionState.port_https}
+                    portTls={encryptionState.port_dns_over_tls}
+                    portQuic={encryptionState.port_dns_over_quic}
+                    dnsAddresses={dashboardState.dnsAddresses}
+                    dnsPort={dashboardState.dnsPort}
+                    // Distinct clients seen in the selected period, so this
+                    // agrees with the Top clients card rather than counting
+                    // configured and auto-discovered entries.
+                    clientCount={statsState.topClients.length}
+                    avgProcessingTime={statsState.avgProcessingTime}
+                    onToggleProtection={handleToggleProtection}
                 />
 
                 <Show
