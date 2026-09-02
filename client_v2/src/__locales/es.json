@@ -179,7 +179,7 @@
   "dhcp_config_saved": "Configuración DHCP guardado correctamente",
   "dhcp_dynamic_ip_found": "Su sistema utiliza una configuración de dirección IP dinámica para la interfaz %interface_name%. Para poder usar el servidor DHCP, se debe establecer una dirección IP estática. Su dirección IP actual es %ip%. DNSGuard establecerá automáticamente esta dirección IP como estática si pulsa el botón \"Habilitar servidor DHCP\".",
   "dhcp_edit_static_lease": "Editar asignación estática",
-  "dhcp_enable": "Usar el servidor DHCP integrado de AdGuard",
+  "dhcp_enable": "Usar el servidor DHCP integrado de DNSGuard",
   "dhcp_error": "No se pudo comprobar el servidor DHCP. Espere un momento antes de volver a intentarlo",
   "dhcp_form_gateway_address": "Dirección IP de gateway",
   "dhcp_form_lease_title": "Tiempo de concesión DHCP, en segundos",

@@ -179,7 +179,7 @@
   "dhcp_config_saved": "已成功保存 DHCP 服务器配置",
   "dhcp_dynamic_ip_found": "您的系统对接口 %interface_name% 使用了动态 IP 地址配置。要使用 DHCP 服务器，必须设置静态 IP 地址。您当前的 IP 地址是 %ip%。如果您按下「启用 DHCP 服务器」按钮，DNSGuard 将自动将此 IP 设为静态地址。",
   "dhcp_edit_static_lease": "编辑静态租约",
-  "dhcp_enable": "使用 AdGuard 内置的 DHCP 服务器",
+  "dhcp_enable": "使用 DNSGuard 内置的 DHCP 服务器",
   "dhcp_error": "检查 DHCP 服务器失败。请稍后重试。",
   "dhcp_form_gateway_address": "网关 IP 地址",
   "dhcp_form_gateway_address_value": "<strong>网关 IP 地址：</strong>%value%",

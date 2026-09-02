@@ -172,7 +172,7 @@
   "dhcp_config_saved": "Configuration du serveur DHCP sauvegardée",
   "dhcp_dynamic_ip_found": "Votre système utilise une configuration d'adresse IP dynamique pour l'interface %interface_name%. Pour pouvoir utiliser le serveur DHCP, vous devez définir une adresse IP statique. Votre adresse IP actuelle est %ip%. DNSGuard définira automatiquement cette adresse IP comme statique si vous cliquez sur le bouton « Activer le serveur DHCP ».",
   "dhcp_edit_static_lease": "Modifier le bail statique",
-  "dhcp_enable": "Utiliser le serveur DHCP intégré à AdGuard",
+  "dhcp_enable": "Utiliser le serveur DHCP intégré à DNSGuard",
   "dhcp_error": "Échec de la vérification du serveur DHCP. Veuillez patienter un instant avant de réessayer",
   "dhcp_form_gateway_address": "Adresse IP de la passerelle",
   "dhcp_form_gateway_address_value": "<strong>Adresse IP de la passerelle :</strong> %value%",

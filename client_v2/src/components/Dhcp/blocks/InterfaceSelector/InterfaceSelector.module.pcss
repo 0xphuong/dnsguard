@@ -15,12 +15,22 @@
     padding: 8px 0;
 }
 
+/* These rows read "<strong>Gateway IP address:</strong> 172.17.0.1" — the
+ * label is tagged, the value is bare.  Monospacing the row therefore reaches
+ * the value, and restoring the base family on the label keeps the prose out of
+ * it.  Gateways, hardware addresses and IP lists are the most machine-like
+ * values in the interface. */
 .row {
     font-size: var(--fs-text-t3);
     line-height: var(--lh-t2-normal);
+    font-family: var(--font-family-monospace);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
 
     & strong {
+        font-family: var(--font-family-base);
         font-weight: var(--weight-semi-bold);
+        letter-spacing: normal;
     }
 }
 

@@ -144,7 +144,7 @@
   "dhcp_config_saved": "DHCP configuration successfully saved",
   "dhcp_dynamic_ip_found": "Your system uses dynamic IP address configuration for interface %interface_name%. In order to use DHCP server, a static IP address must be set. Your current IP address is %ip%. DNSGuard will automatically set this IP address as static if you press the \"Enable DHCP server\" button.",
   "dhcp_edit_static_lease": "Edit static lease",
-  "dhcp_enable": "Use AdGuard's own built-in DHCP server",
+  "dhcp_enable": "Use DNSGuard's own built-in DHCP server",
   "dhcp_error": "Failed to check the DHCP server. Wait a bit before retrying",
   "dhcp_form_gateway_address": "Gateway IP address",
   "dhcp_form_gateway_address_value": "<strong>Gateway IP address:</strong> %value%",

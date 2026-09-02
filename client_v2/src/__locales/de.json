@@ -165,7 +165,7 @@
   "dhcp_add_static_lease": "Statische Zuweisung hinzufügen",
   "dhcp_config_saved": "DHCP-Konfiguration erfolgreich gespeichert",
   "dhcp_edit_static_lease": "Statische Zuweisung bearbeiten",
-  "dhcp_enable": "Den integrierten DHCP-Server von AdGuard nutzen",
+  "dhcp_enable": "Den integrierten DHCP-Server von DNSGuard nutzen",
   "dhcp_error": "Fehler bei der Überprüfung des DHCP-Servers. Bitte warte kurz und versuche es erneut",
   "dhcp_form_gateway_input": "Gateway-IP",
   "dhcp_form_gateway_address": "Gateway-IP-Adresse",

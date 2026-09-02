@@ -74,9 +74,14 @@
     padding: 4px;
 }
 
+/* Four config lines whose ports should line up in a column.  Only the figures
+ * get tabular treatment, not the face: unlike the DNS page, these strings embed
+ * their own label — "HTTPS port: %value%" — so monospacing the line would put
+ * the prose in monospace too. */
 .summaryLine {
     color: var(--default-description-text);
     font-size: 14px;
+    font-variant-numeric: tabular-nums;
 }
 
 .certStatus {

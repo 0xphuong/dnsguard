@@ -179,7 +179,7 @@
   "dhcp_config_saved": "DHCP-opsætning gemt",
   "dhcp_dynamic_ip_found": "Systemet anvender dynamisk IP-adresseosægning for grænsefladen %interface_name%. For at bruge DHCP-server skal en statisk IP-adresse angives. Den aktuelle IP-adresse er %ip%. DNSGuard vil automatisk angive denne IP-adresse som statisk ved tryk på knappen \"Aktivér DHCP-server\".",
   "dhcp_edit_static_lease": "Redigér statisk tildeling",
-  "dhcp_enable": "Brug AdGuards egen indbyggede DHCP-server",
+  "dhcp_enable": "Brug DNSGuards egen indbyggede DHCP-server",
   "dhcp_error": "Mislykkedes at tjekke DHCP-serveren. Vent lidt inden et nyt forsøg",
   "dhcp_form_gateway_address": "Gateway IP-adresse",
   "dhcp_form_gateway_address_value": "<strong>Gateway IP-adresse:</strong> %value%",

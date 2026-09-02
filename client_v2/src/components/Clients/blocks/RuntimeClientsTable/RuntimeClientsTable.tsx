@@ -5,6 +5,7 @@ import { sortIp } from 'panel/helpers/helpers';
 import type { AutoClient, NormalizedTopClients, WhoisInfo } from 'panel/initialState';
 import { LOCAL_STORAGE_KEYS, LocalStorageHelper } from 'panel/helpers/localStorageHelper';
 import { Table, type TableColumn } from 'panel/common/ui/Table';
+import cn from 'clsx';
 import theme from 'panel/lib/theme';
 
 import { WhoisCell } from './WhoisCell';
@@ -39,7 +40,7 @@ export const RuntimeClientsTable = (props: Props) => {
                     <span class={s.cellLabel}>{intl.getMessage('ip_address')}</span>
 
                     <div class={s.cellValue}>
-                        <span class={theme.common.textOverflow} title={value}>
+                        <span class={cn(theme.common.textOverflow, s.ipValue)} title={value}>
                             {value}
                         </span>
                     </div>

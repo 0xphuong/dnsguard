@@ -35,6 +35,14 @@
     }
 }
 
+/* Only the address, not the whole value column: the column also carries the
+ * whois organisation, which is prose. */
+.ipValue {
+    font-family: var(--font-family-monospace);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+}
+
 .cellValue {
     width: 100%;
     min-width: 0;

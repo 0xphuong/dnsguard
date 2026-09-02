@@ -179,7 +179,7 @@
   "dhcp_config_saved": "DHCP-configuratie succesvol opgeslagen",
   "dhcp_dynamic_ip_found": "Je systeem gebruikt dynamische IP-adresconfiguratie voor de interface %interface_name%. Om een DHCP-server te gebruiken, moet een statisch IP-adres worden ingesteld. Je huidige IP-adres is %ip%. DNSGuard zet dit IP-adres automatisch als statisch als je op de knop \"DHCP-server inschakelen\" drukt.",
   "dhcp_edit_static_lease": "Statische lease bewerken",
-  "dhcp_enable": "AdGuard's eigen ingebouwde DHCP-server gebruiken",
+  "dhcp_enable": "DNSGuard's eigen ingebouwde DHCP-server gebruiken",
   "dhcp_error": "Kan de DHCP-server niet controleren. Wacht even voordat je het opnieuw probeert",
   "dhcp_form_gateway_address": "Gateway-IP-adres",
   "dhcp_form_gateway_address_value": "<strong>Gateway IP-adres:</strong> %value%",
