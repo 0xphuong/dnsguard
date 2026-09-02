@@ -99,7 +99,9 @@ export const TopBlockedDomains = (props: Props) => {
                                                 <Icon icon="eye_open" class={s.tableRowIcon} />
                                             </Tooltip>
                                         </Show>
-                                        <span class={s.domainName}>{domain.name}</span>
+                                        <span class={s.domainName} title={domain.name}>
+                                            {domain.name}
+                                        </span>
                                     </div>
 
                                     <div class={s.tableRowRight}>

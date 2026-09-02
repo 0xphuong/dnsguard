@@ -74,7 +74,9 @@ export const TopUpstreams = (props: Props) => {
                                             s.tableRowLeft,
                                         )}
                                     >
-                                        <span class={s.domainName}>{upstream.name}</span>
+                                        <span class={s.domainName} title={upstream.name}>
+                                            {upstream.name}
+                                        </span>
                                     </div>
 
                                     <div class={s.tableRowRight}>

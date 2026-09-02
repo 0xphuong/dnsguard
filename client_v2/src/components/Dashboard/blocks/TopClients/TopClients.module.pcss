@@ -189,11 +189,29 @@
 }
 
 .clientIp {
-    font-size: 14px;
+    font-size: var(--fs-text-t3);
     color: var(--default-main-text);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-2);
+    min-width: 0;
+    /* Addresses line up column-wise only with tabular figures, and an IPv6
+     * literal needs the same character-level legibility as a domain. */
+    font-family: var(--font-family-monospace);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* The icon is a sibling of the address, so the ellipsis has to live on the
+ * text itself or the icon gets clipped first. */
+.clientIpValue {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .clientName {
@@ -201,6 +219,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-family: var(--font-family-monospace);
+    letter-spacing: -0.01em;
 }
 
 .clientBlocked {

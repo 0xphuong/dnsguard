@@ -68,7 +68,9 @@ export const UpstreamAvgTime = (props: Props) => {
                                 <div
                                     class={cn(theme.text.t3, theme.text.condenced, s.tableRowLeft)}
                                 >
-                                    <span class={s.domainName}>{upstream.name}</span>
+                                    <span class={s.domainName} title={upstream.name}>
+                                        {upstream.name}
+                                    </span>
                                 </div>
                                 <div class={s.tableRowRight}>
                                     <div

@@ -181,7 +181,9 @@ export const TopClients = (props: Props) => {
                                                 <Icon icon="location" class={s.tableRowIcon} />
                                             </Show>
 
-                                            {client.name}
+                                            <span class={s.clientIpValue} title={client.name}>
+                                                {client.name}
+                                            </span>
                                         </div>
                                     </div>
 
@@ -270,6 +272,7 @@ export const TopClients = (props: Props) => {
                                                     theme.text.condenced,
                                                     s.clientName,
                                                 )}
+                                                title={client.info.name}
                                             >
                                                 {client.info.name}
                                             </div>
