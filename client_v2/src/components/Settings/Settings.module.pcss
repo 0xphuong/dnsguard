@@ -16,13 +16,70 @@
     flex-shrink: 0;
 }
 
+/* Destructive and irreversible, sitting in the same reading flow as the
+ * toggles above it.  A 200px outlined button gave it the weight of a primary
+ * action; this keeps it reachable but stops it competing.  The confirm dialog
+ * was already in place. */
 .clearButton {
     width: auto;
-    min-width: 200px;
+    min-width: 0;
+    align-self: flex-start;
+}
+
+/* Separates the destructive action from the settings it destroys, so the eye
+ * has to cross a boundary to reach it. */
+.dangerRow {
+    display: flex;
+    margin-top: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--default-item-divider);
 }
 
 .section {
-    padding-top: 24px;
+    padding-top: var(--space-5);
+}
+
+/* The content column measured 584px inside a 1440px viewport, leaving 568px
+ * — about 40% of the screen — empty to the right of sixteen toggles.  Two
+ * columns from 1280px roughly halve the scroll without touching any of the
+ * content.  Sections are kept whole with break-inside so a heading never
+ * separates from its rows. */
+.columns {
+    @media (min-width: 1280px) {
+        /* Grid rather than column-count: with interactive blocks a fragmented
+         * column can split a section across the fold, and grid keeps each
+         * section whole with its heading.  The dialogs nested in here are
+         * position: fixed, so they never become grid items. */
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-6);
+        align-items: start;
+    }
+}
+
+/* Kept as a hook: sections are whole grid items, so nothing needs
+ * break-inside, but the class marks which blocks are column candidates. */
+.columnBlock {
+    min-width: 0;
+}
+
+/* The shared containerIn_one_col caps content at 584px and ten pages rely on
+ * it, so it is widened here only, and only where the second column appears.
+ * Doubled selector to win over the shared class regardless of emit order. */
+/* The filtering section spans the full widened container, which pushed its
+ * switches over 1000px away from their labels — the row uses
+ * justify-content: space-between, so widening the page widened the gap.
+ * Capping it keeps every control beside the thing it controls. */
+.fullWidthSection {
+    @media (min-width: 1280px) {
+        max-width: 640px;
+    }
+}
+
+.wide.wide {
+    @media (min-width: 1280px) {
+        max-width: 1080px;
+    }
 }
 
 .actionRow {

@@ -1,4 +1,5 @@
 import { type JSX, Show, createMemo } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 import cn from 'clsx';
 
 import { Switch } from 'panel/common/controls/Switch';
@@ -25,6 +26,14 @@ type Props = {
     children?: JSX.Element;
     divider?: boolean;
     align?: 'top' | 'center';
+    /**
+     * Element to render the title as.  A row that heads a section needs to be
+     * a real heading: three of this page's section titles looked identical at
+     * 24px, but only one was an h2, so two sections were missing from the
+     * document outline entirely.
+     */
+    titleAs?: 'div' | 'h2' | 'h3';
+    titleId?: string;
     largeTitle?: boolean;
     inputClass?: string;
 };
@@ -113,13 +122,15 @@ export const SettingRow = (props: Props) => {
                 })}
             >
                 <div class={s.text}>
-                    <div
+                    <Dynamic
+                        component={props.titleAs || 'div'}
+                        id={props.titleId}
                         class={cn(s.title, props.titleClass, {
                             [s.titleDisabled]: props.disabled,
                         })}
                     >
                         {props.title}
-                    </div>
+                    </Dynamic>
                     <Show when={props.description}>
                         <div
                             class={cn(s.desc, props.descriptionClass, theme.text.t3, {

@@ -149,7 +149,7 @@ export const Settings = () => {
 
     return (
         <div class={theme.layout.container}>
-            <div class={cn(theme.layout.containerIn, theme.layout.containerIn_one_col)}>
+            <div class={cn(theme.layout.containerIn, theme.layout.containerIn_one_col, s.wide)}>
                 <h1 class={cn(theme.layout.title, theme.title.h4, theme.title.h3_tablet, s.title)}>
                     {intl.getMessage('settings_general_short')}
                 </h1>
@@ -158,6 +158,7 @@ export const Settings = () => {
                     when={isLoading()}
                     fallback={
                         <>
+                            <div class={s.fullWidthSection}>
                             <h2
                                 id="filtering"
                                 class={cn(
@@ -203,7 +204,6 @@ export const Settings = () => {
                                 description={intl.getMessage('settings_safe_search_desc')}
                                 checked={safesearchEnabled()}
                                 value={safesearchSummary()}
-                                divider
                                 onChange={(v) => {
                                     const ss = untrack(() => settingsState.settingsList.safesearch);
                                     toggleSetting('safesearch', { ...ss, enabled: v });
@@ -222,11 +222,16 @@ export const Settings = () => {
                                 onSave={handleSafeSearchSave}
                             />
 
-                            <div class={s.section} id="query-log">
+                            </div>
+
+                            <div class={s.columns}>
+                            <div class={cn(s.section, s.columnBlock)} id="query-log">
                                 <SettingRow
                                     variant="switch"
                                     id="querylog_enabled"
                                     title={intl.getMessage('query_log')}
+                                    titleAs="h2"
+                                    titleId="query-log-title"
                                     titleClass={cn(
                                         theme.title.h5,
                                         theme.title.h4_tablet,
@@ -277,7 +282,6 @@ export const Settings = () => {
                                     description={intl.getMessage('ignore_domains_desc_log')}
                                     checked={queryLogsState.ignored_enabled}
                                     value={logsIgnoredSummary()}
-                                    divider
                                     disabled={!queryLogsState.enabled}
                                     onChange={(v) =>
                                         setLogsConfig(
@@ -289,7 +293,7 @@ export const Settings = () => {
                                     onClick={() => setLogsIgnoredModalOpen(true)}
                                 />
 
-                                <div class={s.actionRow}>
+                                <div class={cn(s.actionRow, s.dangerRow)}>
                                     <Button
                                         variant="secondary-danger"
                                         class={s.clearButton}
@@ -330,12 +334,14 @@ export const Settings = () => {
                                 />
                             </Show>
 
-                            <div class={s.section} id="statistics">
+                            <div class={cn(s.section, s.columnBlock)} id="statistics">
                                 <SettingRow
                                     variant="switch"
                                     id="stats_enabled"
                                     title={intl.getMessage('settings_statistics')}
                                     description={intl.getMessage('settings_statistics_desc')}
+                                    titleAs="h2"
+                                    titleId="statistics-title"
                                     titleClass={cn(
                                         theme.title.h5,
                                         theme.title.h4_tablet,
@@ -364,7 +370,6 @@ export const Settings = () => {
                                     description={intl.getMessage('ignore_domains_desc_stats')}
                                     checked={statsState.ignored_enabled}
                                     value={statsIgnoredSummary()}
-                                    divider
                                     disabled={!statsState.enabled}
                                     onChange={(v) =>
                                         setStatsConfig(
@@ -374,7 +379,7 @@ export const Settings = () => {
                                     onClick={() => setStatsIgnoredModalOpen(true)}
                                 />
 
-                                <div class={s.actionRow}>
+                                <div class={cn(s.actionRow, s.dangerRow)}>
                                     <Button
                                         variant="secondary-danger"
                                         class={s.clearButton}
@@ -415,6 +420,7 @@ export const Settings = () => {
                                         onConfirm={handleClearStats}
                                     />
                                 </Show>
+                            </div>
                             </div>
                         </>
                     }
