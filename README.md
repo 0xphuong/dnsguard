@@ -243,6 +243,35 @@ make build-release CHANNEL='...' VERSION='...'
 
 See the [`build-release` target documentation][targ-release].
 
+Publishing a release takes three steps, and the update check stays broken
+until all three are done:
+
+1.  Tag the commit and build:
+
+    ```sh
+    git tag -a 'vX.Y.Z' -m 'DNSGuard vX.Y.Z'
+    make build-release CHANNEL='release' SIGN='0'
+    ```
+
+2.  Upload every `dist/DNSGuard_*.tar.gz`, `dist/DNSGuard_*.zip`, and
+    `dist/checksums.txt` as assets of the GitHub release for that tag.  The
+    manifest points at `releases/latest/download/`, so the asset names must
+    stay exactly as built.
+
+3.  Publish the manifest, which is what [`updater.DefaultVersionURL`][durl]
+    fetches:
+
+    ```sh
+    cp dist/version.json release/version.json
+    git add release/version.json && git commit -m 'chore: publish vX.Y.Z manifest'
+    ```
+
+    `TestPublishedManifest` in `internal/updater` parses `release/version.json`
+    with the real updater code, so `go test ./internal/updater/` catches a
+    manifest the updater would reject before it ships.
+
+[durl]: internal/updater/updater.go
+
 #### <a href="#docker-image" id="docker-image" name="docker-image">Docker image</a>
 
 Run `make build-docker` to build the multi-platform Docker image locally. It uses
