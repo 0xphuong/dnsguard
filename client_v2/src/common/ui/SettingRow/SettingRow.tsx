@@ -41,6 +41,16 @@ type Props = {
 export const SettingRow = (props: Props) => {
     let inputRef: HTMLInputElement | undefined;
 
+    /**
+     * Two rows on the settings page are both titled "Ignored domains" — one
+     * scoped to the query log, one to the statistics.  Their section headings
+     * tell them apart visually, but a screen reader listing form controls gets
+     * neither the heading nor the column, so it hears the same name twice.
+     * Tying the control to its own description fixes that with the strings the
+     * page already has, rather than lengthening the visible titles.
+     */
+    const descriptionId = createMemo(() => (props.description ? `${props.id}-desc` : undefined));
+
     const isSwitch = createMemo(() => props.variant === 'switch');
     const isLink = createMemo(() => props.variant === 'link');
     const isSwitchLink = createMemo(() => props.variant === 'switch-link');
@@ -133,6 +143,7 @@ export const SettingRow = (props: Props) => {
                     </Dynamic>
                     <Show when={props.description}>
                         <div
+                            id={descriptionId()}
                             class={cn(s.desc, props.descriptionClass, theme.text.t3, {
                                 [s.descDisabled]: props.disabled,
                             })}
@@ -160,6 +171,7 @@ export const SettingRow = (props: Props) => {
                     <Show when={isSwitchVariant()}>
                         <Switch
                             id={props.id}
+                            aria-describedby={descriptionId()}
                             checked={!!props.checked}
                             disabled={!!props.disabled}
                             onChange={handleSwitchChange}
@@ -172,6 +184,8 @@ export const SettingRow = (props: Props) => {
                         <button
                             type="button"
                             class={s.link}
+                            aria-label={props.title}
+                            aria-describedby={descriptionId()}
                             disabled={!!props.disabled}
                             onClick={handleLinkClick}
                         >

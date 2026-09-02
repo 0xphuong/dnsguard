@@ -13,6 +13,18 @@ type Props = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'type'
     onChange: (e: Event) => void;
     children?: JSX.Element;
     ref?: HTMLInputElement | ((el: HTMLInputElement) => void);
+    /**
+     * Forwarded explicitly rather than by spreading the rest of the props.
+     * Props extends InputHTMLAttributes, so the type checker accepted these
+     * already, but the input never received them — three call sites were
+     * passing a data-testid that never reached the DOM.  Spreading the
+     * remainder does deliver them, but it switches Solid to its spread path
+     * and the reactive `checked` binding stops reverting, which the DHCP
+     * toggle test catches.
+     */
+    'data-testid'?: string;
+    'aria-describedby'?: string;
+    'aria-label'?: string;
 };
 
 export const Switch = (props: Props) => {
@@ -26,6 +38,9 @@ export const Switch = (props: Props) => {
         <>
             <input
                 id={props.id}
+                data-testid={props['data-testid']}
+                aria-describedby={props['aria-describedby']}
+                aria-label={props['aria-label']}
                 type="checkbox"
                 class={s.input}
                 onChange={(e) => props.onChange?.(e)}
