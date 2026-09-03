@@ -165,7 +165,7 @@ export const getGetVersionJsonUrl = () => {
 };
 
 /**
- * @summary Gets information about the latest available version of AdGuard
+ * @summary Gets information about the latest available version of DNSGuard
 
  */
 export const getVersionJson = async (

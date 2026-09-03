@@ -23,6 +23,11 @@ export interface Stats {
     top_clients?: TopArrayEntry[];
     top_blocked_domains?: TopArrayEntry[];
     /**
+     * Number of blocked requests from each client.  Together with top_clients this gives the blocked share of a client's traffic.
+     * @maxItems 100
+     */
+    top_blocked_clients?: TopArrayEntry[];
+    /**
      * Total number of responses from each upstream.
      * @maxItems 100
      */

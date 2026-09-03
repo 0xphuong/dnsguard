@@ -29,6 +29,12 @@ type StatsState = {
     customInterval: number | null;
     dnsQueries: number[];
     blockedFiltering: number[];
+    /**
+     * Blocked query count per client.  Reported by the resolver only since
+     * `blockedClients` was added to the statistics unit, so an older server
+     * simply sends nothing and every device shows a null blocked share.
+     */
+    topBlockedClients: { name: string; count: number }[];
     replacedParental: number[];
     replacedSafebrowsing: number[];
     topBlockedDomains: { name: string; count: number }[];
@@ -61,6 +67,7 @@ const initialState: StatsState = {
     customInterval: null,
     dnsQueries: [],
     blockedFiltering: [],
+    topBlockedClients: [],
     replacedParental: [],
     replacedSafebrowsing: [],
     topBlockedDomains: [],
@@ -99,6 +106,7 @@ export const getStats = async (period?: number) => {
             replacedParental: data.replaced_parental || [],
             replacedSafebrowsing: data.replaced_safebrowsing || [],
             topBlockedDomains: normalizeTopStats(data.top_blocked_domains || []),
+            topBlockedClients: normalizeTopStats(data.top_blocked_clients || []),
             topClients: topClientsWithInfo,
             normalizedTopClients: normalizeTopClients(topClientsWithInfo),
             topQueriedDomains: normalizeTopStats(data.top_queried_domains || []),

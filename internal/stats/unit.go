@@ -103,6 +103,12 @@ type unit struct {
 	// clients stores the number of requests from each client.
 	clients map[string]uint64
 
+	// blockedClients stores the number of requests from each client that have
+	// been blocked, that is, whose result was anything other than
+	// [RNotFiltered].  It mirrors blockedDomains, but keyed by client, so that
+	// the API can report how much of a device's traffic is being filtered.
+	blockedClients map[string]uint64
+
 	// upstreamsResponses stores the number of responses from each upstream.
 	upstreamsResponses map[string]uint64
 
@@ -134,6 +140,7 @@ func newUnit(id uint32) (u *unit) {
 		domains:            map[string]uint64{},
 		blockedDomains:     map[string]uint64{},
 		clients:            map[string]uint64{},
+		blockedClients:     map[string]uint64{},
 		upstreamsResponses: map[string]uint64{},
 		upstreamsTimeSum:   map[string]uint64{},
 		nResult:            make([]uint64, resultLast),
@@ -164,6 +171,14 @@ type unitDB struct {
 
 	// Clients is the number of requests from each client.
 	Clients []countPair
+
+	// BlockedClients is the number of requests blocked for each client.
+	//
+	// NOTE:  Units written before this field existed decode with it unset,
+	// which is why it must stay a nil-tolerant slice: convertSliceToMap turns
+	// nil into an empty map, so old data reports zero blocked rather than
+	// failing to decode.
+	BlockedClients []countPair
 
 	// UpstreamsResponses is the number of responses from each upstream.
 	UpstreamsResponses []countPair
@@ -267,6 +282,7 @@ func (u *unit) serialize() (udb *unitDB) {
 		Domains:            convertMapToSlice(u.domains, maxDomains),
 		BlockedDomains:     convertMapToSlice(u.blockedDomains, maxDomains),
 		Clients:            convertMapToSlice(u.clients, maxClients),
+		BlockedClients:     convertMapToSlice(u.blockedClients, maxClients),
 		UpstreamsResponses: convertMapToSlice(u.upstreamsResponses, maxUpstreams),
 		UpstreamsTimeSum:   convertMapToSlice(u.upstreamsTimeSum, maxUpstreams),
 		TimeAvg:            timeAvg,
@@ -309,6 +325,7 @@ func (u *unit) deserialize(udb *unitDB) {
 	u.domains = convertSliceToMap(udb.Domains)
 	u.blockedDomains = convertSliceToMap(udb.BlockedDomains)
 	u.clients = convertSliceToMap(udb.Clients)
+	u.blockedClients = convertSliceToMap(udb.BlockedClients)
 	u.upstreamsResponses = convertSliceToMap(udb.UpstreamsResponses)
 	u.upstreamsTimeSum = convertSliceToMap(udb.UpstreamsTimeSum)
 	u.timeSum = uint64(udb.TimeAvg) * udb.NTotal
@@ -321,6 +338,7 @@ func (u *unit) add(e *Entry) {
 		u.domains[e.Domain]++
 	} else {
 		u.blockedDomains[e.Domain]++
+		u.blockedClients[e.Client]++
 	}
 
 	u.clients[e.Client]++
@@ -416,6 +434,7 @@ func (s *StatsCtx) getData(limit uint32) (resp *StatsResp, ok bool) {
 
 			TopBlocked:            []topAddrs{},
 			TopClients:            []topAddrs{},
+			TopBlockedClients:     []topAddrs{},
 			TopQueried:            []topAddrs{},
 			TopUpstreamsResponses: []topAddrs{},
 			TopUpstreamsAvgTime:   []topAddrsFloat{},
@@ -445,6 +464,7 @@ func (s *StatsCtx) dataFromUnits(units []*unitDB, curID uint32) (resp *StatsResp
 		TopUpstreamsResponses: topUpstreamsResponses,
 		TopUpstreamsAvgTime:   topUpstreamsAvgTime,
 		TopClients:            topsCollector(units, maxClients, nil, topClientPairs(s)),
+		TopBlockedClients:     topsCollector(units, maxClients, nil, topBlockedClientPairs(s)),
 	}
 
 	s.fillCollectedStats(resp, units, curID)
@@ -551,6 +571,23 @@ func countHours(curHour uint32, days int) (n int) {
 func topClientPairs(s *StatsCtx) (pg pairsGetter) {
 	return func(u *unitDB) (clients []countPair) {
 		for _, c := range u.Clients {
+			if c.Name != "" && !s.shouldCountClient([]string{c.Name}) {
+				continue
+			}
+
+			clients = append(clients, c)
+		}
+
+		return clients
+	}
+}
+
+// topBlockedClientPairs is the blocked-only counterpart of topClientPairs.  It
+// applies the same ignore list, so a client excluded from the statistics does
+// not reappear here.
+func topBlockedClientPairs(s *StatsCtx) (pg pairsGetter) {
+	return func(u *unitDB) (clients []countPair) {
+		for _, c := range u.BlockedClients {
 			if c.Name != "" && !s.shouldCountClient([]string{c.Name}) {
 				continue
 			}

@@ -38,6 +38,11 @@ type StatsResp struct {
 	TopClients []topAddrs `json:"top_clients"`
 	TopBlocked []topAddrs `json:"top_blocked_domains"`
 
+	// TopBlockedClients is the number of blocked requests per client, which is
+	// what lets the UI show a device's blocked share rather than only its
+	// query volume.
+	TopBlockedClients []topAddrs `json:"top_blocked_clients"`
+
 	TopUpstreamsResponses []topAddrs      `json:"top_upstreams_responses"`
 	TopUpstreamsAvgTime   []topAddrsFloat `json:"top_upstreams_avg_time"`
 

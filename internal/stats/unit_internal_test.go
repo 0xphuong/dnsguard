@@ -18,6 +18,7 @@ func TestUnit_Deserialize(t *testing.T) {
 			domains:            map[string]uint64{},
 			blockedDomains:     map[string]uint64{},
 			clients:            map[string]uint64{},
+			blockedClients:     map[string]uint64{},
 			nResult:            []uint64{0, 0, 0, 0, 0, 0},
 			id:                 0,
 			nTotal:             0,
@@ -47,6 +48,9 @@ func TestUnit_Deserialize(t *testing.T) {
 			clients: map[string]uint64{
 				"127.0.0.1": 2,
 			},
+			blockedClients: map[string]uint64{
+				"127.0.0.1": 1,
+			},
 			nResult: []uint64{0, 1, 1, 0, 0, 0},
 			id:      0,
 			nTotal:  2,
@@ -69,6 +73,9 @@ func TestUnit_Deserialize(t *testing.T) {
 			Clients: []countPair{{
 				"127.0.0.1", 2,
 			}},
+			BlockedClients: []countPair{{
+				"127.0.0.1", 1,
+			}},
 			NTotal:  2,
 			TimeAvg: 123456,
 			UpstreamsResponses: []countPair{{
@@ -77,6 +84,30 @@ func TestUnit_Deserialize(t *testing.T) {
 			UpstreamsTimeSum: []countPair{{
 				"1.2.3.4", 246912,
 			}},
+		},
+	}, {
+		// A unit written before BlockedClients existed decodes with the field
+		// unset.  It must still yield a usable map, reporting zero blocked
+		// rather than leaving a nil map for callers to range over.
+		name: "legacy_without_blocked_clients",
+		want: unit{
+			domains:        map[string]uint64{},
+			blockedDomains: map[string]uint64{},
+			clients: map[string]uint64{
+				"127.0.0.1": 2,
+			},
+			blockedClients:     map[string]uint64{},
+			nResult:            []uint64{0, 2, 0, 0, 0, 0},
+			nTotal:             2,
+			upstreamsResponses: map[string]uint64{},
+			upstreamsTimeSum:   map[string]uint64{},
+		},
+		db: &unitDB{
+			NResult: []uint64{0, 2, 0, 0, 0, 0},
+			Clients: []countPair{{
+				"127.0.0.1", 2,
+			}},
+			NTotal: 2,
 		},
 	}}
 

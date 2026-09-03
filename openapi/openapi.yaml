@@ -1962,6 +1962,14 @@
           'type': 'array'
           'items':
             '$ref': '#/components/schemas/TopArrayEntry'
+        'top_blocked_clients':
+          'type': 'array'
+          'description': >
+            Number of blocked requests from each client.  Together with
+            top_clients this gives the blocked share of a client's traffic.
+          'items':
+            '$ref': '#/components/schemas/TopArrayEntry'
+          'maxItems': 100
         'top_upstreams_responses':
           'type': 'array'
           'description': 'Total number of responses from each upstream.'
