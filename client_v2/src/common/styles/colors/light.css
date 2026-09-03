@@ -1,9 +1,9 @@
 :root {
     /* Page background */
-    --default-page-background: var(--surface-50);
-    --hovered-page-background: var(--surface-100);
-    --pressed-page-background: var(--surface-150);
-    --page-background-additional: var(--surface-100);
+    --default-page-background: var(--surface-100);
+    --hovered-page-background: var(--surface-150);
+    --pressed-page-background: var(--surface-200);
+    --page-background-additional: var(--surface-50);
     /* Cards background */
     --default-cards-background: var(--surface-0);
     /* Popup background */
@@ -12,15 +12,15 @@
     --default-item-divider: var(--surface-200);
     /* Main text */
     --default-main-text: var(--gray-80);
-    --disabled-main-text: var(--gray-50);
+    --disabled-main-text: var(--gray-40);
     /* Description text */
-    --default-description-text: var(--gray-70);
+    --default-description-text: var(--gray-60);
     /* Forms */
-    --default-labels: var(--gray-70);
+    --default-labels: var(--gray-60);
     /* Input */
-    --default-input-background: var(--surface-100);
-    --default-active-input-stroke: var(--gray-60);
-    --default-inactive-input-stroke: var(--gray-40);
+    --default-input-background: var(--surface-0);
+    --default-active-input-stroke: var(--gray-50);
+    --default-inactive-input-stroke: var(--gray-20);
     --default-placeholder: var(--gray-60);
     /* Dropdown */
     --default-dropdown-menu-background: var(--surface-0);
@@ -33,17 +33,17 @@
      * still separates from the card by the same 5.83:1.  Identity keeps -50
      * wherever nothing is written on top of it — the icon, the switch, the
      * focus ring. */
-    --default-main-button: var(--product-primary-70);
-    --hovered-main-button: var(--product-primary-80);
-    --pressed-main-button: var(--product-primary-90);
-    --disabled-main-button: var(--product-primary-30);
+    --default-main-button: var(--product-primary-60);
+    --hovered-main-button: var(--product-primary-70);
+    --pressed-main-button: var(--product-primary-80);
+    --disabled-main-button: var(--product-primary-20);
     --default-primary-button-text: var(--gray-0);
     /* Secondary button */
     --default-secondary-button: var(--gray-0);
     --hovered-secondary-button: var(--gray-10);
     --pressed-secondary-button: var(--gray-20);
     --disabled-secondary-button: var(--gray-0);
-    --default-secondary-button-stroke: var(--gray-80);
+    --default-secondary-button-stroke: var(--gray-30);
     --disabled-secondary-button-stroke: var(--gray-50);
     /* Danger button */
     --default-danger-button-text: var(--gray-0);
@@ -56,28 +56,28 @@
      * -50 is the brand step, but text is read against it, and in this theme it
      * only reaches 3.33:1 under white.  -70 clears AA at 5.83:1 and hover
      * steps further to 7.80:1, so hover is unambiguously stronger. */
-    --default-link: var(--product-primary-70);
-    --hovered-link: var(--product-primary-80);
-    --pressed-link: var(--product-primary-90);
+    --default-link: var(--cyan-70);
+    --hovered-link: var(--cyan-80);
+    --pressed-link: var(--cyan-90);
     /* Attention link
      *
      * Carries text — counts, "Ads blocked", "6 blocked total" — so it needs
      * 4.5:1, not the 3:1 a graphic gets.  -80 measures 8.15:1 on a card.  The
      * chart strokes are separate --chart-* tokens, so darkening the text does
      * not dull the lines. */
-    --default-attention-link: var(--orange-80);
+    --default-attention-link: var(--orange-70);
     /* Additional link */
     --category-adult: var(--violet-70);
     /* Error link */
-    --default-error-link: var(--red-80);
+    --default-error-link: var(--red-70);
     /* Icons */
-    --default-product-icon: var(--product-primary-50);
+    --default-product-icon: var(--product-primary-60);
     --default-black-icons: var(--gray-80);
-    --default-gray-icons: var(--gray-60);
+    --default-gray-icons: var(--gray-50);
     --disabled-gray-icons: var(--gray-30);
-    --default-error-icon: var(--red-50);
+    --default-error-icon: var(--red-60);
     --category-adult-icon: var(--violet-50);
-    --default-attention-icon-stroke: var(--orange-50);
+    --default-attention-icon-stroke: var(--orange-60);
     /* Stat */
     --default-tertiary-stat: var(--gray-60);
     /* Promo top line */
@@ -85,16 +85,16 @@
     --fills-backgrounds-recent-activity-changed: var(--orange-10);
     --fills-backgrounds-recent-activity-blocked: var(--red-10);
     /* Switch */
-    --fills-switch-on-default: var(--product-primary-50);
-    --fills-switch-on-hovered: var(--product-primary-60);
-    --fills-switch-on-disabled: var(--product-primary-30);
-    --fills-switch-off-default: var(--gray-50);
-    --fills-switch-off-hovered: var(--gray-60);
-    --fills-switch-off-disabled: var(--gray-30);
+    --fills-switch-on-default: var(--product-primary-60);
+    --fills-switch-on-hovered: var(--product-primary-70);
+    --fills-switch-on-disabled: var(--product-primary-20);
+    --fills-switch-off-default: var(--gray-30);
+    --fills-switch-off-hovered: var(--gray-40);
+    --fills-switch-off-disabled: var(--gray-20);
     --fills-switch-knob: var(--gray-0);
     --fills-switch-knob-disabled: var(--gray-50);
     /* Logo */
-    --default-logo-color: var(--gray-100);
+    --default-logo-color: var(--gray-90);
     /* Data visualisation
      *
      * Separate from the --default-*-link text tokens because a 1px data line
@@ -120,6 +120,6 @@
      * statusGreen and statusBlue in the query log both resolved to the brand
      * colour, so a resolved query and an informational one rendered
      * identically.  Green now carries the first on its own. */
-    --default-success-text: var(--success-80);
-    --fills-success: var(--success-70);
+    --default-success-text: var(--success-70);
+    --fills-success: var(--success-60);
 }

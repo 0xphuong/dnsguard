@@ -30,46 +30,24 @@
     box-shadow: var(--elev-1);
     overflow: hidden;
 
-    & + & {
-        margin-top: var(--space-4);
-    }
 }
 
-/* Identical in all three sections: the name on the left, and on the right the
- * one switch that turns the whole section off, where the section has one.
- * Two of these titles used to be a row's title carrying its own switch and
- * one was a bare heading above the rows, so the same thing looked like three
- * different things. */
-.cardHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    /* Matches the 16px SettingRow indents itself by, so the master switch
-     * sits on the same edge as the switches it governs. */
-    padding: var(--space-4) var(--space-4) var(--space-3);
-    border-bottom: 1px solid var(--default-item-divider);
-}
-
-.cardHeading {
-    min-width: 0;
-}
-
-.cardTitle {
-    margin: 0;
-}
-
-.cardDesc {
-    margin: 2px 0 0;
+/* The group label, NexGuard's .ng-section-header: small, uppercase, tracked
+ * out, in the muted ink.  It sits above the card rather than inside it, so
+ * every section is titled the same way — before, two titles were a row
+ * carrying a switch and one was a bare heading, and the same thing looked
+ * like three different things.  The switch that turns a section off is now
+ * simply its first row. */
+.sectionLabel {
+    margin: 0 0 var(--space-3);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
     color: var(--default-description-text);
 }
 
-/* Pulled in by exactly the width SettingRow reserves for its chevron slot
- * (20px) plus its gap (12px), so a section's master switch lands on the same
- * vertical line as every switch it governs. */
-.cardSwitch {
-    flex: none;
-    margin-right: 32px;
+.card + .sectionLabel {
+    margin-top: var(--space-6);
 }
 
 /* No horizontal padding: SettingRow already carries 16px of its own, and

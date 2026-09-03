@@ -186,6 +186,7 @@ export const SettingRow = (props: Props) => {
                         <Switch
                             id={props.id}
                             aria-describedby={descriptionId()}
+                            withState
                             checked={!!props.checked}
                             disabled={!!props.disabled}
                             onChange={handleSwitchChange}

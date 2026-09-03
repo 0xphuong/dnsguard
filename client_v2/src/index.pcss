@@ -5,15 +5,15 @@
 @import './common/styles/fonts.css';
 
 :root {
-    /* Mono was an unbundled system stack, which meant the same table of
-     * addresses rendered at a different width on every platform: ten capital
-     * Ms measured 96.02px in Monaco on macOS and 142.27px in Consolas on
-     * Windows, a 48% difference, so columns, truncation and card widths all
-     * shifted with the reader's operating system.  Bundling one face fixes the
-     * text a DNS firewall exists to show. */
-    --font-family-monospace: 'Geist Mono', ui-monospace, Menlo, Consolas, monospace;
+    /* Both bundled, which is what keeps a table of addresses the same width on
+     * every platform: with an unbundled stack ten capital Ms measured 96.02px
+     * in Monaco on macOS and 142.27px in Consolas on Windows, and columns,
+     * truncation and card widths all shifted with the reader's operating
+     * system. */
+    --font-family-monospace: 'Fira Mono', ui-monospace, Menlo, Consolas, monospace;
     --font-family-base:
-        Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial,
+        sans-serif;
 }
 
 *,

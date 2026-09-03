@@ -30,8 +30,11 @@
                         window.matchMedia &&
                         window.matchMedia('(prefers-color-scheme: dark)').matches;
                     theme = prefersDark ? 'dark' : 'light';
-                } else if (theme !== 'light') {
-                    theme = 'dark';
+                } else if (theme !== 'dark' && theme !== 'light') {
+                    // Never chose one, so match what the server now stores for
+                    // a fresh install and what the NexGuard portal ships:
+                    // light.  'auto' still means follow the OS.
+                    theme = 'light';
                 }
                 document.documentElement.dataset.theme = theme;
                 document.documentElement.style.colorScheme = theme;

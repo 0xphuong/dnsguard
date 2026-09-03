@@ -802,8 +802,14 @@ export const setTheme = (theme: string): void => {
 // someone glances at in a rack or on a home server, and the palette is tuned
 // dark-first.  The server profile still wins once it loads; this only covers
 // the first paint and anyone who never chose a theme.
+/**
+ * Light by default, which is what the NexGuard portal ships and the only
+ * theme it has.  Dark stays available here — it is built and it passes the
+ * contrast audit — but a reader who has expressed no preference gets the same
+ * screen in both products.
+ */
 export const getTheme = () =>
-    LocalStorageHelper.getItem<string>(LOCAL_STORAGE_KEYS.THEME) || THEMES.dark;
+    LocalStorageHelper.getItem<string>(LOCAL_STORAGE_KEYS.THEME) || THEMES.light;
 
 /**
  * Sets UI theme.

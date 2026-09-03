@@ -628,7 +628,10 @@ var config = &configuration{
 	},
 	OSConfig:      &osConfig{},
 	SchemaVersion: configmigrate.LastSchemaVersion,
-	Theme:         ThemeAuto,
+	// Light rather than auto: the panel is a companion to the NexGuard
+	// portal, which ships light-only, and a new installation should open on
+	// the same screen in both.  Dark and auto both remain selectable.
+	Theme:         ThemeLight,
 }
 
 // configFilePath returns the absolute, symlink-resolved path to the current

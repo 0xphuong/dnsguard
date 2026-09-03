@@ -48,6 +48,8 @@
     "@babel/preset-typescript": "^7.24.1",
     "@fontsource-variable/geist": "^5.3.0",
     "@fontsource-variable/geist-mono": "^5.3.0",
+    "@fontsource/fira-mono": "^5.3.0",
+    "@fontsource/fira-sans": "^5.3.0",
     "@playwright/test": "1.56.0",
     "@solidjs/testing-library": "^0.8.0",
     "@testing-library/jest-dom": "^6.9.1",

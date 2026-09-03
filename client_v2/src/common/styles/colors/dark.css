@@ -60,9 +60,9 @@
      *
      * Dark moves the opposite way from light: lighter, not darker.  -40 is
      * 6.36:1 on a card and hover lifts to -30 at 8.03:1. */
-    --default-link: var(--product-primary-40);
-    --hovered-link: var(--product-primary-30);
-    --pressed-link: var(--product-primary-20);
+    --default-link: var(--cyan-40);
+    --hovered-link: var(--cyan-30);
+    --pressed-link: var(--cyan-20);
     /* Attention link — 6.06:1 on a card. */
     --default-attention-link: var(--orange-40);
     /* Additional link */
@@ -70,7 +70,7 @@
     /* Error link */
     --default-error-link: var(--red-30);
     /* Icons */
-    --default-product-icon: var(--product-primary-50);
+    --default-product-icon: var(--product-primary-40);
     --default-black-icons: var(--gray-20);
     --default-gray-icons: var(--gray-40);
     --disabled-gray-icons: var(--gray-70);
@@ -85,7 +85,7 @@
     --fills-backgrounds-recent-activity-blocked: var(--red-90);
     /* Switch */
     --fills-switch-on-default: var(--product-primary-50);
-    --fills-switch-on-hovered: var(--product-primary-60);
+    --fills-switch-on-hovered: var(--product-primary-40);
     --fills-switch-on-disabled: var(--product-primary-90);
     --fills-switch-off-default: var(--gray-50);
     --fills-switch-off-hovered: var(--gray-40);

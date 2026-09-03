@@ -1,137 +1,141 @@
-/* Colour primitives, generated in OKLCH.
+/* Colour primitives.
  *
- * Written as oklch() rather than hex because the notation is the point: every
- * ramp here holds one hue and one chroma profile and varies only lightness, in
- * even steps.  That is what the hex ramps could not express, and the reason
- * they drifted:
+ * These are the Tailwind ramps the NexGuard portal is built from, so the two
+ * products in the family share one palette: blue for the brand, cyan for
+ * links, slate for every neutral, and green / amber / red for state.  The
+ * anchors NexGuard names in its theme file — blue-600 #2563eb, cyan-700
+ * #0e7490, #16a34a, #d97706, #dc2626 — all appear here unchanged.
  *
- *   - product-tertiary jumped 109 degrees of hue between its first step and
- *     the rest of the ramp, so its lightest tint was mint and the rest indigo.
- *     It is gone; nothing live referenced it.
- *   - orange drifted 23 degrees across its ramp, and because light and dark
- *     pick different steps for the same role, "attention" was literally a
- *     different colour in each theme.
- *   - the neutral ramp had a 0.122 lightness cliff between -50 and -60, which
- *     is what forced the hand-inserted --gray-65 to patch a contrast hole.
- *     With even steps the hole is gone and so is the patch.
+ * Written as oklch() rather than hex because two tools read this file: the
+ * contrast auditor, which resolves every semantic token against the surface
+ * it is painted on, and the colour-blindness validator that picks the chart
+ * steps.  The values are Tailwind's; only the notation is ours.
  *
- * Generated values, not hand-picked ones: see scratchpad genpalette.py for the
- * hue, chroma profile and lightness ladder each family is built from.
+ * Ramp direction follows this codebase rather than Tailwind's: step 0 is the
+ * lightest tint and step 100 the darkest shade, so 0..100 maps onto 50..950.
  */
 
 :root {
-    /* BRAND
+    /* BRAND — Tailwind blue.  NexGuard's $primary: buttons, focus, identity. */
+    --product-primary-0: oklch(97.0% 0.014 254.6); /* #eff6ff */
+    --product-primary-10: oklch(93.2% 0.032 255.6); /* #dbeafe */
+    --product-primary-20: oklch(88.2% 0.057 254.1); /* #bfdbfe */
+    --product-primary-30: oklch(80.9% 0.096 251.8); /* #93c5fd */
+    --product-primary-40: oklch(71.4% 0.143 254.6); /* #60a5fa */
+    --product-primary-50: oklch(62.3% 0.188 259.8); /* #3b82f6 */
+    --product-primary-60: oklch(54.6% 0.215 262.9); /* #2563eb */
+    --product-primary-70: oklch(48.8% 0.217 264.4); /* #1d4ed8 */
+    --product-primary-80: oklch(42.4% 0.181 265.6); /* #1e40af */
+    --product-primary-90: oklch(37.9% 0.138 265.5); /* #1e3a8a */
+    --product-primary-100: oklch(28.2% 0.087 267.9); /* #172554 */
+
+    /* LINKS — Tailwind cyan.  NexGuard's $accent, with links on -70. */
+    --cyan-0: oklch(98.4% 0.019 200.9); /* #ecfeff */
+    --cyan-10: oklch(95.6% 0.044 203.4); /* #cffafe */
+    --cyan-20: oklch(91.7% 0.077 205.0); /* #a5f3fc */
+    --cyan-30: oklch(86.5% 0.115 207.1); /* #67e8f9 */
+    --cyan-40: oklch(79.7% 0.134 211.5); /* #22d3ee */
+    --cyan-50: oklch(71.5% 0.126 215.2); /* #06b6d4 */
+    --cyan-60: oklch(60.9% 0.111 221.7); /* #0891b2 */
+    --cyan-70: oklch(52.0% 0.094 223.1); /* #0e7490 */
+    --cyan-80: oklch(45.0% 0.077 224.3); /* #155e75 */
+    --cyan-90: oklch(39.8% 0.066 227.4); /* #164e63 */
+    --cyan-100: oklch(30.2% 0.054 229.7); /* #083344 */
+
+    /* ALLOWED / HEALTHY — Tailwind green. */
+    --success-0: oklch(98.2% 0.018 155.8); /* #f0fdf4 */
+    --success-10: oklch(96.2% 0.043 156.7); /* #dcfce7 */
+    --success-20: oklch(92.5% 0.081 156.0); /* #bbf7d0 */
+    --success-30: oklch(87.1% 0.136 154.4); /* #86efac */
+    --success-40: oklch(80.0% 0.182 151.7); /* #4ade80 */
+    --success-50: oklch(72.3% 0.192 149.6); /* #22c55e */
+    --success-60: oklch(62.7% 0.170 149.2); /* #16a34a */
+    --success-70: oklch(52.7% 0.137 150.1); /* #15803d */
+    --success-80: oklch(44.8% 0.108 151.3); /* #166534 */
+    --success-90: oklch(39.3% 0.090 152.5); /* #14532d */
+    --success-100: oklch(26.6% 0.063 152.9); /* #052e16 */
+
+    /* ATTENTION / REWRITTEN — Tailwind amber. */
+    --orange-0: oklch(98.7% 0.021 95.3); /* #fffbeb */
+    --orange-10: oklch(96.2% 0.058 95.6); /* #fef3c7 */
+    --orange-20: oklch(92.4% 0.115 95.7); /* #fde68a */
+    --orange-30: oklch(87.9% 0.153 91.6); /* #fcd34d */
+    --orange-40: oklch(83.7% 0.164 84.4); /* #fbbf24 */
+    --orange-50: oklch(76.9% 0.165 70.1); /* #f59e0b */
+    --orange-60: oklch(66.6% 0.157 58.3); /* #d97706 */
+    --orange-70: oklch(55.5% 0.146 49.0); /* #b45309 */
+    --orange-80: oklch(47.3% 0.125 46.2); /* #92400e */
+    --orange-90: oklch(41.4% 0.105 45.9); /* #78350f */
+    --orange-100: oklch(27.9% 0.074 45.6); /* #451a03 */
+
+    /* BLOCKED / DANGER — Tailwind red. */
+    --red-0: oklch(97.1% 0.013 17.4); /* #fef2f2 */
+    --red-10: oklch(93.6% 0.031 17.7); /* #fee2e2 */
+    --red-20: oklch(88.5% 0.059 18.3); /* #fecaca */
+    --red-30: oklch(80.8% 0.103 19.6); /* #fca5a5 */
+    --red-40: oklch(71.1% 0.166 22.2); /* #f87171 */
+    --red-50: oklch(63.7% 0.208 25.3); /* #ef4444 */
+    --red-60: oklch(57.7% 0.215 27.3); /* #dc2626 */
+    --red-70: oklch(50.5% 0.190 27.5); /* #b91c1c */
+    --red-80: oklch(44.4% 0.161 26.9); /* #991b1b */
+    --red-90: oklch(39.6% 0.133 25.7); /* #7f1d1d */
+    --red-100: oklch(25.8% 0.089 26.0); /* #450a0a */
+
+    /* CATEGORY: ADULT — Tailwind violet.
      *
-     * Azure carries identity and interaction only: buttons, links, switches,
-     * focus.  It deliberately says nothing about whether a query was allowed
-     * or blocked. */
-    --product-primary-0: oklch(97.5% 0.008 236);
-    --product-primary-10: oklch(90.8% 0.030 236);
-    --product-primary-20: oklch(84.0% 0.057 236);
-    --product-primary-30: oklch(77.2% 0.094 236);
-    --product-primary-40: oklch(70.5% 0.121 236);
-    --product-primary-50: oklch(63.7% 0.130 236);
-    --product-primary-60: oklch(57.0% 0.121 236);
-    --product-primary-70: oklch(50.2% 0.108 236);
-    --product-primary-80: oklch(43.5% 0.094 236);
-    --product-primary-90: oklch(36.7% 0.079 236);
-    --product-primary-100: oklch(30.0% 0.059 236);
+     * Not a UI accent and not part of NexGuard's palette.  It exists only so
+     * the parental-control series is separable from the other three in a
+     * chart, and it is used nowhere else. */
+    --violet-0: oklch(96.9% 0.016 293.8); /* #f5f3ff */
+    --violet-10: oklch(94.3% 0.028 294.6); /* #ede9fe */
+    --violet-20: oklch(89.4% 0.055 293.3); /* #ddd6fe */
+    --violet-30: oklch(81.1% 0.101 293.6); /* #c4b5fd */
+    --violet-40: oklch(70.9% 0.159 293.5); /* #a78bfa */
+    --violet-50: oklch(60.6% 0.219 292.7); /* #8b5cf6 */
+    --violet-60: oklch(54.1% 0.247 293.0); /* #7c3aed */
+    --violet-70: oklch(49.1% 0.241 292.6); /* #6d28d9 */
+    --violet-80: oklch(43.2% 0.211 292.8); /* #5b21b6 */
+    --violet-90: oklch(38.0% 0.178 293.7); /* #4c1d95 */
+    --violet-100: oklch(28.3% 0.135 291.1); /* #2e1065 */
 
-    /* ALLOWED / HEALTHY */
-    --success-0: oklch(97.5% 0.007 150);
-    --success-10: oklch(90.8% 0.026 150);
-    --success-20: oklch(84.0% 0.051 150);
-    --success-30: oklch(77.2% 0.083 150);
-    --success-40: oklch(70.5% 0.107 150);
-    --success-50: oklch(63.7% 0.115 150);
-    --success-60: oklch(57.0% 0.107 150);
-    --success-70: oklch(50.2% 0.097 150);
-    --success-80: oklch(43.5% 0.083 150);
-    --success-90: oklch(36.7% 0.070 150);
-    --success-100: oklch(30.0% 0.052 150);
-
-    /* ATTENTION / REWRITTEN */
-    --orange-0: oklch(97.5% 0.008 70);
-    --orange-10: oklch(90.8% 0.032 70);
-    --orange-20: oklch(84.0% 0.061 70);
-    --orange-30: oklch(77.2% 0.099 70);
-    --orange-40: oklch(70.5% 0.128 70);
-    --orange-50: oklch(63.7% 0.138 70);
-    --orange-60: oklch(57.0% 0.124 70);
-    --orange-70: oklch(50.2% 0.109 70);
-    --orange-80: oklch(43.5% 0.094 70);
-    --orange-90: oklch(36.7% 0.080 70);
-    --orange-100: oklch(30.0% 0.062 70);
-
-    /* BLOCKED / DANGER */
-    --red-0: oklch(97.5% 0.011 38);
-    --red-10: oklch(90.8% 0.044 38);
-    --red-20: oklch(84.0% 0.084 38);
-    --red-30: oklch(77.2% 0.137 38);
-    --red-40: oklch(70.5% 0.177 38);
-    --red-50: oklch(63.7% 0.190 38);
-    --red-60: oklch(57.0% 0.177 38);
-    --red-70: oklch(50.2% 0.160 38);
-    --red-80: oklch(43.5% 0.137 38);
-    --red-90: oklch(36.7% 0.116 38);
-    --red-100: oklch(30.0% 0.086 38);
-
-    /* CATEGORY: ADULT
-     *
-     * Not a UI accent — the interface uses four hues, and this is not one of
-     * them.  It exists solely so the parental-control series is separable from
-     * the other three in a chart, and it is used nowhere else.  Formerly
-     * --product-secondary, which named it as a brand colour it never was. */
-    --violet-0: oklch(97.5% 0.008 321);
-    --violet-10: oklch(90.8% 0.030 321);
-    --violet-20: oklch(84.0% 0.057 321);
-    --violet-30: oklch(77.2% 0.094 321);
-    --violet-40: oklch(70.5% 0.121 321);
-    --violet-50: oklch(63.7% 0.130 321);
-    --violet-60: oklch(57.0% 0.121 321);
-    --violet-70: oklch(50.2% 0.109 321);
-    --violet-80: oklch(43.5% 0.094 321);
-    --violet-90: oklch(36.7% 0.079 321);
-    --violet-100: oklch(30.0% 0.059 321);
-
-    /* NEUTRALS */
-    --gray-0: oklch(100.0% 0.000 0);
-    --gray-10: oklch(91.5% 0.000 0);
-    --gray-20: oklch(82.9% 0.000 0);
-    --gray-30: oklch(74.4% 0.000 0);
-    --gray-40: oklch(65.8% 0.000 0);
-    --gray-50: oklch(57.2% 0.000 0);
-    --gray-60: oklch(48.7% 0.000 0);
-    --gray-70: oklch(40.2% 0.000 0);
-    --gray-80: oklch(31.6% 0.000 0);
-    --gray-90: oklch(23.0% 0.000 0);
-    --gray-100: oklch(14.5% 0.000 0);
-
-    /* SURFACES — DARK LADDER
-     *
-     * Depth in a dark theme comes from surfaces getting lighter, not from
-     * shadows, which barely register on near-black.  The steps compress
-     * towards black on purpose: near the floor a small lightness change already
-     * reads as a full level of elevation. */
-    --surface-950: oklch(15.9% 0.008 264);
-    --surface-900: oklch(18.7% 0.012 264);
-    --surface-850: oklch(21.4% 0.016 264);
-    --surface-800: oklch(24.3% 0.020 264);
-    --surface-700: oklch(28.0% 0.024 264);
-    --surface-600: oklch(33.3% 0.028 264);
-    --surface-500: oklch(40.0% 0.032 264);
-    --surface-400: oklch(48.8% 0.036 264);
+    /* NEUTRALS — Tailwind slate.  NexGuard's $interface ramp. */
+    --gray-0: oklch(98.4% 0.003 247.9); /* #f8fafc */
+    --gray-10: oklch(96.8% 0.007 247.9); /* #f1f5f9 */
+    --gray-20: oklch(92.9% 0.013 255.5); /* #e2e8f0 */
+    --gray-30: oklch(86.9% 0.020 252.9); /* #cbd5e1 */
+    --gray-40: oklch(71.1% 0.035 256.8); /* #94a3b8 */
+    --gray-50: oklch(55.4% 0.041 257.4); /* #64748b */
+    --gray-60: oklch(44.6% 0.037 257.3); /* #475569 */
+    --gray-70: oklch(37.2% 0.039 257.3); /* #334155 */
+    --gray-80: oklch(27.9% 0.037 260.0); /* #1e293b */
+    --gray-90: oklch(20.8% 0.040 265.8); /* #0f172a */
+    --gray-100: oklch(12.9% 0.041 264.7); /* #020617 */
 
     /* SURFACES — LIGHT LADDER
      *
+     * Pinned to what NexGuard paints: white cards on a slate-100 canvas, with
+     * slate-200 carrying the dividers. */
+    --surface-0: oklch(100.0% 0.000 89.9); /* #ffffff */
+    --surface-25: oklch(99.4% 0.002 247.8); /* #fcfdfe */
+    --surface-50: oklch(98.4% 0.003 247.9); /* #f8fafc */
+    --surface-100: oklch(96.8% 0.007 247.9); /* #f1f5f9 */
+    --surface-150: oklch(94.7% 0.010 252.8); /* #e9eef4 */
+    --surface-200: oklch(92.9% 0.013 255.5); /* #e2e8f0 */
+    --surface-300: oklch(86.9% 0.020 252.9); /* #cbd5e1 */
+
+    /* SURFACES — DARK LADDER
+     *
      * A separate ladder that happens to share the prefix: --surface-300 and
      * --surface-400 are not neighbouring steps of one scale, they are the
-     * bottom of this one and the top of the dark one. */
-    --surface-0: oklch(100.0% 0.000 256);
-    --surface-25: oklch(99.1% 0.002 256);
-    --surface-50: oklch(97.8% 0.004 256);
-    --surface-100: oklch(95.7% 0.006 256);
-    --surface-150: oklch(93.3% 0.009 256);
-    --surface-200: oklch(90.1% 0.013 256);
-    --surface-300: oklch(84.2% 0.019 256);
+     * bottom of the light one and the top of this one.  NexGuard ships
+     * light-only; this ladder keeps the dark theme this repo already has
+     * coherent with the new slate neutrals. */
+    --surface-950: oklch(12.9% 0.041 264.7); /* #020617 */
+    --surface-900: oklch(20.8% 0.040 265.8); /* #0f172a */
+    --surface-850: oklch(24.9% 0.052 266.8); /* #16203a */
+    --surface-800: oklch(27.9% 0.037 260.0); /* #1e293b */
+    --surface-700: oklch(32.7% 0.038 259.4); /* #293548 */
+    --surface-600: oklch(37.2% 0.039 257.3); /* #334155 */
+    --surface-500: oklch(44.6% 0.037 257.3); /* #475569 */
+    --surface-400: oklch(55.4% 0.041 257.4); /* #64748b */
 }

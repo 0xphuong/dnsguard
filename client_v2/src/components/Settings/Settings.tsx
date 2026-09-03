@@ -19,7 +19,7 @@ import { SAFE_SEARCH_PROVIDERS } from 'panel/helpers/constants';
 import { addSuccessToast } from 'panel/stores/toasts';
 
 import { SettingRow } from 'panel/common/ui/SettingRow';
-import { Switch } from 'panel/common/controls/Switch';
+import { PageHeader } from 'panel/common/ui/PageHeader';
 import { StatsConfig } from './StatsConfig';
 import { LogsConfig } from './LogsConfig';
 import { FiltersConfig } from './FiltersConfig';
@@ -151,26 +151,20 @@ export const Settings = () => {
     return (
         <div class={theme.layout.container}>
             <div class={cn(theme.layout.containerIn, theme.layout.containerIn_one_col, s.page)}>
-                <h1 class={cn(theme.layout.title, theme.title.h4, theme.title.h3_tablet, s.title)}>
-                    {intl.getMessage('settings_general_short')}
-                </h1>
+                <PageHeader
+                    title={intl.getMessage('settings_general_short')}
+                    subtitle={intl.getMessage('settings_general_desc')}
+                />
 
                 <Show
                     when={isLoading()}
                     fallback={
                         <>
-                            <section class={s.card} id="filtering">
-                                {/* No switch beside this title: "Filter
-                                    requests" is one filter among several
-                                    below, not a master for the section. */}
-                                <header class={s.cardHeader}>
-                                    <div class={s.cardHeading}>
-                                        <h2 class={cn(theme.title.h5, s.cardTitle)}>
-                                            {intl.getMessage('settings_filtering_and_security')}
-                                        </h2>
-                                    </div>
-                                </header>
+                            <h2 class={cn(theme.text.t4, s.sectionLabel)} id="filtering">
+                                {intl.getMessage('settings_filtering_and_security')}
+                            </h2>
 
+                            <section class={s.card}>
                                 <div class={s.cardBody}>
                                     <FiltersConfig
                                         initialValues={{
@@ -233,34 +227,26 @@ export const Settings = () => {
                                 onSave={handleSafeSearchSave}
                             />
 
-                            <section class={s.card} id="query-log">
-                                <header class={s.cardHeader}>
-                                    <div class={s.cardHeading}>
-                                        <h2
-                                            id="query-log-title"
-                                            class={cn(theme.title.h5, s.cardTitle)}
-                                        >
-                                            {intl.getMessage('query_log')}
-                                        </h2>
-                                    </div>
+                            <h2 class={cn(theme.text.t4, s.sectionLabel)} id="query-log">
+                                {intl.getMessage('query_log')}
+                            </h2>
 
-                                    <Switch
+                            <section class={s.card}>
+                                <div class={s.cardBody}>
+                                    <SettingRow
+                                        variant="switch"
                                         id="querylog_enabled"
-                                        class={s.cardSwitch}
-                                        aria-labelledby="query-log-title"
+                                        title={intl.getMessage('enable')}
                                         checked={queryLogsState.enabled}
-                                        onChange={(e) =>
+                                        onChange={(v) =>
                                             setLogsConfig(
                                                 buildQueryLogConfig(queryLogsState, {
-                                                    enabled: (e.currentTarget as HTMLInputElement)
-                                                        .checked,
+                                                    enabled: v,
                                                 }),
                                             )
                                         }
                                     />
-                                </header>
 
-                                <div class={s.cardBody}>
                                     <SettingRow
                                         variant="switch"
                                         id="querylog_anonymize"
@@ -348,37 +334,25 @@ export const Settings = () => {
                                 />
                             </Show>
 
-                            <section class={s.card} id="statistics">
-                                <header class={s.cardHeader}>
-                                    <div class={s.cardHeading}>
-                                        <h2
-                                            id="statistics-title"
-                                            class={cn(theme.title.h5, s.cardTitle)}
-                                        >
-                                            {intl.getMessage('settings_statistics')}
-                                        </h2>
-                                        <p class={cn(theme.text.t3, s.cardDesc)}>
-                                            {intl.getMessage('settings_statistics_desc')}
-                                        </p>
-                                    </div>
+                            <h2 class={cn(theme.text.t4, s.sectionLabel)} id="statistics">
+                                {intl.getMessage('settings_statistics')}
+                            </h2>
 
-                                    <Switch
+                            <section class={s.card}>
+                                <div class={s.cardBody}>
+                                    <SettingRow
+                                        variant="switch"
                                         id="stats_enabled"
-                                        class={s.cardSwitch}
-                                        aria-labelledby="statistics-title"
+                                        title={intl.getMessage('enable')}
+                                        description={intl.getMessage('settings_statistics_desc')}
                                         checked={statsState.enabled}
-                                        onChange={(e) =>
+                                        onChange={(v) =>
                                             setStatsConfig(
-                                                buildStatsConfig(statsState, {
-                                                    enabled: (e.currentTarget as HTMLInputElement)
-                                                        .checked,
-                                                }),
+                                                buildStatsConfig(statsState, { enabled: v }),
                                             )
                                         }
                                     />
-                                </header>
 
-                                <div class={s.cardBody}>
                                     <SettingRow
                                         variant="link"
                                         id="stats_retention"

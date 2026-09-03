@@ -1,6 +1,8 @@
 import { type JSX, Show } from 'solid-js';
 import cn from 'clsx';
 
+import intl from 'panel/common/intl';
+
 import s from './Switch.module.pcss';
 
 type Props = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'type'> & {
@@ -25,6 +27,15 @@ type Props = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'type'
     'data-testid'?: string;
     'aria-describedby'?: string;
     'aria-label'?: string;
+    /**
+     * Shows ON or OFF beside the track, the way the NexGuard portal does.
+     *
+     * It is not decoration: the off track is the slate NexGuard paints, which
+     * reads 1.48:1 against a white card, so the word is what actually carries
+     * the state.  Opt-in, because a switch inside a dense row or a toolbar has
+     * its label right beside it and does not need a second one.
+     */
+    withState?: boolean;
 };
 
 export const Switch = (props: Props) => {
@@ -49,6 +60,14 @@ export const Switch = (props: Props) => {
                 ref={(el) => setRef(el)}
             />
             <div class={s.handler} />
+            <Show when={props.withState}>
+                <span
+                    class={cn(s.state, { [s.stateOn]: props.checked })}
+                    aria-hidden="true"
+                >
+                    {props.checked ? intl.getMessage('switch_on') : intl.getMessage('switch_off')}
+                </span>
+            </Show>
             <Show when={props.children}>
                 <div class={cn(s.label, props.labelClass)}>{props.children}</div>
             </Show>

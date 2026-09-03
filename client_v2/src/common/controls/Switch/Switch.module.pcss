@@ -86,3 +86,21 @@
         color: var(--fills-switch-knob-disabled);
     }
 }
+
+/* The state, spelled out.  NexGuard's portal puts it beside every settings
+ * toggle, and it is the reason a low-contrast off-track is acceptable: the
+ * word carries the state, the track only reinforces it. */
+.state {
+    order: -1;
+    min-width: 28px;
+    text-align: right;
+    font-size: var(--fs-text-t4);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--default-description-text);
+}
+
+.stateOn {
+    color: var(--default-success-text);
+}
