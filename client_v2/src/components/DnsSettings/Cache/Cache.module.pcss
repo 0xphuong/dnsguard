@@ -1,13 +1,11 @@
-.section {
-    padding-top: 24px;
-}
-
-.title {
-    margin-bottom: 8px;
-    font-weight: var(--weight-bold);
-}
-
-.description {
-    font-size: var(--fs-text-t2);
-    line-height: var(--lh-t2-normal);
+/* Button defaults to width: 100% with a 200px minimum, sized for a form
+ * footer that spans a dialog.  In a card footer it only needs to be as wide
+ * as its label.
+ *
+ * The three rules that used to live here — .section, .title and .description
+ * — styled the row that doubled as this section's heading.  Section carries
+ * the heading now, so they went with it. */
+.actionButton {
+    width: auto;
+    min-width: 0;
 }

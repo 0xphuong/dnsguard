@@ -42,16 +42,8 @@
     }
 }
 
-.section {
-    padding: 24px 16px 8px;
-}
-
 .certSection {
     padding: 8px 16px;
-}
-
-.plusButton {
-    padding: 0 16px;
 }
 
 .certRow {
@@ -91,4 +83,13 @@
     border-radius: 50%;
     background-color: var(--default-product-icon);
     margin-right: 8px;
+}
+
+/* Section no longer sets a sibling margin — that broke the two-column DNS
+ * grid — so each container supplies its own gap.  Without this the two cards
+ * on this page sat flush against each other. */
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
 }
