@@ -47,3 +47,6 @@ node_modules/
 tmp/
 
 !/build/gitkeep
+
+# macOS Finder metadata
+.DS_Store

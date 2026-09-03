@@ -41,7 +41,7 @@ export const PublicHeader = (props: Props) => {
         <div class={styles.header}>
             <div class={styles.headerContent}>
                 <div class={styles.logoWrap}>
-                    <Logo id="header" />
+                    <Logo full />
                 </div>
                 {props.center}
                 <div class={styles.languageWrap}>

@@ -1,48 +1,50 @@
+import { Show } from 'solid-js';
+import cn from 'clsx';
+
 import s from './styles.module.pcss';
 
 type Props = {
-    id: string;
+    /** Kept for call-site compatibility; nothing in the markup needs it now. */
+    id?: string;
+    /**
+     * Renders the full lock-up — shield and wordmark as one image — instead of
+     * the shield beside live text.
+     *
+     * Only for light grounds.  The wordmark artwork is drawn in navy: its
+     * darkest pixels measure #081a30 and #02172c, which is 1.02:1 and 1.01:1
+     * against the sidebar's #0f172a, so on the dark chrome the word would
+     * simply not be there.  The sidebar therefore keeps the shield with live
+     * text, which follows whatever the theme sets.
+     */
+    full?: boolean;
+    class?: string;
 };
 
-// Logo renders the DNSGuard wordmark: the badge, then "DNS" in the logo colour
-// and "Guard" in the description colour, so both follow the active theme.  The
-// id prop keeps the gradient id unique when several logos share a document.
-export const Logo = (props: Props) => {
-    const id = () => props.id || 'sidebar';
-
-    return (
-        <svg
-            width="173"
-            height="24"
-            viewBox="0 0 173 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            class={s.logo}
-        >
-            <rect width="24" height="24" rx="6" fill={`url(#dnsguardMark_${id()})`} />
-            <path
-                fill="#fff"
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M6.75 5.25h4.95a6.75 6.75 0 0 1 0 13.5H6.75V5.25Zm3.08 2.93v7.64h1.87a3.82 3.82 0 0 0 0-7.64H9.83Z"
-            />
-            <text x="32" y="18" font-size="18" font-weight="700" letter-spacing="-0.4">
-                <tspan class={s.logoCompany}>DNS</tspan>
-                <tspan class={s.logoProduct}>Guard</tspan>
-            </text>
-            <defs>
-                <linearGradient
-                    id={`dnsguardMark_${id()}`}
-                    x1="12"
-                    y1="0"
-                    x2="12"
-                    y2="24"
-                    gradientUnits="userSpaceOnUse"
-                >
-                    <stop stop-color="#2B93C9" />
-                    <stop offset="1" stop-color="#2482B3" />
-                </linearGradient>
-            </defs>
-        </svg>
-    );
-};
+export const Logo = (props: Props) => (
+    <Show
+        when={props.full}
+        fallback={
+            <span class={cn(s.logo, props.class)}>
+                <img
+                    src="assets/logo-shield.png"
+                    width="24"
+                    height="24"
+                    alt=""
+                    class={s.logoMark}
+                />
+                <span class={s.logoText}>
+                    <span class={s.logoCompany}>DNS</span>
+                    <span class={s.logoProduct}>Guard</span>
+                </span>
+            </span>
+        }
+    >
+        <img
+            src="assets/logo-full.png"
+            width="168"
+            height="56"
+            alt="DNSGuard"
+            class={cn(s.logoFull, props.class)}
+        />
+    </Show>
+);

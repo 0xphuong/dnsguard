@@ -71,7 +71,7 @@ export const Footer = () => {
         <footer class={s.footer}>
             <div class={s.container}>
                 <div class={s.leftGroup}>
-                    <div class={s.copyright}>&copy; 2018–{getYear()} DNSGuard</div>
+                    <div class={s.copyright}>&copy; {getYear()} DNSGuard</div>
 
                     <Show when={dashboardState.dnsVersion}>
                         <div class={s.version}>

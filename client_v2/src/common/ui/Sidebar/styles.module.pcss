@@ -38,9 +38,34 @@
     min-height: 0;
 }
 
+/* The shield is artwork; the word beside it is live text, so it takes the
+ * sidebar's own ink and stays legible whatever the theme does. */
 .logo {
-    width: 160px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logoMark {
+    width: 24px;
     height: 24px;
+    flex: none;
+    display: block;
+}
+
+.logoText {
+    font-size: 18px;
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.4px;
+    line-height: 24px;
+    white-space: nowrap;
+}
+
+/* The full lock-up, for light grounds only — see Logo.tsx for the numbers. */
+.logoFull {
+    height: 56px;
+    width: auto;
+    display: block;
 }
 
 .linkWrapper {
@@ -53,9 +78,9 @@
 }
 
 .logoCompany {
-    fill: var(--sidebar-logo);
+    color: var(--sidebar-logo);
 }
 
 .logoProduct {
-    fill: var(--sidebar-logo-muted);
+    color: var(--sidebar-logo-muted);
 }
