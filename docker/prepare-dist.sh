@@ -9,10 +9,28 @@
 # architecture by default) — unlike scripts/make/build-docker.sh, which needs a
 # full six-platform `make build-release` first.
 #
+# The binary is always built for Linux — GOOS is hardcoded below — so the only
+# thing that varies is the architecture, and it defaults to whatever the local
+# Docker daemon runs on.  On an Apple Silicon Mac that is arm64, which will not
+# run on the usual x86-64 Linux server, so an explicit ARCH is needed there.
+#
 # Usage:
 #	sh ./docker/prepare-dist.sh              # host arch
+#	ARCH=amd64 sh ./docker/prepare-dist.sh   # for a typical Linux server
 #	ARCH=arm64 sh ./docker/prepare-dist.sh   # explicit arch
 #	ARCH=arm GOARM=7 sh ./docker/prepare-dist.sh
+#
+# Building an image for a different architecture than the host also needs the
+# platform passed to the builder, because build.Dockerfile picks the binary by
+# TARGETARCH:
+#
+#	ARCH=amd64 VERSION=v1.0.0 CHANNEL=release sh ./docker/prepare-dist.sh
+#	docker buildx build --platform linux/amd64 \
+#		-f docker/build.Dockerfile --build-arg DIST_DIR=dist \
+#		--build-arg VERSION=v1.0.0 -t dnsguard:v1.0.0-amd64 --load .
+#
+# `docker compose build` has no platform flag, so it always produces an image
+# for the host's architecture.
 #
 # Environment:
 #	ARCH      GOARCH to build for.  Default: the host Docker architecture.
