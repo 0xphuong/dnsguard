@@ -221,14 +221,22 @@
     min-height: 24px;
 }
 
-/* Present but quiet until the row is under the pointer or the button has
- * focus: 60 rows each shouting "Block" would drown the feed itself. */
-.blockButton {
-    /* Button defaults to width: 100% with a 200px minimum, which is meant for
-     * form footers.  In a table cell that minimum crushes every column beside
-     * it, so both are dropped here. */
-    width: auto;
-    min-width: 0;
+/* A quiet word rather than a filled button, and invisible until the row is
+ * under the pointer or the action has focus: sixty rows each shouting "Block"
+ * would drown the feed itself. */
+.rowAction {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    /* The smallest target WCAG 2.5.8 accepts. */
+    min-height: 24px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--default-description-text);
+    cursor: pointer;
+    white-space: nowrap;
     opacity: 0;
     transition: opacity var(--t2);
 
@@ -241,6 +249,21 @@
     @media (hover: none) {
         opacity: 1;
     }
+
+    &:disabled {
+        cursor: default;
+    }
+}
+
+/* The colour arrives on hover, where it warns about the click being made. */
+.rowActionBlock:hover:not(:disabled) {
+    color: var(--default-error-link);
+    text-decoration: underline;
+}
+
+.rowActionUndo:hover:not(:disabled) {
+    color: var(--default-link);
+    text-decoration: underline;
 }
 
 .empty {

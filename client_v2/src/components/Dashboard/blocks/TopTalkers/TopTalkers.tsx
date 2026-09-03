@@ -3,7 +3,6 @@ import cn from 'clsx';
 
 import intl from 'panel/common/intl';
 import theme from 'panel/lib/theme';
-import { Button } from 'panel/common/ui/Button';
 import { formatCompactNumber } from 'panel/helpers/helpers';
 import { blockDomain, removeDomainBlock, filteringState } from 'panel/stores/filtering';
 import { getDomainRuleState } from 'panel/helpers/domainRules';
@@ -79,16 +78,41 @@ export const TopTalkers = (props: Props) => {
             >
                 <For each={rows()}>
                     {(row) => {
+                        const state = () => ruleState(row.name);
+
                         return (
                             <div class={s.row}>
+                                {/* The state is a dot rather than a word: the
+                                    rail has room for one action, and the
+                                    action already names the state — a row
+                                    offering Unblock is a blocked row. */}
+                                <Show
+                                    when={state() !== 'none'}
+                                    fallback={<span class={s.dotCell} />}
+                                >
+                                    <span
+                                        class={cn(s.dotCell, s.dot, {
+                                            [s.dotBlocked]: state() === 'blocked',
+                                            [s.dotAllowed]: state() === 'allowed',
+                                        })}
+                                        role="img"
+                                        aria-label={
+                                            state() === 'blocked'
+                                                ? intl.getMessage('blocked')
+                                                : intl.getMessage('top_talkers_allowed_by_rule')
+                                        }
+                                        title={
+                                            state() === 'blocked'
+                                                ? intl.getMessage('blocked')
+                                                : intl.getMessage('top_talkers_allowed_by_rule')
+                                        }
+                                    />
+                                </Show>
+
                                 <span class={cn(theme.text.t3, s.domain)} title={row.name}>
                                     {row.name}
                                 </span>
 
-                                {/* No share here.  A blocked row carries a
-                                    state and an undo as well, and four things
-                                    do not fit the rail — the full table below
-                                    is where the percentages belong. */}
                                 <span
                                     class={cn(theme.text.t4, s.count)}
                                     title={intl.getMessage('queries_tooltip', {
@@ -98,49 +122,36 @@ export const TopTalkers = (props: Props) => {
                                     {formatCompactNumber(row.count)}
                                 </span>
 
-                                {/* Three states, because "nothing blocks
-                                    this" and "you allowed this on purpose"
-                                    are different facts in a firewall and used
-                                    to look identical. */}
                                 <Switch>
-                                    <Match when={ruleState(row.name) === 'blocked'}>
-                                        <span class={s.stateCell}>
-                                            <span class={cn(theme.text.t4, s.blockedLabel)}>
-                                                {intl.getMessage('blocked')}
-                                            </span>
-                                            <Button
-                                                variant="secondary"
-                                                size="very-small"
-                                                compact
-                                                class={s.blockButton}
-                                                disabled={pending().includes(row.name)}
-                                                aria-label={intl.getMessage(
-                                                    'top_talkers_unblock_domain',
-                                                    { value: row.name },
-                                                )}
-                                                onClick={() =>
-                                                    void run(row.name, () =>
-                                                        removeDomainBlock(row.name),
-                                                    )
-                                                }
-                                            >
-                                                {intl.getMessage('unblock')}
-                                            </Button>
-                                        </span>
+                                    <Match when={state() === 'blocked'}>
+                                        <button
+                                            type="button"
+                                            class={cn(theme.text.t4, s.action, s.actionUndo)}
+                                            disabled={pending().includes(row.name)}
+                                            aria-label={intl.getMessage(
+                                                'top_talkers_unblock_domain',
+                                                { value: row.name },
+                                            )}
+                                            onClick={() =>
+                                                void run(row.name, () =>
+                                                    removeDomainBlock(row.name),
+                                                )
+                                            }
+                                        >
+                                            {intl.getMessage('unblock')}
+                                        </button>
                                     </Match>
 
-                                    <Match when={ruleState(row.name) === 'allowed'}>
-                                        <span class={cn(theme.text.t4, s.allowedLabel)}>
-                                            {intl.getMessage('top_talkers_allowed_by_rule')}
-                                        </span>
+                                    {/* An exception already overrides any block,
+                                        so offering one here would do nothing. */}
+                                    <Match when={state() === 'allowed'}>
+                                        <span class={s.action} />
                                     </Match>
 
                                     <Match when={true}>
-                                        <Button
-                                            variant="secondary-danger"
-                                            size="very-small"
-                                            compact
-                                            class={s.blockButton}
+                                        <button
+                                            type="button"
+                                            class={cn(theme.text.t4, s.action, s.actionBlock)}
                                             disabled={pending().includes(row.name)}
                                             aria-label={intl.getMessage(
                                                 'live_stream_block_domain',
@@ -151,7 +162,7 @@ export const TopTalkers = (props: Props) => {
                                             }
                                         >
                                             {intl.getMessage('block')}
-                                        </Button>
+                                        </button>
                                     </Match>
                                 </Switch>
                             </div>

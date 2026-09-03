@@ -3,7 +3,6 @@ import cn from 'clsx';
 
 import intl from 'panel/common/intl';
 import theme from 'panel/lib/theme';
-import { Button } from 'panel/common/ui/Button';
 import { FILTERED_STATUS } from 'panel/helpers/constants';
 import { blockDomain, removeDomainBlock, filteringState } from 'panel/stores/filtering';
 import { getDomainRuleState } from 'panel/helpers/domainRules';
@@ -226,11 +225,13 @@ export const QueryStream = () => {
                                                         status() !== 'blocked' && item.domain
                                                     }
                                                 >
-                                                    <Button
-                                                        variant="secondary-danger"
-                                                        size="very-small"
-                                                        compact
-                                                        class={s.blockButton}
+                                                    <button
+                                                        type="button"
+                                                        class={cn(
+                                                            theme.text.t4,
+                                                            s.rowAction,
+                                                            s.rowActionBlock,
+                                                        )}
                                                         disabled={pending().includes(
                                                             item.domain,
                                                         )}
@@ -245,15 +246,17 @@ export const QueryStream = () => {
                                                         }
                                                     >
                                                         {intl.getMessage('block')}
-                                                    </Button>
+                                                    </button>
                                                 </Show>
                                             }
                                         >
-                                            <Button
-                                                variant="secondary"
-                                                size="very-small"
-                                                compact
-                                                class={s.blockButton}
+                                            <button
+                                                type="button"
+                                                class={cn(
+                                                    theme.text.t4,
+                                                    s.rowAction,
+                                                    s.rowActionUndo,
+                                                )}
                                                 disabled={pending().includes(item.domain)}
                                                 aria-label={intl.getMessage(
                                                     'top_talkers_unblock_domain',
@@ -266,7 +269,7 @@ export const QueryStream = () => {
                                                 }
                                             >
                                                 {intl.getMessage('unblock')}
-                                            </Button>
+                                            </button>
                                         </Show>
                                     </span>
                                 </div>

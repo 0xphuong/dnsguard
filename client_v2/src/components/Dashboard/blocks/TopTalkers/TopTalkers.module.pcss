@@ -33,7 +33,10 @@
 
 .row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
+    /* Fixed tracks, not auto.  Each row is its own grid, so an auto track
+     * sizes to that row's content and a row carrying an undo pushed its
+     * neighbours' columns out of line with every other row. */
+    grid-template-columns: 8px minmax(0, 1fr) 44px 60px;
     align-items: center;
     gap: var(--space-3);
     padding: var(--space-2) var(--space-4);
@@ -63,18 +66,6 @@
     white-space: nowrap;
 }
 
-/* Same reason as in the query stream: Button's 200px minimum is sized for a
- * form footer, and here it would leave the domain a single character wide. */
-.blockButton {
-    width: auto;
-    min-width: 0;
-}
-
-.blockedLabel {
-    color: var(--default-error-link);
-    white-space: nowrap;
-}
-
 .empty {
     margin: 0;
     padding: var(--space-5) var(--space-4);
@@ -82,18 +73,52 @@
     text-align: center;
 }
 
-/* The blocked state carries a label and its undo side by side, so the row
- * says what is true before it says what you can do about it. */
-.stateCell {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    white-space: nowrap;
+.dotCell {
+    width: 8px;
+    height: 8px;
 }
 
-/* "Allowed because you wrote a rule" is not the same as "allowed because
- * nothing blocks it", and only the first one gets a label. */
-.allowedLabel {
-    color: var(--default-success-text);
+.dot {
+    border-radius: 50%;
+}
+
+.dotBlocked {
+    background-color: var(--default-error-link);
+}
+
+.dotAllowed {
+    background-color: var(--fills-success);
+}
+
+/* A quiet word, not a filled button.  Five outlined red buttons stacked in a
+ * narrow rail shout louder than anything else on the page, and the same
+ * mistake was already avoided in the query stream beside it.  The colour
+ * arrives on hover, where it warns about the click being made. */
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* The smallest target WCAG 2.5.8 accepts. */
+    min-height: 24px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--default-description-text);
+    cursor: pointer;
     white-space: nowrap;
+
+    &:disabled {
+        cursor: default;
+        opacity: 0.5;
+    }
+}
+
+.actionBlock:hover:not(:disabled) {
+    color: var(--default-error-link);
+    text-decoration: underline;
+}
+
+.actionUndo:hover:not(:disabled) {
+    color: var(--default-link);
+    text-decoration: underline;
 }
