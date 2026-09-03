@@ -9,6 +9,8 @@ import { Icon } from 'panel/common/ui/Icon';
 import { DISABLE_PROTECTION_TIMINGS, ONE_SECOND_IN_MS } from 'panel/helpers/constants';
 import { msToSeconds, msToMinutes, msToHours } from 'panel/helpers/helpers';
 
+import type { LiveMetrics } from '../../liveMetrics';
+
 import s from './Posture.module.pcss';
 
 const DISABLE_PROTECTION_ITEMS = [
@@ -53,6 +55,15 @@ const getRemainingTimeText = (milliseconds: number) => {
     return hh ? `${formattedHH}:${mm}:${ss}` : `${mm}:${ss}`;
 };
 
+const formatShare = (share: number | null): string =>
+    share === null ? '—' : `${(share * 100).toFixed(share < 0.1 ? 1 : 0)}%`;
+
+const formatRate = (rate: number | null): string => {
+    if (rate === null) return '—';
+
+    return rate >= 10 ? rate.toFixed(0) : rate.toFixed(1);
+};
+
 type Props = {
     protectionEnabled: boolean;
     processingProtection: boolean;
@@ -65,19 +76,19 @@ type Props = {
     portQuic: number | string;
     dnsAddresses: string[];
     dnsPort: number;
-    clientCount: number;
     avgProcessingTime: number;
+    /** Rate, blocked share and verdict, all derived from the hourly series. */
+    metrics: LiveMetrics;
     onToggleProtection: (enabled: boolean, duration?: number) => void;
 };
 
 /**
- * Posture answers the question the dashboard did not: is this resolver
- * actually protecting anything right now.
+ * Posture answers the question the counters below it do not: is this resolver
+ * protecting anything right now, and is what it is doing normal.
  *
- * The four counters below it report volume, which is a different question —
- * they read the same whether DNS is encrypted or wide open.  Every value here
- * comes from state the page already holds, apart from the encryption ports,
- * which the dashboard now fetches for this row.
+ * The counters report volume over a whole period — they read the same whether
+ * DNS is encrypted or wide open, and whether the block rate just tripled or
+ * has not moved in a week.  Everything in this band is about *now*.
  */
 export const Posture = (props: Props) => {
     const [protectionMenuOpen, setProtectionMenuOpen] = createSignal(false);
@@ -104,6 +115,50 @@ export const Posture = (props: Props) => {
             Number(props.portTls) ? 'DoT' : null,
             Number(props.portQuic) ? 'DoQ' : null,
         ].filter(Boolean) as string[];
+    };
+
+    /**
+     * Four states rather than two.  "Active" and "Normal" differ on purpose:
+     * the first says the filter is on, the second adds that its block rate
+     * looks like the last day's, which is a claim that needs history to make.
+     */
+    const verdict = (): 'paused' | 'attention' | 'normal' | 'active' => {
+        if (!props.protectionEnabled) return 'paused';
+        if (props.metrics.level === 'elevated') return 'attention';
+        if (props.metrics.level === 'normal') return 'normal';
+
+        return 'active';
+    };
+
+    const verdictLabel = () => {
+        switch (verdict()) {
+            case 'paused':
+                return intl.getMessage('posture_paused');
+            case 'attention':
+                return intl.getMessage('posture_attention');
+            case 'normal':
+                return intl.getMessage('posture_normal');
+            default:
+                return intl.getMessage('posture_active');
+        }
+    };
+
+    const note = () => {
+        const baseline = formatShare(props.metrics.baselineShare);
+
+        switch (verdict()) {
+            case 'paused':
+                return intl.getMessage('posture_note_paused');
+            case 'attention':
+                return intl.getMessage('posture_note_elevated', {
+                    current: formatShare(props.metrics.blockedShare),
+                    baseline,
+                });
+            case 'normal':
+                return intl.getMessage('posture_note_normal', { baseline });
+            default:
+                return intl.getMessage('posture_note_unknown');
+        }
     };
 
     const protectionMenu = (
@@ -134,117 +189,139 @@ export const Posture = (props: Props) => {
 
     return (
         <div class={s.posture} data-testid="dashboard-posture">
-            <div class={cn(s.segment, s.segmentProtection)}>
-                <div class={s.segmentBody}>
-                    <div class={cn(theme.text.t4, s.label)}>{intl.getMessage('protection')}</div>
+            <div class={s.segments}>
+                <div class={cn(s.segment, s.segmentProtection)}>
+                    <div class={s.segmentBody}>
+                        <div class={cn(theme.text.t4, s.label)}>
+                            {intl.getMessage('protection')}
+                        </div>
 
+                        <div class={s.stateRow}>
+                            <span
+                                class={cn(s.dot, {
+                                    [s.dotOn]: verdict() === 'normal' || verdict() === 'active',
+                                    [s.dotWarn]: verdict() === 'attention',
+                                    [s.dotOff]: verdict() === 'paused',
+                                })}
+                                aria-hidden="true"
+                            />
+                            <span class={s.value}>{verdictLabel()}</span>
+                            <Show when={props.remainingTime && props.remainingTime > 0}>
+                                <span class={cn(theme.text.t4, s.countdown)}>
+                                    {getRemainingTimeText(props.remainingTime!)}
+                                </span>
+                            </Show>
+                        </div>
+                    </div>
+
+                    <div class={s.controls}>
+                        <Switch
+                            id="protection_toggle"
+                            data-testid="protection-toggle"
+                            checked={!!props.protectionEnabled}
+                            onChange={handleToggleProtection}
+                            disabled={props.processingProtection}
+                        />
+
+                        <Dropdown
+                            menu={protectionMenu}
+                            position="bottomLeft"
+                            open={protectionMenuOpen()}
+                            onOpenChange={setProtectionMenuOpen}
+                            disabled={!props.protectionEnabled}
+                            noIcon
+                        >
+                            <button
+                                type="button"
+                                class={s.dropdownTrigger}
+                                aria-label={intl.getMessage('disable_protection_btn')}
+                                disabled={!props.protectionEnabled}
+                            >
+                                <Icon icon="bullets" />
+                            </button>
+                        </Dropdown>
+                    </div>
+                </div>
+
+                <div class={s.segment}>
+                    <div class={cn(theme.text.t4, s.label)}>{intl.getMessage('posture_rate')}</div>
+                    <div class={s.stateRow}>
+                        <span class={cn(s.value, s.valueMono)}>
+                            {formatRate(props.metrics.ratePerMinute)}
+                        </span>
+                    </div>
+                </div>
+
+                <div class={s.segment}>
+                    <div class={cn(theme.text.t4, s.label)}>{intl.getMessage('blocked')}</div>
                     <div class={s.stateRow}>
                         <span
-                            class={cn(s.dot, {
-                                [s.dotOn]: props.protectionEnabled,
-                                [s.dotOff]: !props.protectionEnabled,
+                            class={cn(s.value, s.valueMono, {
+                                [s.valueWarn]: verdict() === 'attention',
                             })}
-                            aria-hidden="true"
-                        />
-                        <span class={s.value}>
-                            {props.protectionEnabled
-                                ? intl.getMessage('posture_active')
-                                : intl.getMessage('posture_paused')}
+                        >
+                            {formatShare(props.metrics.blockedShare)}
                         </span>
-                        <Show when={props.remainingTime && props.remainingTime > 0}>
-                            <span class={cn(theme.text.t4, s.countdown)}>
-                                {getRemainingTimeText(props.remainingTime!)}
+                    </div>
+                </div>
+
+                <div class={s.segment}>
+                    <div class={cn(theme.text.t4, s.label)}>
+                        {intl.getMessage('posture_avg_response')}
+                    </div>
+                    <div class={s.stateRow}>
+                        <span class={cn(s.value, s.valueMono)}>
+                            {intl.getMessage('processing_time_ms', {
+                                // The store already runs secondsToMilliseconds
+                                // on the API value, so this must not scale it
+                                // again.
+                                value: (props.avgProcessingTime ?? 0).toFixed(0),
+                            })}
+                        </span>
+                    </div>
+                </div>
+
+                <div class={s.segment}>
+                    <div class={cn(theme.text.t4, s.label)}>
+                        {intl.getMessage('encryption_title')}
+                    </div>
+                    <div class={s.stateRow}>
+                        <Show
+                            when={encryptedProtocols().length > 0}
+                            fallback={
+                                <>
+                                    <span class={cn(s.dot, s.dotWarn)} aria-hidden="true" />
+                                    <span class={cn(s.value, s.valueMuted)}>
+                                        {intl.getMessage('posture_not_configured')}
+                                    </span>
+                                </>
+                            }
+                        >
+                            <span class={cn(s.dot, s.dotOn)} aria-hidden="true" />
+                            <span class={cn(s.value, s.valueMono)}>
+                                {encryptedProtocols().join(' · ')}
                             </span>
                         </Show>
                     </div>
                 </div>
 
-                <div class={s.controls}>
-                    <Switch
-                        id="protection_toggle"
-                        data-testid="protection-toggle"
-                        checked={!!props.protectionEnabled}
-                        onChange={handleToggleProtection}
-                        disabled={props.processingProtection}
-                    />
-
-                    <Dropdown
-                        menu={protectionMenu}
-                        position="bottomLeft"
-                        open={protectionMenuOpen()}
-                        onOpenChange={setProtectionMenuOpen}
-                        disabled={!props.protectionEnabled}
-                        noIcon
-                    >
-                        <button
-                            type="button"
-                            class={s.dropdownTrigger}
-                            aria-label={intl.getMessage('disable_protection_btn')}
-                            disabled={!props.protectionEnabled}
-                        >
-                            <Icon icon="bullets" />
-                        </button>
-                    </Dropdown>
-                </div>
-            </div>
-
-            <div class={s.segment}>
-                <div class={cn(theme.text.t4, s.label)}>
-                    {intl.getMessage('encryption_title')}
-                </div>
-                <div class={s.stateRow}>
-                    <Show
-                        when={encryptedProtocols().length > 0}
-                        fallback={
-                            <>
-                                <span class={cn(s.dot, s.dotWarn)} aria-hidden="true" />
-                                <span class={cn(s.value, s.valueMuted)}>
-                                    {intl.getMessage('posture_not_configured')}
-                                </span>
-                            </>
-                        }
-                    >
-                        <span class={cn(s.dot, s.dotOn)} aria-hidden="true" />
-                        <span class={cn(s.value, s.valueMono)}>
-                            {encryptedProtocols().join(' · ')}
+                <div class={s.segment}>
+                    <div class={cn(theme.text.t4, s.label)}>
+                        {intl.getMessage('posture_listening')}
+                    </div>
+                    <div class={s.stateRow}>
+                        <span class={cn(s.value, s.valueMono)}>:{props.dnsPort}</span>
+                        <span class={cn(theme.text.t4, s.valueMuted)}>
+                            {props.dnsAddresses.length}
                         </span>
-                    </Show>
+                    </div>
                 </div>
             </div>
 
-            <div class={s.segment}>
-                <div class={cn(theme.text.t4, s.label)}>
-                    {intl.getMessage('posture_listening')}
-                </div>
-                <div class={s.stateRow}>
-                    <span class={cn(s.value, s.valueMono)}>:{props.dnsPort}</span>
-                    <span class={cn(theme.text.t4, s.valueMuted)}>
-                        {props.dnsAddresses.length}
-                    </span>
-                </div>
-            </div>
-
-            <div class={s.segment}>
-                <div class={cn(theme.text.t4, s.label)}>{intl.getMessage('clients')}</div>
-                <div class={s.stateRow}>
-                    <span class={cn(s.value, s.valueMono)}>{props.clientCount}</span>
-                </div>
-            </div>
-
-            <div class={s.segment}>
-                <div class={cn(theme.text.t4, s.label)}>
-                    {intl.getMessage('posture_avg_response')}
-                </div>
-                <div class={s.stateRow}>
-                    <span class={cn(s.value, s.valueMono)}>
-                        {intl.getMessage('processing_time_ms', {
-                            // The store already runs secondsToMilliseconds on
-                            // the API value, so this must not scale it again.
-                            value: (props.avgProcessingTime ?? 0).toFixed(0),
-                        })}
-                    </span>
-                </div>
-            </div>
+            {/* The band states facts; this line states what they mean.  It is
+                deliberately a sentence: a verdict without its basis is not
+                something an operator can check. */}
+            <p class={cn(theme.text.t4, s.note)}>{note()}</p>
         </div>
     );
 };

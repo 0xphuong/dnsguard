@@ -2,8 +2,6 @@
  * segments are facets of a single answer, and nesting cards inside the page's
  * card grid would add a second frame around content that needs none. */
 .posture {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     border: 1px solid var(--default-item-divider);
     border-radius: var(--radius-md);
     background-color: var(--default-cards-background);
@@ -11,14 +9,25 @@
     margin: 0 var(--space-4) var(--space-4);
     overflow: hidden;
 
+    @media (min-width: 1024px) {
+        margin: 0 0 var(--space-4);
+    }
+}
+
+/* The grid is a child rather than the strip itself so that the note below can
+ * sit outside it without every nth-child border rule having to account for a
+ * full-width row. */
+.segments {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
     @media (min-width: 768px) {
         grid-template-columns: repeat(3, 1fr);
     }
 
     @media (min-width: 1024px) {
         /* Protection carries a control, so it gets the wider track. */
-        grid-template-columns: 1.6fr 1fr 1fr 0.8fr 1fr;
-        margin: 0 0 var(--space-4);
+        grid-template-columns: 1.7fr repeat(5, 1fr);
     }
 }
 
@@ -114,6 +123,12 @@
     font-variant-numeric: tabular-nums;
 }
 
+/* The one value the verdict is derived from, tinted only when the verdict is
+ * "Attention", so the number and the dot agree. */
+.valueWarn {
+    color: var(--default-attention-link);
+}
+
 .valueMuted {
     color: var(--default-description-text);
     font-weight: var(--weight-regular);
@@ -174,4 +189,14 @@
 
 .protectionMenu {
     padding: var(--space-1) 0;
+}
+
+/* Reads as a caption to the strip above, not a sixth fact: separated by the
+ * same divider the segments use, and set in the description colour. */
+.note {
+    margin: 0;
+    padding: var(--space-2) var(--space-4);
+    border-top: 1px solid var(--default-item-divider);
+    background-color: var(--default-page-background);
+    color: var(--default-description-text);
 }

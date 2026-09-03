@@ -1,0 +1,251 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border: 1px solid var(--default-item-divider);
+    border-radius: var(--radius-lg);
+    background-color: var(--default-cards-background);
+    box-shadow: var(--elev-1);
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--default-item-divider);
+}
+
+.title {
+    margin: 0;
+    color: var(--default-description-text);
+    font-weight: var(--weight-semi-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.chips {
+    display: flex;
+    gap: 2px;
+    margin-left: auto;
+    padding: 2px;
+    border-radius: var(--radius-md);
+    background-color: var(--default-page-background);
+}
+
+.chip {
+    padding: 3px var(--space-3);
+    /* 24px tall including the track padding, which is the smallest target
+     * WCAG 2.5.8 accepts. */
+    min-height: 20px;
+    border: 0;
+    border-radius: calc(var(--radius-md) - 2px);
+    background: none;
+    color: var(--default-description-text);
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+        color: var(--default-main-text);
+    }
+}
+
+.chipOn {
+    background-color: var(--default-cards-background);
+    box-shadow: var(--elev-1);
+    color: var(--default-main-text);
+}
+
+.streamToggle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 24px;
+    padding: 0 var(--space-2);
+    border: 0;
+    background: none;
+    color: var(--default-description-text);
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+        color: var(--default-main-text);
+    }
+}
+
+.pulse {
+    flex: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--default-gray-icons);
+}
+
+/* The feed's own heartbeat.  It is the only animation on the page, and it is
+ * here because a frozen list and a live one look identical otherwise. */
+.pulseOn {
+    background-color: var(--fills-success);
+
+    @media (prefers-reduced-motion: no-preference) {
+        animation: beat 2s ease-in-out infinite;
+    }
+}
+
+.pulseStale {
+    background-color: var(--default-attention-link);
+}
+
+@keyframes beat {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--fills-success) 40%, transparent);
+    }
+
+    50% {
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--fills-success) 0%, transparent);
+    }
+}
+
+.feed {
+    /* Tall enough for roughly a dozen rows, capped so a busy resolver does not
+     * turn the dashboard into one endless column. */
+    max-height: 480px;
+    min-height: 240px;
+    overflow-y: auto;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-1) var(--space-3);
+    padding: var(--space-2) var(--space-4);
+    /* A transparent left edge on every row, coloured only on the rows that
+     * need it, so the text never shifts when a status changes. */
+    border-left: 2px solid transparent;
+    border-bottom: 1px solid var(--default-item-divider);
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background-color: var(--hovered-page-background);
+    }
+
+    @media (min-width: 768px) {
+        grid-template-columns: auto minmax(0, 1fr) 110px 130px 72px;
+        gap: var(--space-3);
+    }
+}
+
+.rowBlocked {
+    border-left-color: var(--default-error-link);
+}
+
+.rowThreat {
+    border-left-color: var(--default-attention-link);
+}
+
+.rowError {
+    border-left-color: var(--default-gray-icons);
+}
+
+/* Times, domains, and addresses are machine values: they line up column-wise
+ * only in tabular figures, and the feed is read by scanning down a column. */
+.time {
+    font-family: var(--font-family-monospace);
+    font-variant-numeric: tabular-nums;
+    color: var(--default-description-text);
+    white-space: nowrap;
+}
+
+.domain {
+    min-width: 0;
+    font-family: var(--font-family-monospace);
+    color: var(--default-main-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--default-description-text);
+    white-space: nowrap;
+}
+
+.statusDot {
+    flex: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentcolor;
+}
+
+.statusBlocked {
+    color: var(--default-error-link);
+}
+
+.statusAllowed {
+    color: var(--fills-success);
+}
+
+.statusRewritten {
+    color: var(--default-link);
+}
+
+.statusError,
+.statusThreat {
+    color: var(--default-attention-link);
+}
+
+.client {
+    font-family: var(--font-family-monospace);
+    font-variant-numeric: tabular-nums;
+    color: var(--default-description-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.action {
+    display: flex;
+    justify-content: flex-end;
+    /* Reserved even when empty, so rows with and without the action keep the
+     * same columns. */
+    min-height: 24px;
+}
+
+/* Present but quiet until the row is under the pointer or the button has
+ * focus: 60 rows each shouting "Block" would drown the feed itself. */
+.blockButton {
+    /* Button defaults to width: 100% with a 200px minimum, which is meant for
+     * form footers.  In a table cell that minimum crushes every column beside
+     * it, so both are dropped here. */
+    width: auto;
+    min-width: 0;
+    opacity: 0;
+    transition: opacity var(--t2);
+
+    .row:hover &,
+    &:focus-visible {
+        opacity: 1;
+    }
+
+    /* Touch has no hover, so there the action is simply always visible. */
+    @media (hover: none) {
+        opacity: 1;
+    }
+}
+
+.empty {
+    margin: 0;
+    padding: var(--space-6) var(--space-4);
+    color: var(--default-description-text);
+    text-align: center;
+}

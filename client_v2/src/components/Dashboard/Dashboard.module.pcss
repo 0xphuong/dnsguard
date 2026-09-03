@@ -24,3 +24,32 @@
 .emptyState {
     flex: 1;
 }
+
+/* The live console: the feed takes the width it needs to stay readable at a
+ * glance, and the shortlist beside it stays narrow because it is five rows and
+ * a button, not a table. */
+.console {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    padding: 0 var(--space-4);
+    margin-bottom: var(--space-6);
+    align-items: start;
+
+    @media (min-width: 1024px) {
+        grid-template-columns: minmax(0, 2.2fr) minmax(280px, 1fr);
+        gap: var(--space-4);
+        padding: 0;
+    }
+}
+
+/* Marks where the page stops being about now and starts being about the
+ * selected period.  Without it the counters read as more live numbers. */
+.sectionTitle {
+    margin: 0 var(--space-4) var(--space-3);
+    color: var(--default-description-text);
+
+    @media (min-width: 1024px) {
+        margin: 0 0 var(--space-3);
+    }
+}
