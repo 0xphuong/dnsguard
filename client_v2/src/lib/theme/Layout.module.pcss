@@ -34,9 +34,20 @@
     display: flex;
     flex-direction: column;
 
+    /* Centred rather than left-aligned.  The outer container is already
+     * centred, but a capped column inside it with no auto margin hugs that
+     * container's left edge: in a 1440px window the settings column left 48px
+     * of space on one side and 392px on the other.
+     *
+     * The trade-off, taken deliberately: this column's left edge no longer
+     * matches the full-width pages'.  Every page that uses it is a
+     * configuration page, so they stay aligned with each other, and the
+     * full-width pages are tables and grids that already read as a different
+     * kind of screen. */
     &_one_col {
         @media (min-width: 1024px) {
             max-width: 584px;
+            margin-inline: auto;
         }
     }
 }
