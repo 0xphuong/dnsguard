@@ -12,6 +12,7 @@
 #	sh ./docker/build-image.sh --version v1.0.0
 #	sh ./docker/build-image.sh -v v1.0.0 -p linux/amd64
 #	sh ./docker/build-image.sh -v v1.0.0 -p linux/amd64,linux/arm64 --push
+#	sh ./docker/build-image.sh -v v1.0.0 -r myuser/dnsguard -p linux/amd64
 #
 # Options:
 #	-v, --version <v>   Version baked into the binary and the image labels.
@@ -24,8 +25,12 @@
 #	-c, --channel <c>   development | edge | beta | release | candidate.
 #	                    Decides which version.json the updater consults.
 #	                    Default: release.
-#	-t, --tag <t>       Image tag.  Default: dnsguard:<version>, with the
-#	                    architecture appended when only one is built.
+#	-r, --repo <r>      Image repository.  Default: binhphuong/dnsguard.
+#	-t, --tag <t>       Full image reference, overriding --repo and the
+#	                    version.  Default: <repo>:<version>, with the
+#	                    architecture appended for a local single-platform
+#	                    build so two runs cannot overwrite each other; a
+#	                    push keeps the plain <repo>:<version>.
 #	-b, --builder <b>   buildx builder to use.  Default: the current one.
 #	    --push          Push to a registry instead of loading locally.
 #	                    Required for more than one platform: a local image
@@ -42,6 +47,7 @@ readonly script_dir repo_dir
 version=''
 platforms=''
 channel='release'
+repo='binhphuong/dnsguard'
 tag=''
 builder=''
 push='0'
@@ -70,6 +76,7 @@ while [ "$#" -gt 0 ]; do
 	-v | --version) need_value "$1" "$#"; version="$2"; shift 2 ;;
 	-p | --platform) need_value "$1" "$#"; platforms="$2"; shift 2 ;;
 	-c | --channel) need_value "$1" "$#"; channel="$2"; shift 2 ;;
+	-r | --repo) need_value "$1" "$#"; repo="$2"; shift 2 ;;
 	-t | --tag) need_value "$1" "$#"; tag="$2"; shift 2 ;;
 	-b | --builder) need_value "$1" "$#"; builder="$2"; shift 2 ;;
 	--push) push='1'; shift ;;
@@ -142,10 +149,12 @@ for platform in $(printf '%s' "$platforms" | tr ',' ' '); do
 done
 
 if [ "$tag" = '' ]; then
-	tag="dnsguard:${version}"
-	# One platform means one architecture in the tag, so two builds on the same
-	# machine do not silently overwrite each other.
-	if [ "$platform_count" -eq 1 ]; then
+	tag="${repo}:${version}"
+	# A local build of one platform gets the architecture in its tag, so
+	# building amd64 after arm64 does not silently replace it in the image
+	# store.  A push does not: what lands in the registry should be the plain
+	# version, and a multi-platform push publishes one manifest under it.
+	if [ "$platform_count" -eq 1 ] && [ "$push" = '0' ]; then
 		only_arch=$(printf '%s' "$platforms" | cut -d/ -f2)
 		tag="${tag}-${only_arch}"
 	fi
