@@ -1,6 +1,6 @@
 {
-  "announcement": "DNSGuard v0.1.0 is now available!",
-  "announcement_url": "https://github.com/0xphuong/dnsguard/releases/tag/v0.1.0",
+  "announcement": "DNSGuard v1.0.0 is now available!",
+  "announcement_url": "https://github.com/0xphuong/dnsguard/releases/tag/v1.0.0",
   "download_darwin_amd64": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_darwin_amd64.zip",
   "download_darwin_arm64": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_darwin_arm64.zip",
   "download_freebsd_386": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_freebsd_386.tar.gz",
@@ -31,5 +31,5 @@
   "download_windows_amd64": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_windows_amd64.zip",
   "download_windows_arm64": "https://github.com/0xphuong/dnsguard/releases/latest/download/DNSGuard_windows_arm64.zip",
   "selfupdate_min_version": "0.0",
-  "version": "v0.1.0"
+  "version": "v1.0.0"
 }

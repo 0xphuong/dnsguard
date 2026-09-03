@@ -1,26 +1,83 @@
-# AdGuard Home Changelog
+# DNSGuard Changelog
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [*Keep a Changelog*](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+DNSGuard is a fork of AdGuard Home. Entries from `v0.107.79` down are AdGuard
+Home's own history, kept because the code they describe is still here.
+
 ## [Unreleased]
 
-<!--
-## [v1.0.0] – TBA
+## [v1.0.0] - 2026-09-03
 
-## [v0.107.80] - 2026-09-03 (APPROX.)
+The first release under the DNSGuard name, and the first with an interface
+built for a DNS firewall rather than inherited from one.
 
-See also the [v0.107.80 GitHub milestone][ms-v0.107.80].
+### Added
 
-[ms-v0.107.80]: https://github.com/AdguardTeam/AdGuardHome/milestone/115?closed=1
+- Blocked queries are now counted per client, so a device's blocked share is a
+  number the resolver measures rather than one the interface has to guess. It
+  is reported as `top_blocked_clients`. Statistics written before the field
+  existed still decode.
+- The dashboard opens on a live query stream and a shortlist of the domains
+  getting through most, each row carrying the action that follows from reading
+  it. The counters moved below, under their own heading.
+- A status band reporting a query rate, a blocked share, and a verdict on
+  whether this hour looks like the last day. It says so plainly when it does
+  not have the history to judge.
+- Clients are shown as devices — one card per address the resolver has
+  answered, with how much of its traffic is filtered. The two configuration
+  tables are still there, behind their own tabs.
+- A command palette on `Ctrl`/`Cmd`+`K` reaching all fourteen routes, not the
+  six the sidebar lists, and able to block a domain from anywhere.
+- `docker/build-image.sh`, which builds the binary and the image for a chosen
+  platform together. The two have to agree — the binary is named after its
+  architecture and the Dockerfile picks it by `TARGETARCH` — and neither
+  complains when they do not.
 
-NOTE: Add new changes BELOW THIS COMMENT.
--->
+### Changed
 
-<!--
-NOTE: Add new changes ABOVE THIS COMMENT.
--->
+- The design language now follows the NexGuard portal, so the two products in
+  the family read as one screen: the Tailwind ramps it is built from, its
+  section cards under small tracked labels, its page header band, and `ON`/`OFF`
+  spelled out beside every settings toggle.
+- Light is the default theme, as the NexGuard portal ships light-only. Dark
+  remains selectable. A fresh installation now stores `theme: light` rather
+  than `theme: auto`; existing configurations keep what they saved.
+- Rubik and an unbundled system monospace are replaced by Fira Sans and Fira
+  Mono, both self-hosted. Bundling the monospace matters: with a system stack
+  the same table of addresses rendered at a different width on every platform.
+- The colour primitives are generated in OKLCH, one hue and one chroma profile
+  per ramp. A contrast audit across both themes went from eighteen failures to
+  four, and the four that remain are NexGuard's own border and track values,
+  answered by the `ON`/`OFF` label beside the switch.
+- The chart series were chosen with a colour-blindness validator rather than by
+  eye. Ads on red and threats on amber had sat 0.4 ΔE apart under
+  deuteranopia — the same colour to a red-green colourblind reader.
+- The configuration file is `dnsguard.yaml`, with `AdGuardHome.yaml` still read
+  when the new name is absent, so an existing installation keeps working
+  without being renamed.
+- The updater consults this repository's own `version.json` rather than
+  AdGuard's.
+- The new shield and wordmark are used throughout, and every icon the panel
+  serves is generated from them.
+
+### Fixed
+
+- The Top talkers card offered Block on every row and, once clicked, showed
+  "Blocked" from state that lived in the component: it did not survive a
+  reload, knew nothing about rules made elsewhere, and left no way back. The
+  dashboard had never loaded the filtering status at all, so the card had no
+  rules to consult.
+- Six `var()` references named variables nothing defines, so the browser
+  dropped the declarations: tabs had no hover background, the custom scrollbar
+  had neither track nor thumb colour, the warning toast icon and the install
+  wizard's error text had no colour, and one `font-size` was lost to a mistyped
+  token.
+- The primary and danger buttons hardcoded a white label, so no theme could
+  answer for it; white on the brand step measured 3.33:1.
+- Keyboard focus was visible on 3 of 14 reachable elements.
 
 ## [v0.107.79] - 2026-08-17
 
@@ -3742,7 +3799,13 @@ See also the [v0.104.2 GitHub milestone][ms-v0.104.2].
 [v0.107.80]:  https://github.com/AdguardTeam/AdGuardHome/compare/v0.107.79...v0.107.80
 -->
 
-[Unreleased]: https://github.com/AdguardTeam/AdGuardHome/compare/v0.107.79...HEAD
+<!-- This fork's own releases.  The comparisons below v1.0.0 stay on the
+     upstream repository, because that is where those commits live. -->
+
+[Unreleased]: https://github.com/0xphuong/dnsguard/compare/v1.0.0...HEAD
+[v1.0.0]:     https://github.com/0xphuong/dnsguard/compare/v0.1.0...v1.0.0
+[v0.1.0]:     https://github.com/0xphuong/dnsguard/releases/tag/v0.1.0
+
 [v0.107.79]:  https://github.com/AdguardTeam/AdGuardHome/compare/v0.107.78...v0.107.79
 [v0.107.78]:  https://github.com/AdguardTeam/AdGuardHome/compare/v0.107.77...v0.107.78
 [v0.107.77]:  https://github.com/AdguardTeam/AdGuardHome/compare/v0.107.76...v0.107.77
