@@ -13,6 +13,7 @@ import {
 } from 'panel/stores/rewrites';
 import { ConfirmDialog } from 'panel/common/ui/ConfirmDialog';
 import { SettingRow } from 'panel/common/ui/SettingRow';
+import { PageHeader } from 'panel/common/ui/PageHeader';
 import { openModal } from 'panel/stores/modals';
 import { DeleteRewriteModal } from 'panel/components/FilterLists/blocks/DeleteRewriteModal';
 import { PlusButton } from 'panel/common/ui/PlusButton';
@@ -97,13 +98,15 @@ export const DNSRewrites = () => {
     return (
         <div class={cn(theme.layout.container, s.dnsRewritesContainer)}>
             <div class={theme.layout.containerIn}>
+                <PageHeader
+                    title={intl.getMessage('dns_rewrites')}
+                    subtitle={intl.getMessage('dns_rewrites_desc')}
+                />
+
                 <SettingRow
                     variant="switch"
                     id="rewrite_global_enabled"
-                    title={intl.getMessage('dns_rewrites')}
-                    titleClass={cn(theme.title.h4, theme.title.h3_tablet)}
-                    description={intl.getMessage('dns_rewrites_desc')}
-                    descriptionClass={s.settingRowDesc}
+                    title={intl.getMessage('enable')}
                     checked={rewritesState.enabled}
                     disabled={isInitialSettingsLoad()}
                     onChange={(value: boolean) => openGlobalToggleConfirm(value)}

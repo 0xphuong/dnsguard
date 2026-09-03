@@ -5,6 +5,7 @@ import { useNavigate } from '@solidjs/router';
 import { Dropdown } from 'panel/common/ui/Dropdown';
 import { Icon } from 'panel/common/ui/Icon';
 import { PageLoader } from 'panel/common/ui/Loader';
+import { PageHeader } from 'panel/common/ui/PageHeader';
 import { SettingRow } from 'panel/common/ui/SettingRow';
 import { ConfirmDialog } from 'panel/common/ui/ConfirmDialog';
 import intl from 'panel/common/intl';
@@ -120,33 +121,27 @@ export const Dhcp = () => {
                     </Show>
 
                     <Show when={dhcpState.dhcp_available}>
-                        <div class={s.header}>
-                            <h1
-                                class={cn(
-                                    theme.layout.title,
-                                    theme.title.h4,
-                                    theme.title.h3_tablet,
-                                    s.title,
-                                )}
-                            >
-                                {intl.getMessage('dhcp')}
-                            </h1>
-                            <Dropdown
-                                position="bottomRight"
-                                noIcon
-                                open={menuOpen()}
-                                onOpenChange={setMenuOpen}
-                                menu={resetMenu}
-                            >
-                                <button
-                                    type="button"
-                                    class={cn(theme.form.action, s.menuButton)}
-                                    aria-label={intl.getMessage('reset_dhcp_settings')}
+                        <PageHeader
+                            title={intl.getMessage('dhcp')}
+                            subtitle={intl.getMessage('dhcp_page_desc')}
+                            actions={
+                                <Dropdown
+                                    position="bottomRight"
+                                    noIcon
+                                    open={menuOpen()}
+                                    onOpenChange={setMenuOpen}
+                                    menu={resetMenu}
                                 >
-                                    <Icon icon="bullets" />
-                                </button>
-                            </Dropdown>
-                        </div>
+                                    <button
+                                        type="button"
+                                        class={cn(theme.form.action, s.menuButton)}
+                                        aria-label={intl.getMessage('reset_dhcp_settings')}
+                                    >
+                                        <Icon icon="bullets" />
+                                    </button>
+                                </Dropdown>
+                            }
+                        />
 
                         <DhcpToggle
                             selectedInterface={selectedInterface}

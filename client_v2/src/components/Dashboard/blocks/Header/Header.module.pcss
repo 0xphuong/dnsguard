@@ -1,9 +1,14 @@
+/* This toolbar stands in for the shared PageHeader, which it cannot use
+ * because it carries mobile and desktop variants of both the title and the
+ * refresh control.  It takes the band's rule and spacing so the page still
+ * opens the same way every other page does. */
 .header {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding: 0 16px;
-    margin: 0 0 32px;
+    padding: 0 16px 16px;
+    margin: 0 0 24px;
+    border-bottom: 1px solid var(--default-item-divider);
 
     @media (min-width: 1024px) {
         flex-direction: row;
@@ -11,7 +16,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 32px 16px;
-        padding: 0;
+        padding: 0 0 16px;
     }
 }
 

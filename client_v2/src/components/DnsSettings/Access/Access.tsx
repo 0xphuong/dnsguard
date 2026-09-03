@@ -1,12 +1,11 @@
 import { createMemo } from 'solid-js';
-import cn from 'clsx';
 
 import { accessState } from 'panel/stores/access';
 import intl from 'panel/common/intl';
 import { SettingRow } from 'panel/common/ui/SettingRow';
+import { Section } from 'panel/common/ui/Section';
 import { useDialog } from 'panel/hooks/useDialog';
 import { getListSummary } from '../helpers';
-import theme from 'panel/lib/theme';
 
 import { AllowedClientsDialog } from './blocks/AllowedClientsDialog';
 import { DisallowedClientsDialog } from './blocks/DisallowedClientsDialog';
@@ -25,10 +24,7 @@ export const Access = () => {
     const disallowedDomainsValue = createMemo(() => getListSummary(accessState.blocked_hosts));
 
     return (
-        <div>
-            <h2 class={cn(theme.layout.subtitle, theme.title.h5, theme.title.h4_tablet)}>
-                {intl.getMessage('dns_access_settings_title')}
-            </h2>
+        <Section title={intl.getMessage('dns_access_settings_title')}>
 
             <SettingRow
                 variant="link"
@@ -78,6 +74,6 @@ export const Access = () => {
                 onClose={disallowedDomainsDialog.closeDialog}
                 processing={processing()}
             />
-        </div>
+        </Section>
     );
 };

@@ -1,11 +1,16 @@
+/* Stands in for the shared PageHeader for the same reason as the dashboard's:
+ * it carries a search field and a filter row that the shared band has no slot
+ * for.  It takes the band's rule so the page opens the same way. */
 .header {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding: 0 16px;
+    padding: 0 16px 16px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--default-item-divider);
 
     @media (min-width: 1024px) {
-        padding: 0;
+        padding: 0 0 16px;
         flex-direction: row;
         align-items: center;
     }

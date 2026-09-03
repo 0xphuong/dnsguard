@@ -10,7 +10,10 @@
     @media (min-width: 1280px) {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 0 var(--space-6);
+        /* Both gaps: a Section carries its own top margin only when it
+         * follows a sibling, and in a grid every section is a first child of
+         * its own cell. */
+        gap: var(--space-6);
         align-items: start;
     }
 }

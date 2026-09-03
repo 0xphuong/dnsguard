@@ -11,6 +11,7 @@ import { servicesState, getBlockedServices, getAllBlockedServices } from 'panel/
 import { rewritesState, getRewritesList } from 'panel/stores/rewrites';
 import { MODAL_TYPE } from 'panel/helpers/constants';
 import theme from 'panel/lib/theme';
+import { PageHeader } from 'panel/common/ui/PageHeader';
 import { Loader, PageLoader } from 'panel/common/ui/Loader';
 import { ConfigureRewritesModal } from 'panel/components/FilterLists/blocks/ConfigureRewritesModal/ConfigureRewritesModal';
 import { DeleteRewriteModal } from 'panel/components/FilterLists/blocks/DeleteRewriteModal';
@@ -141,9 +142,10 @@ export const UserRules = () => {
             <div class={theme.layout.container}>
                 <div class={s.container}>
                     <div class={s.wrapper}>
-                        <h1 class={cn(theme.title.h4, theme.title.h3_tablet, s.pageTitle)}>
-                            {intl.getMessage('user_rules_title')}
-                        </h1>
+                        <PageHeader
+                            title={intl.getMessage('user_rules_title')}
+                            subtitle={intl.getMessage('user_rules_page_desc')}
+                        />
 
                         <RulesEditor
                             value={userRulesValue()}

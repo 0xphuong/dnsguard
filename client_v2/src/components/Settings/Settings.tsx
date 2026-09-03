@@ -20,6 +20,7 @@ import { addSuccessToast } from 'panel/stores/toasts';
 
 import { SettingRow } from 'panel/common/ui/SettingRow';
 import { PageHeader } from 'panel/common/ui/PageHeader';
+import { Section } from 'panel/common/ui/Section';
 import { StatsConfig } from './StatsConfig';
 import { LogsConfig } from './LogsConfig';
 import { FiltersConfig } from './FiltersConfig';
@@ -159,13 +160,11 @@ export const Settings = () => {
                 <Show
                     when={isLoading()}
                     fallback={
-                        <>
-                            <h2 class={cn(theme.text.t4, s.sectionLabel)} id="filtering">
-                                {intl.getMessage('settings_filtering_and_security')}
-                            </h2>
-
-                            <section class={s.card}>
-                                <div class={s.cardBody}>
+                        <div class={s.stack}>
+                            <Section
+                                id="filtering"
+                                title={intl.getMessage('settings_filtering_and_security')}
+                            >
                                     <FiltersConfig
                                         initialValues={{
                                             interval: filteringState.interval,
@@ -213,8 +212,7 @@ export const Settings = () => {
                                         }}
                                         onClick={() => setSafesearchProvidersOpen(true)}
                                     />
-                                </div>
-                            </section>
+                            </Section>
 
                             <SafeSearchModal
                                 open={safesearchProvidersOpen()}
@@ -227,12 +225,20 @@ export const Settings = () => {
                                 onSave={handleSafeSearchSave}
                             />
 
-                            <h2 class={cn(theme.text.t4, s.sectionLabel)} id="query-log">
-                                {intl.getMessage('query_log')}
-                            </h2>
-
-                            <section class={s.card}>
-                                <div class={s.cardBody}>
+                            <Section
+                                id="query-log"
+                                title={intl.getMessage('query_log')}
+                                footer={
+                                    <Button
+                                        variant="secondary-danger"
+                                        class={s.clearButton}
+                                        onClick={() => setShowClearLogsConfirm(true)}
+                                        compact
+                                    >
+                                        {intl.getMessage('clear_query_log')}
+                                    </Button>
+                                }
+                            >
                                     <SettingRow
                                         variant="switch"
                                         id="querylog_enabled"
@@ -291,19 +297,7 @@ export const Settings = () => {
                                         }
                                         onClick={() => setLogsIgnoredModalOpen(true)}
                                     />
-                                </div>
-
-                                <div class={s.cardFooter}>
-                                    <Button
-                                        variant="secondary-danger"
-                                        class={s.clearButton}
-                                        onClick={() => setShowClearLogsConfirm(true)}
-                                        compact
-                                    >
-                                        {intl.getMessage('clear_query_log')}
-                                    </Button>
-                                </div>
-                            </section>
+                            </Section>
 
                             <LogsConfig
                                 interval={queryLogsState.interval}
@@ -334,12 +328,20 @@ export const Settings = () => {
                                 />
                             </Show>
 
-                            <h2 class={cn(theme.text.t4, s.sectionLabel)} id="statistics">
-                                {intl.getMessage('settings_statistics')}
-                            </h2>
-
-                            <section class={s.card}>
-                                <div class={s.cardBody}>
+                            <Section
+                                id="statistics"
+                                title={intl.getMessage('settings_statistics')}
+                                footer={
+                                    <Button
+                                        variant="secondary-danger"
+                                        class={s.clearButton}
+                                        onClick={() => setShowClearStatsConfirm(true)}
+                                        compact
+                                    >
+                                        {intl.getMessage('settings_statistics_clear')}
+                                    </Button>
+                                }
+                            >
                                     <SettingRow
                                         variant="switch"
                                         id="stats_enabled"
@@ -377,19 +379,7 @@ export const Settings = () => {
                                         }
                                         onClick={() => setStatsIgnoredModalOpen(true)}
                                     />
-                                </div>
-
-                                <div class={s.cardFooter}>
-                                    <Button
-                                        variant="secondary-danger"
-                                        class={s.clearButton}
-                                        onClick={() => setShowClearStatsConfirm(true)}
-                                        compact
-                                    >
-                                        {intl.getMessage('settings_statistics_clear')}
-                                    </Button>
-                                </div>
-                            </section>
+                            </Section>
 
                             <StatsConfig
                                 interval={statsState.interval}
@@ -419,7 +409,7 @@ export const Settings = () => {
                                     onConfirm={handleClearStats}
                                 />
                             </Show>
-                        </>
+                        </div>
                     }
                 >
                     <PageLoader />

@@ -1,5 +1,4 @@
 import { createSignal, createMemo, Show } from 'solid-js';
-import cn from 'clsx';
 
 import {
     dnsConfigState,
@@ -10,10 +9,10 @@ import {
 import intl from 'panel/common/intl';
 import { Button } from 'panel/common/ui/Button';
 import { SettingRow } from 'panel/common/ui/SettingRow';
+import { Section } from 'panel/common/ui/Section';
 import { ConfirmDialog } from 'panel/common/ui/ConfirmDialog';
 import { useDialog } from 'panel/hooks/useDialog';
 import { getCacheSizeSummary, getTtlSummary } from '../helpers';
-import theme from 'panel/lib/theme';
 
 import s from './Cache.module.pcss';
 import { CacheInputDialog } from './blocks/CacheInputDialog';
@@ -32,16 +31,23 @@ export const Cache = () => {
     const processing = () => dnsConfigState.processingSetConfig;
 
     return (
-        <div class={s.section}>
+        <Section
+            title={intl.getMessage('dns_cache_title')}
+            footer={
+                <Button
+                    variant="secondary-danger"
+                    onClick={() => setShowClearConfirm(true)}
+                    class={s.actionButton}
+                    compact
+                >
+                    {intl.getMessage('dns_clear_cache')}
+                </Button>
+            }
+        >
             <SettingRow
                 variant="switch"
                 id="cache_enabled"
-                title={intl.getMessage('dns_cache_title')}
-                titleAs="h2"
-                titleId="dns-cache-title"
-                titleClass={cn(theme.title.h5, theme.title.h4_tablet, theme.text.bold, s.title)}
-                descriptionClass={s.description}
-                align="center"
+                title={intl.getMessage('enable')}
                 description={intl.getMessage('dns_cache_desc')}
                 checked={!!dnsConfigState.cache_enabled}
                 onChange={() => toggleCacheEnabled()}
@@ -90,16 +96,6 @@ export const Cache = () => {
                 onChange={() => toggleOptimisticCaching()}
             />
 
-            <div class={cn(theme.form.actionRow, theme.form.dangerRow)}>
-                <Button
-                    variant="secondary-danger"
-                    onClick={() => setShowClearConfirm(true)}
-                    class={theme.form.actionButton}
-                    compact
-                >
-                    {intl.getMessage('dns_clear_cache')}
-                </Button>
-            </div>
 
             <Show when={showClearConfirm()}>
                 <ConfirmDialog
@@ -136,6 +132,6 @@ export const Cache = () => {
                 onClose={maxTtlDialog.closeDialog}
                 processing={processing()}
             />
-        </div>
+        </Section>
     );
 };

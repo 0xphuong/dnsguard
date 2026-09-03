@@ -6,6 +6,7 @@ import intl from 'panel/common/intl';
 import cn from 'clsx';
 
 import { PageLoader } from 'panel/common/ui/Loader';
+import { PageHeader } from 'panel/common/ui/PageHeader';
 import theme from 'panel/lib/theme';
 
 import s from './DnsSettings.module.pcss';
@@ -23,9 +24,10 @@ export const DnsSettings = () => {
     return (
         <div class={theme.layout.container}>
             <div class={cn(theme.layout.containerIn, theme.layout.containerIn_one_col, s.wide)}>
-                <h1 class={cn(theme.layout.title, theme.title.h4, theme.title.h3_tablet)}>
-                    {intl.getMessage('dns_settings')}
-                </h1>
+                <PageHeader
+                    title={intl.getMessage('dns_settings')}
+                    subtitle={intl.getMessage('dns_settings_desc')}
+                />
 
                 <Show
                     when={!(dnsConfigState.processingGetConfig || accessState.processing)}

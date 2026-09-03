@@ -1,10 +1,10 @@
 import { createSignal, createMemo, Show, onMount } from 'solid-js';
 import { useNavigate, useSearchParams } from '@solidjs/router';
-import cn from 'clsx';
 
 import intl from 'panel/common/intl';
 import { ConfirmDialog } from 'panel/common/ui/ConfirmDialog';
 import { Tabs } from 'panel/common/ui/Tabs';
+import { PageHeader } from 'panel/common/ui/PageHeader';
 import { dashboardState, getClients } from 'panel/stores/dashboard';
 import { statsState, getStats } from 'panel/stores/stats';
 import { clientsState, deleteClient } from 'panel/stores/clients';
@@ -116,20 +116,18 @@ export const Clients = () => {
     return (
         <div class={theme.layout.container}>
             <div class={theme.layout.containerIn}>
-                <div class={s.pageHeader}>
-                    <h1
-                        class={cn(theme.layout.title, theme.title.h4, theme.title.h3_tablet)}
-                        data-testid="clients-title"
-                    >
-                        {intl.getMessage('clients')}
-                    </h1>
-
-                    {/* Adding a client applies to every view, so the button
-                        belongs to the page rather than to one tab. */}
-                    <PlusButton onClick={handleAddClient} testId="clients-add-button">
-                        {intl.getMessage('clients_add')}
-                    </PlusButton>
-                </div>
+                {/* Adding a client applies to every view, so the button
+                    belongs to the page rather than to one tab. */}
+                <PageHeader
+                    titleId="clients-title"
+                    title={intl.getMessage('clients')}
+                    subtitle={intl.getMessage('clients_page_desc')}
+                    actions={
+                        <PlusButton onClick={handleAddClient} testId="clients-add-button">
+                            {intl.getMessage('clients_add')}
+                        </PlusButton>
+                    }
+                />
 
                 <Tabs
                     activeTab={activeTab()}

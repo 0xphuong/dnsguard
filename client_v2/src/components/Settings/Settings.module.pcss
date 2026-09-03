@@ -1,15 +1,6 @@
-/* One column, and every section in a card.
- *
- * The page used to be two widths at once: a 1080px container with the
- * filtering block capped at 640px inside it, which left about 456px empty
- * beside four switches.  Worse, controls landed on three different right
- * edges — 796, 912 and 1352 — so there was no single column to run an eye
- * down, which is the only way a settings page is ever read.
- *
- * A card per section also brings this page into the language the rest of the
- * app already speaks; it was the only screen whose content sat bare on the
- * page background.
- */
+/* The page is a stack of Sections, so all the card, label and footer styling
+ * lives in that shared component now.  What is left is this page's own
+ * measure and the one button override. */
 .page.page {
     /* Wider than the shared 584px one-column cap, because these rows carry a
      * title, a description and a value; narrower than the full container, so
@@ -19,52 +10,12 @@
     }
 }
 
-.title {
-    padding-bottom: 16px;
-}
-
-.card {
-    border: 1px solid var(--default-item-divider);
-    border-radius: var(--radius-lg);
-    background-color: var(--default-cards-background);
-    box-shadow: var(--elev-1);
-    overflow: hidden;
-
-}
-
-/* The group label, NexGuard's .ng-section-header: small, uppercase, tracked
- * out, in the muted ink.  It sits above the card rather than inside it, so
- * every section is titled the same way — before, two titles were a row
- * carrying a switch and one was a bare heading, and the same thing looked
- * like three different things.  The switch that turns a section off is now
- * simply its first row. */
-.sectionLabel {
-    margin: 0 0 var(--space-3);
-    font-weight: var(--weight-bold);
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--default-description-text);
-}
-
-.card + .sectionLabel {
-    margin-top: var(--space-6);
-}
-
-/* No horizontal padding: SettingRow already carries 16px of its own, and
- * adding another 16 here indented every row past the card header, so the
- * header switch and the row switches landed on different edges. */
-.cardBody {
-    padding: var(--space-2) 0;
-}
-
-/* Destructive and irreversible, so it gets its own band on a recessed ground
- * at the foot of the card rather than being one more row in the same reading
- * flow as the toggles.  The confirm dialog was already in place. */
-.cardFooter {
+/* The stack supplies the spacing between sections, since Section itself no
+ * longer sets a sibling margin — that broke the two-column DNS grid. */
+.stack {
     display: flex;
-    padding: var(--space-3) var(--space-4);
-    border-top: 1px solid var(--default-item-divider);
-    background-color: var(--default-page-background);
+    flex-direction: column;
+    gap: var(--space-6);
 }
 
 /* A 200px outlined button gave this the weight of a primary action. */

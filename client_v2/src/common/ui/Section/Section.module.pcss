@@ -1,0 +1,39 @@
+/* No sibling margin.  It looked right in a stack and was wrong in a grid:
+ * the second section is a DOM sibling of the first even when it sits in the
+ * next column, so it picked up a 32px top margin and the two columns' labels
+ * started 32px apart.  Containers supply the gap instead. */
+.section {
+    min-width: 0;
+}
+
+/* NexGuard's .ng-section-header: small, uppercase, tracked out, in the muted
+ * ink, above the card rather than inside it.  Every section on every page is
+ * titled this way, so a section title is never mistaken for a control. */
+.label {
+    margin: 0 0 var(--space-3);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--default-description-text);
+}
+
+.card {
+    border: 1px solid var(--default-item-divider);
+    border-radius: var(--radius-lg);
+    background-color: var(--default-cards-background);
+    box-shadow: var(--elev-1);
+    overflow: hidden;
+}
+
+/* No horizontal padding: SettingRow carries 16px of its own, and adding more
+ * here would indent every row past the card's own edge. */
+.body {
+    padding: var(--space-2) 0;
+}
+
+.footer {
+    display: flex;
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--default-item-divider);
+    background-color: var(--default-page-background);
+}

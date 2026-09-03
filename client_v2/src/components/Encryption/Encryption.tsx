@@ -5,6 +5,8 @@ import { SettingRow } from 'panel/common/ui/SettingRow';
 import { Dropdown } from 'panel/common/ui/Dropdown';
 import { Icon } from 'panel/common/ui/Icon';
 import { PageLoader } from 'panel/common/ui/Loader';
+import { PageHeader } from 'panel/common/ui/PageHeader';
+import { Section } from 'panel/common/ui/Section';
 import { PlusButton } from 'panel/common/ui/PlusButton';
 import intl from 'panel/common/intl';
 import theme from 'panel/lib/theme';
@@ -167,66 +169,68 @@ export const Encryption = () => {
     return (
         <div class={theme.layout.container}>
             <div class={cn(theme.layout.containerIn, theme.layout.containerIn_one_col)}>
-                <div class={s.header}>
-                    <h1 class={cn(theme.layout.title, theme.title.h4, theme.title.h3_tablet)}>
-                        {intl.getMessage('dns_protocols_title')}
-                    </h1>
-                    <Dropdown
-                        position="bottomRight"
-                        noIcon
-                        open={menuOpen()}
-                        onOpenChange={setMenuOpen}
-                        menu={resetMenu}
-                    >
-                        <button
-                            type="button"
-                            class={s.menuButton}
-                            aria-label={intl.getMessage('reset_dns_protocols')}
+                <PageHeader
+                    title={intl.getMessage('dns_protocols_title')}
+                    subtitle={intl.getMessage('dns_protocols_desc')}
+                    actions={
+                        <Dropdown
+                            position="bottomRight"
+                            noIcon
+                            open={menuOpen()}
+                            onOpenChange={setMenuOpen}
+                            menu={resetMenu}
                         >
-                            <Icon icon="bullets" />
-                        </button>
-                    </Dropdown>
-                </div>
+                            <button
+                                type="button"
+                                class={s.menuButton}
+                                aria-label={intl.getMessage('reset_dns_protocols')}
+                            >
+                                <Icon icon="bullets" />
+                            </button>
+                        </Dropdown>
+                    }
+                />
 
                 <Show when={tlsStatusLoaded()} fallback={<PageLoader />}>
-                    <PlainDnsToggle />
+                    <div class={s.stack}>
+                        <Section title={intl.getMessage('plain_dns')}>
+                            <PlainDnsToggle />
+                        </Section>
 
-                    <h2
-                        class={cn(
-                            theme.layout.subtitle,
-                            theme.title.h5,
-                            theme.title.h4_tablet,
-                            s.section,
-                        )}
-                    >
-                        {intl.getMessage('encryption_title')}
-                    </h2>
+                        <Section
+                            title={intl.getMessage('encryption_title')}
+                            footer={
+                                <Show when={!certConfigured()}>
+                                    <PlusButton
+                                        onClick={() => setAddCertOpen(true)}
+                                        weight="semi"
+                                    >
+                                        {intl.getMessage('add_tls_certificate')}
+                                    </PlusButton>
+                                </Show>
+                            }
+                        >
+                            <SettingRow
+                                id="encrypted_dns"
+                                variant="switch"
+                                title={intl.getMessage('encryption_encrypted_dns')}
+                                description={intl.getMessage(
+                                    'encryption_encrypted_dns_desc',
+                                )}
+                                checked={encryptionEnabled()}
+                                disabled={encryptionState.processingConfig}
+                                onChange={handleEncryptedDnsChange}
+                            />
 
-                    <SettingRow
-                        id="encrypted_dns"
-                        variant="switch"
-                        title={intl.getMessage('encryption_encrypted_dns')}
-                        description={intl.getMessage('encryption_encrypted_dns_desc')}
-                        checked={encryptionEnabled()}
-                        disabled={encryptionState.processingConfig}
-                        onChange={handleEncryptedDnsChange}
-                    />
+                            <Show when={certConfigured()}>
+                                <TlsCertSection />
+                            </Show>
 
-                    <Show when={!certConfigured()}>
-                        <div class={s.plusButton}>
-                            <PlusButton onClick={() => setAddCertOpen(true)} weight="semi">
-                                {intl.getMessage('add_tls_certificate')}
-                            </PlusButton>
-                        </div>
-                    </Show>
+                            <ServerSettingsRow onOpen={() => setServerSettingsOpen(true)} />
 
-                    <Show when={certConfigured()}>
-                        <TlsCertSection />
-                    </Show>
-
-                    <ServerSettingsRow onOpen={() => setServerSettingsOpen(true)} />
-
-                    <RedirectToggle />
+                            <RedirectToggle />
+                        </Section>
+                    </div>
                 </Show>
             </div>
 

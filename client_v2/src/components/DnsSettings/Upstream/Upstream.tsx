@@ -1,15 +1,16 @@
 import { createMemo } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import cn from 'clsx';
 
 import intl from 'panel/common/intl';
 import { dnsConfigState, togglePrivatePtrResolvers } from 'panel/stores/dnsConfig';
 import { settingsState, testUpstreamWithFormValues } from 'panel/stores/settings';
 import { Button } from 'panel/common/ui/Button';
 import { SettingRow } from 'panel/common/ui/SettingRow';
+import { Section } from 'panel/common/ui/Section';
+
+import s from './Upstream.module.pcss';
 import { useDialog } from 'panel/hooks/useDialog';
 import { getUpstreamModeSummary, getUpstreamServersSummary, getTtlSummary } from '../helpers';
-import theme from 'panel/lib/theme';
 
 import { UpstreamModeDialog } from './blocks/UpstreamModeDialog';
 import { ServerAddressesDialog } from './blocks/ServerAddressesDialog';
@@ -44,10 +45,30 @@ export const Upstream = () => {
     const processing = () => dnsConfigState.processingSetConfig;
 
     return (
-        <div>
-            <h2 class={cn(theme.layout.subtitle, theme.title.h5, theme.title.h4_tablet)}>
-                {intl.getMessage('upstream_dns')}
-            </h2>
+        <Section
+            title={intl.getMessage('upstream_dns')}
+            footer={
+                <Button
+                    variant="secondary"
+                    disabled={settingsState.processingTestUpstream}
+                    onClick={() =>
+                        testUpstreamWithFormValues(
+                            {
+                                bootstrap_dns: dnsConfigState.bootstrap_dns,
+                                upstream_dns: dnsConfigState.upstream_dns,
+                                local_ptr_upstreams: dnsConfigState.local_ptr_upstreams,
+                                fallback_dns: dnsConfigState.fallback_dns,
+                            },
+                            dnsConfigState.upstream_dns_file,
+                        )
+                    }
+                    class={s.actionButton}
+                    compact
+                >
+                    {intl.getMessage('dns_test_upstreams')}
+                </Button>
+            }
+        >
 
             <SettingRow
                 variant="link"
@@ -113,27 +134,6 @@ export const Upstream = () => {
                 onClick={timeoutDialog.openDialog}
             />
 
-            <div class={theme.form.actionRow}>
-                <Button
-                    variant="secondary"
-                    disabled={settingsState.processingTestUpstream}
-                    onClick={() =>
-                        testUpstreamWithFormValues(
-                            {
-                                bootstrap_dns: dnsConfigState.bootstrap_dns,
-                                upstream_dns: dnsConfigState.upstream_dns,
-                                local_ptr_upstreams: dnsConfigState.local_ptr_upstreams,
-                                fallback_dns: dnsConfigState.fallback_dns,
-                            },
-                            dnsConfigState.upstream_dns_file,
-                        )
-                    }
-                    class={theme.form.actionButton}
-                    compact
-                >
-                    {intl.getMessage('dns_test_upstreams')}
-                </Button>
-            </div>
 
             <UpstreamModeDialog
                 open={upstreamModeDialog.open}
@@ -160,6 +160,6 @@ export const Upstream = () => {
                 onClose={timeoutDialog.closeDialog}
                 processing={processing()}
             />
-        </div>
+        </Section>
     );
 };
