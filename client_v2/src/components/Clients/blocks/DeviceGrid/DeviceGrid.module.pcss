@@ -1,0 +1,265 @@
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 2px;
+    border-radius: var(--radius-md);
+    background-color: var(--default-page-background);
+}
+
+.filter {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 28px;
+    padding: 0 var(--space-3);
+    border: 0;
+    border-radius: calc(var(--radius-md) - 2px);
+    background: none;
+    color: var(--default-description-text);
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+        color: var(--default-main-text);
+    }
+}
+
+.filterOn {
+    background-color: var(--default-cards-background);
+    box-shadow: var(--elev-1);
+    color: var(--default-main-text);
+}
+
+/* The count belongs to the label, not beside it: it says how many the filter
+ * would show, which is the only reason to read it before clicking. */
+.filterCount {
+    font-variant-numeric: tabular-nums;
+    color: var(--default-description-text);
+}
+
+.summary {
+    display: flex;
+    gap: var(--space-5);
+    margin: 0;
+}
+
+.summaryItem {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.summaryLabel {
+    margin: 0;
+    color: var(--default-description-text);
+}
+
+.summaryValue {
+    margin: 0;
+    color: var(--default-main-text);
+    font-variant-numeric: tabular-nums;
+    font-weight: var(--weight-medium);
+}
+
+.summaryValueBlocked {
+    color: var(--default-error-link);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @media (min-width: 640px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (min-width: 1280px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-4);
+    }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+    padding: var(--space-4);
+    border: 1px solid var(--default-item-divider);
+    border-radius: var(--radius-lg);
+    background-color: var(--default-cards-background);
+    box-shadow: var(--elev-1);
+    transition:
+        border-color var(--t2),
+        box-shadow var(--t2);
+
+    &:hover {
+        border-color: var(--default-active-input-stroke);
+        box-shadow: var(--elev-2);
+    }
+}
+
+.cardHeader {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    min-width: 0;
+}
+
+.cardIcon {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    color: var(--default-gray-icons);
+}
+
+.cardIdentity {
+    flex: 1;
+    min-width: 0;
+}
+
+.cardName {
+    margin: 0;
+    color: var(--default-main-text);
+    font-weight: var(--weight-medium);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cardMeta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 var(--space-3);
+    margin: 2px 0 0;
+    color: var(--default-description-text);
+    min-width: 0;
+}
+
+/* Addresses are compared character by character, which only works in a fixed
+ * pitch with tabular figures. */
+.mono {
+    font-family: var(--font-family-monospace);
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+.badge {
+    flex: none;
+    padding: 1px var(--space-2);
+    border: 1px solid var(--default-item-divider);
+    border-radius: var(--radius-sm);
+    color: var(--default-description-text);
+    white-space: nowrap;
+}
+
+/* Only two badges are tinted, and both mark something to look at: a device
+ * nobody has configured, and one whose filtering differs from the rest. */
+.badgeNew {
+    border-color: color-mix(in srgb, var(--product-primary-50) 40%, transparent);
+    color: var(--default-link);
+}
+
+.badgeCustom {
+    border-color: color-mix(in srgb, var(--default-attention-link) 40%, transparent);
+    color: var(--default-attention-link);
+}
+
+.figures {
+    display: flex;
+    gap: var(--space-5);
+}
+
+.figure {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.figureLabel {
+    color: var(--default-description-text);
+}
+
+.figureValue {
+    color: var(--default-main-text);
+    font-size: var(--fs-display-sm);
+    line-height: var(--lh-display-sm);
+    letter-spacing: var(--tracking-display);
+    font-weight: var(--weight-bold);
+    font-variant-numeric: tabular-nums;
+}
+
+.figureValueHeavy {
+    color: var(--default-error-link);
+}
+
+.bar {
+    display: flex;
+    height: 4px;
+    border-radius: 2px;
+    background-color: var(--default-page-background);
+    overflow: hidden;
+}
+
+.barAllowed {
+    background-color: var(--fills-success);
+}
+
+.barBlocked {
+    background-color: var(--default-error-link);
+}
+
+.cardFooter {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: auto;
+    padding-top: var(--space-1);
+}
+
+.tags {
+    min-width: 0;
+    color: var(--default-description-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.action {
+    flex: none;
+    margin-left: auto;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--default-link);
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.empty {
+    margin: 0;
+    padding: var(--space-6) 0;
+    color: var(--default-description-text);
+    text-align: center;
+}

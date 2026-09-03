@@ -9,21 +9,28 @@ import { dashboardState, getClients } from 'panel/stores/dashboard';
 import { statsState, getStats } from 'panel/stores/stats';
 import { clientsState, deleteClient } from 'panel/stores/clients';
 import { servicesState, getAllBlockedServices } from 'panel/stores/services';
-import { initClientForm, buildFormPayload } from 'panel/stores/clientForm';
+import { initClientForm, buildFormPayload, updateClientFormField } from 'panel/stores/clientForm';
 import type { Client } from 'panel/initialState';
 import { linkPathBuilder, RoutePath, Paths } from 'panel/components/Routes/Paths';
 import theme from 'panel/lib/theme';
 import type { WebService } from './blocks/PersistentClientsTable/ServiceIcons';
 
+import { DeviceGrid } from './blocks/DeviceGrid';
 import { PersistentClientsTable } from './blocks/PersistentClientsTable';
 import { RuntimeClientsTable } from './blocks/RuntimeClientsTable';
 import s from './Clients.module.pcss';
 import { PlusButton } from 'panel/common/ui/PlusButton';
 
 const CLIENT_TABS = {
+    DEVICES: 'devices',
     PERSISTENT: 'persistent',
     RUNTIME: 'runtime',
 } as const;
+
+type ClientTab = (typeof CLIENT_TABS)[keyof typeof CLIENT_TABS];
+
+const isClientTab = (value?: string): value is ClientTab =>
+    value === CLIENT_TABS.PERSISTENT || value === CLIENT_TABS.RUNTIME;
 
 export const Clients = () => {
     const navigate = useNavigate();
@@ -31,8 +38,11 @@ export const Clients = () => {
 
     const [searchParams, setSearchParams] = useSearchParams<{ tab?: string }>();
 
-    const activeTab = createMemo(() =>
-        searchParams.tab === CLIENT_TABS.RUNTIME ? CLIENT_TABS.RUNTIME : CLIENT_TABS.PERSISTENT,
+    // Devices is the default because it is the only view that answers a
+    // question about the traffic; the two tables answer questions about the
+    // configuration, which is why they are still here but no longer first.
+    const activeTab = createMemo<ClientTab>(() =>
+        isClientTab(searchParams.tab) ? searchParams.tab : CLIENT_TABS.DEVICES,
     );
 
     const handleTabChange = (tabId: string) => {
@@ -57,6 +67,25 @@ export const Clients = () => {
                 clientName: encodeURIComponent(client.name ?? ''),
             }),
         );
+    };
+
+    const handleEditByName = (clientName: string) => {
+        const client = (dashboardState.clients || []).find((c) => c.name === clientName);
+        if (client) {
+            handleEditClient(client);
+        }
+    };
+
+    /**
+     * Adding a client for a device the resolver already knows.  The form is
+     * initialised empty — passing a payload would put it in edit mode — and
+     * the address is then filled in as the first identifier, which is the only
+     * field the operator would otherwise have to copy by hand.
+     */
+    const handleAddForAddress = (address: string) => {
+        initClientForm(null);
+        updateClientFormField('ids', [address]);
+        navigate(Paths.ClientsAdd);
     };
 
     const handleDeleteClient = (name: string) => {
@@ -87,12 +116,20 @@ export const Clients = () => {
     return (
         <div class={theme.layout.container}>
             <div class={theme.layout.containerIn}>
-                <h1
-                    class={cn(theme.layout.title, theme.title.h4, theme.title.h3_tablet)}
-                    data-testid="clients-title"
-                >
-                    {intl.getMessage('clients')}
-                </h1>
+                <div class={s.pageHeader}>
+                    <h1
+                        class={cn(theme.layout.title, theme.title.h4, theme.title.h3_tablet)}
+                        data-testid="clients-title"
+                    >
+                        {intl.getMessage('clients')}
+                    </h1>
+
+                    {/* Adding a client applies to every view, so the button
+                        belongs to the page rather than to one tab. */}
+                    <PlusButton onClick={handleAddClient} testId="clients-add-button">
+                        {intl.getMessage('clients_add')}
+                    </PlusButton>
+                </div>
 
                 <Tabs
                     activeTab={activeTab()}
@@ -103,18 +140,29 @@ export const Clients = () => {
                     contentClass={s.tabContent}
                     tabs={[
                         {
+                            id: CLIENT_TABS.DEVICES,
+                            label: intl.getMessage('devices_title'),
+                            content: (
+                                <>
+                                    <div class={s.desc}>{intl.getMessage('devices_desc')}</div>
+
+                                    <DeviceGrid
+                                        clients={dashboardState.clients || []}
+                                        autoClients={dashboardState.autoClients || []}
+                                        topClients={statsState.topClients}
+                                        topBlockedClients={statsState.topBlockedClients}
+                                        onEdit={handleEditByName}
+                                        onAdd={handleAddForAddress}
+                                    />
+                                </>
+                            ),
+                        },
+                        {
                             id: CLIENT_TABS.PERSISTENT,
                             label: intl.getMessage('clients_title'),
                             content: (
                                 <>
                                     <div class={s.desc}>{intl.getMessage('clients_desc')}</div>
-
-                                    <PlusButton
-                                        onClick={handleAddClient}
-                                        testId="clients-add-button"
-                                    >
-                                        {intl.getMessage('clients_add')}
-                                    </PlusButton>
 
                                     {dashboardState.clients?.length > 0 && (
                                         <div class={s.tableSection}>

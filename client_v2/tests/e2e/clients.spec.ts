@@ -246,33 +246,43 @@ test.describe('Clients', () => {
     // TODO(ik): fragile tests, need to rewrite later
     test.skip(() => !!process.env.CI, 'Skipped on CI: fragile tests');
 
-    test('renders the clients page with persistent and runtime clients', async ({ page }) => {
+    test('opens on the device grid, which spans both client kinds', async ({ page }) => {
         await setupClientsMocks(page);
         await login(page);
         await page.goto('/#clients');
 
-        // Page heading + Add button (Add button now lives inside the Persistent tab)
+        // Page heading + Add button, which now belongs to the page rather than
+        // to one tab
         await expect(page.getByTestId('clients-title')).toBeVisible();
         await expect(page.getByTestId('clients-add-button')).toBeVisible();
 
-        // Both tab labels are always visible in the tab nav
+        // All three tab labels are always visible in the tab nav
+        await expect(page.getByRole('button', { name: 'Devices', exact: true })).toBeVisible();
         await expect(page.getByRole('button', { name: 'Persistent', exact: true })).toBeVisible();
         await expect(page.getByRole('button', { name: 'Runtime', exact: true })).toBeVisible();
 
-        // Persistent clients are shown by default
-        await expect(page.getByText('Office Desktop')).toBeVisible({
+        // The device grid is the default view, and unlike either table it
+        // shows configured and discovered devices together
+        await expect(page.getByTestId('device-grid')).toBeVisible({
             timeout: 10_000,
         });
+        await expect(page.getByText('Office Desktop')).toBeVisible();
         await expect(page.getByText('192.168.0.100')).toBeVisible();
-        await expect(page.getByText('Living Room TV')).toBeVisible();
+        await expect(page.getByText('192.168.0.200')).toBeVisible();
+    });
 
-        // Runtime client data is NOT visible until the Runtime tab is active
-        await expect(page.getByText('192.168.0.200')).not.toBeVisible();
+    test('shows the two configuration tables behind their own tabs', async ({ page }) => {
+        await setupClientsMocks(page);
+        await login(page);
+        await page.goto('/#clients');
 
-        // Switch to the Runtime clients tab
+        await page.getByRole('button', { name: 'Persistent', exact: true }).click();
+        await expect(page.getByTestId('device-grid')).not.toBeVisible();
+        await expect(page.getByText('Living Room TV')).toBeVisible({
+            timeout: 10_000,
+        });
+
         await page.getByRole('button', { name: 'Runtime', exact: true }).click();
-
-        // Now runtime client data is visible
         await expect(page.getByText('192.168.0.200')).toBeVisible();
     });
 
@@ -319,7 +329,9 @@ test.describe('Clients', () => {
     test('edits an existing persistent client', async ({ page }) => {
         const { updateClientPayloads } = await setupClientsMocks(page);
         await login(page);
-        await page.goto('/#clients');
+        // The edit and delete buttons live in the persistent clients table,
+        // which is no longer the default tab.
+        await page.goto('/#clients?tab=persistent');
 
         // Click the edit button for "Office Desktop" (second row)
         await page.getByTestId('clients-edit-button').nth(1).click();
@@ -346,7 +358,7 @@ test.describe('Clients', () => {
     test('deletes a persistent client with confirmation', async ({ page }) => {
         const { deleteClientPayloads } = await setupClientsMocks(page);
         await login(page);
-        await page.goto('/#clients');
+        await page.goto('/#clients?tab=persistent');
 
         // Click the delete button for "Living Room TV" (first row)
         await page.getByTestId('clients-delete-button').first().click();
