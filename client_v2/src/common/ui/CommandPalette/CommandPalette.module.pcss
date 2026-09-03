@@ -1,0 +1,119 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 12vh var(--space-4) var(--space-4);
+    background-color: rgb(0 0 0 / 55%);
+}
+
+.panel {
+    width: 100%;
+    max-width: 560px;
+    background-color: var(--default-popup-background);
+    border: 1px solid var(--default-item-divider);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--elev-3);
+    overflow: hidden;
+}
+
+.inputRow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--default-item-divider);
+}
+
+.icon {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    color: var(--default-gray-icons);
+}
+
+.input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: none;
+    color: var(--default-main-text);
+    font-size: var(--fs-text-t2);
+
+    &::placeholder {
+        color: var(--default-placeholder);
+    }
+}
+
+/* Shown as a hint, not a control: the palette is already open. */
+.esc {
+    flex: none;
+    padding: 2px var(--space-2);
+    border: 1px solid var(--default-item-divider);
+    border-radius: var(--radius-sm);
+    color: var(--default-description-text);
+    font-family: var(--font-family-monospace);
+    font-size: var(--fs-text-t4);
+}
+
+.list {
+    max-height: 46vh;
+    overflow-y: auto;
+    padding: var(--space-2) 0;
+}
+
+.group {
+    padding: var(--space-2) var(--space-4) var(--space-1);
+    color: var(--default-description-text);
+    font-size: var(--fs-text-t4);
+    font-weight: var(--weight-semi-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    padding: var(--space-2) var(--space-4);
+    border: 0;
+    background: none;
+    color: var(--default-main-text);
+    font-size: var(--fs-text-t2);
+    text-align: left;
+    cursor: pointer;
+}
+
+/* Highlight follows the keyboard cursor rather than the pointer, so arrowing
+ * through the list and hovering it cannot disagree about what Enter will do. */
+.itemActive {
+    background-color: var(--hovered-dropdown-menu-background);
+}
+
+.itemLabel {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.itemHint {
+    flex: none;
+    color: var(--default-description-text);
+    font-size: var(--fs-text-t4);
+}
+
+.danger {
+    color: var(--default-error-link);
+}
+
+.empty {
+    padding: var(--space-4);
+    color: var(--default-description-text);
+    font-size: var(--fs-text-t3);
+}

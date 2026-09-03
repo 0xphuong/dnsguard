@@ -20,6 +20,7 @@ import { Dhcp } from 'panel/components/Dhcp';
 import { LeasesPage } from 'panel/components/Dhcp/LeasesPage';
 import { QueryLog } from 'panel/components/QueryLog';
 import { Toasts } from 'panel/components/Toasts';
+import { CommandPalette } from 'panel/common/ui/CommandPalette';
 import { THEMES } from '../../helpers/constants';
 import { setHtmlLangAttr, setUITheme } from '../../helpers/helpers';
 import { getDnsStatus, getTimerStatus, dashboardState } from '../../stores/dashboard';
@@ -119,6 +120,8 @@ const App = () => {
                     </div>
 
                     <Footer />
+
+                    <CommandPalette />
 
                     <Toasts />
 
