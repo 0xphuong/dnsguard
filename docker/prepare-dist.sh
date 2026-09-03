@@ -20,17 +20,11 @@
 #	ARCH=arm64 sh ./docker/prepare-dist.sh   # explicit arch
 #	ARCH=arm GOARM=7 sh ./docker/prepare-dist.sh
 #
-# Building an image for a different architecture than the host also needs the
-# platform passed to the builder, because build.Dockerfile picks the binary by
-# TARGETARCH:
-#
-#	ARCH=amd64 VERSION=v1.0.0 CHANNEL=release sh ./docker/prepare-dist.sh
-#	docker buildx build --platform linux/amd64 \
-#		-f docker/build.Dockerfile --build-arg DIST_DIR=dist \
-#		--build-arg VERSION=v1.0.0 -t dnsguard:v1.0.0-amd64 --load .
-#
-# `docker compose build` has no platform flag, so it always produces an image
-# for the host's architecture.
+# This script only produces the binary.  To build the image too, use
+# ./docker/build-image.sh, which runs this once per platform and passes the
+# matching --platform to the builder — build.Dockerfile picks its binary by
+# TARGETARCH, so the two have to agree.  `docker compose build` has no
+# platform flag and always follows the host.
 #
 # Environment:
 #	ARCH      GOARCH to build for.  Default: the host Docker architecture.

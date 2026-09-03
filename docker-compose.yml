@@ -15,15 +15,14 @@
 
 # Architecture: `docker compose build` always builds for this host's
 # architecture, and build.Dockerfile picks its binary by TARGETARCH, so on an
-# Apple Silicon Mac this produces an arm64 image.  For an x86-64 Linux server,
-# build the binary and the image for that platform explicitly instead:
+# Apple Silicon Mac this produces an arm64 image that will not start on the
+# usual x86-64 server.  To target another platform, use the build script,
+# which keeps the binary and the image in step:
 #
-#   ARCH=amd64 VERSION=v1.0.0 CHANNEL=release sh ./docker/prepare-dist.sh
-#   docker buildx build --platform linux/amd64 \
-#       -f docker/build.Dockerfile --build-arg DIST_DIR=dist \
-#       --build-arg VERSION=v1.0.0 -t dnsguard:v1.0.0-amd64 --load .
+#   sh ./docker/build-image.sh -v v1.0.0 -p linux/amd64
+#   sh ./docker/build-image.sh -v v1.0.0 -p linux/amd64,linux/arm64 --push
 #
-# See docker/prepare-dist.sh for the rest of its options.
+# Run it with --help for the rest of its options.
 
 services:
   dnsguard:
