@@ -1,116 +1,137 @@
+/* Colour primitives, generated in OKLCH.
+ *
+ * Written as oklch() rather than hex because the notation is the point: every
+ * ramp here holds one hue and one chroma profile and varies only lightness, in
+ * even steps.  That is what the hex ramps could not express, and the reason
+ * they drifted:
+ *
+ *   - product-tertiary jumped 109 degrees of hue between its first step and
+ *     the rest of the ramp, so its lightest tint was mint and the rest indigo.
+ *     It is gone; nothing live referenced it.
+ *   - orange drifted 23 degrees across its ramp, and because light and dark
+ *     pick different steps for the same role, "attention" was literally a
+ *     different colour in each theme.
+ *   - the neutral ramp had a 0.122 lightness cliff between -50 and -60, which
+ *     is what forced the hand-inserted --gray-65 to patch a contrast hole.
+ *     With even steps the hole is gone and so is the patch.
+ *
+ * Generated values, not hand-picked ones: see scratchpad genpalette.py for the
+ * hue, chroma profile and lightness ladder each family is built from.
+ */
+
 :root {
-    --product-primary-0: #f5fafd;
-    --product-primary-10: #d4eaf6;
-    --product-primary-20: #aed8ef;
-    --product-primary-30: #7cc4e8;
-    --product-primary-40: #4aabdb;
-    --product-primary-50: #2b93c9;
-    --product-primary-60: #2482b3;
-    --product-primary-70: #1e6f9b;
-    --product-primary-80: #1a5d82;
-    --product-primary-90: #164b69;
-    --product-primary-100: #0f3448;
-    /* SUCCESS
+    /* BRAND
      *
-     * This is the green the brand used to be.  Keeping it as its own ramp is
-     * the point of moving the brand to azure: green now says one thing —
-     * allowed, healthy, resolved — instead of also standing in for links,
-     * switches and the primary button. */
-    --success-0: #f7fbf8;
-    --success-10: #d9ecde;
-    --success-20: #bedfc6;
-    --success-30: #a2d0ad;
-    --success-40: #84c193;
-    --success-50: #67b279;
-    --success-60: #5b9f6b;
-    --success-70: #4e8c5d;
-    --success-80: #42794f;
-    --success-90: #366642;
-    --success-100: #22482c;
+     * Azure carries identity and interaction only: buttons, links, switches,
+     * focus.  It deliberately says nothing about whether a query was allowed
+     * or blocked. */
+    --product-primary-0: oklch(97.5% 0.008 236);
+    --product-primary-10: oklch(90.8% 0.030 236);
+    --product-primary-20: oklch(84.0% 0.057 236);
+    --product-primary-30: oklch(77.2% 0.094 236);
+    --product-primary-40: oklch(70.5% 0.121 236);
+    --product-primary-50: oklch(63.7% 0.130 236);
+    --product-primary-60: oklch(57.0% 0.121 236);
+    --product-primary-70: oklch(50.2% 0.108 236);
+    --product-primary-80: oklch(43.5% 0.094 236);
+    --product-primary-90: oklch(36.7% 0.079 236);
+    --product-primary-100: oklch(30.0% 0.059 236);
 
-    --product-secondary-0: #f5edf5;
-    --product-secondary-10: #dec8e1;
-    --product-secondary-20: #ccaad1;
-    --product-secondary-30: #c096c7;
-    --product-secondary-40: #b586be;
-    --product-secondary-50: #a870b2;
-    --product-secondary-60: #9f61aa;
-    --product-secondary-70: #92549c;
-    --product-secondary-80: #804886;
-    --product-secondary-90: #6d3e72;
-    --product-secondary-100: #502d53;
-    --product-tertiary-0: #defdf2;
-    --product-tertiary-10: #ecedf6;
-    --product-tertiary-20: #d0d4ea;
-    --product-tertiary-30: #b6bbdd;
-    --product-tertiary-40: #9ba2d1;
-    --product-tertiary-50: #7884cb;
-    --product-tertiary-60: #6b76bd;
-    --product-tertiary-70: #5c67ae;
-    --product-tertiary-80: #525b97;
-    --product-tertiary-90: #424979;
-    --product-tertiary-100: #303659;
-    --gray-0: #ffffff;
-    --gray-10: #f6f6f6;
-    --gray-20: #e4e4e4;
-    --gray-30: #d2d2d2;
-    --gray-40: #c0c0c0;
-    --gray-50: #a4a4a4;
-    --gray-60: #7f7f7f;
-    /* Sits between -60 and -70 for one reason: a light-theme placeholder.
-     * gray-50 measured 2.49:1 on white, and gray-60 still only reaches 4.00,
-     * while gray-70 is dark enough to read as a filled value rather than a
-     * hint.  This clears 4.5:1 on both the card and the page. */
-    --gray-65: #6f6f6f;
-    --gray-70: #5b5b5b;
-    --gray-80: #3d3d3d;
-    --gray-90: #1f1f1f;
-    --gray-100: #0a0a0a;
-    --orange-0: #fdf9f2;
-    --orange-10: #f9ecd8;
-    --orange-20: #eecb92;
-    --orange-30: #e5b460;
-    --orange-40: #de9e33;
-    --orange-50: #d58500;
-    --orange-60: #c77901;
-    --orange-70: #b76c01;
-    --orange-80: #a85f01;
-    --orange-90: #985201;
-    --orange-100: #503200;
-    --red-0: #fcece6;
-    --red-10: #f6c2b1;
-    --red-20: #f2a288;
-    --red-30: #ef9071;
-    --red-40: #ec7b55;
-    --red-50: #e9653a;
-    --red-60: #e75727;
-    --red-70: #dc4918;
-    --red-80: #bc3f15;
-    --red-90: #a13612;
-    --red-100: #77280d;
+    /* ALLOWED / HEALTHY */
+    --success-0: oklch(97.5% 0.007 150);
+    --success-10: oklch(90.8% 0.026 150);
+    --success-20: oklch(84.0% 0.051 150);
+    --success-30: oklch(77.2% 0.083 150);
+    --success-40: oklch(70.5% 0.107 150);
+    --success-50: oklch(63.7% 0.115 150);
+    --success-60: oklch(57.0% 0.107 150);
+    --success-70: oklch(50.2% 0.097 150);
+    --success-80: oklch(43.5% 0.083 150);
+    --success-90: oklch(36.7% 0.070 150);
+    --success-100: oklch(30.0% 0.052 150);
 
-    /* SURFACES
+    /* ATTENTION / REWRITTEN */
+    --orange-0: oklch(97.5% 0.008 70);
+    --orange-10: oklch(90.8% 0.032 70);
+    --orange-20: oklch(84.0% 0.061 70);
+    --orange-30: oklch(77.2% 0.099 70);
+    --orange-40: oklch(70.5% 0.128 70);
+    --orange-50: oklch(63.7% 0.138 70);
+    --orange-60: oklch(57.0% 0.124 70);
+    --orange-70: oklch(50.2% 0.109 70);
+    --orange-80: oklch(43.5% 0.094 70);
+    --orange-90: oklch(36.7% 0.080 70);
+    --orange-100: oklch(30.0% 0.062 70);
+
+    /* BLOCKED / DANGER */
+    --red-0: oklch(97.5% 0.011 38);
+    --red-10: oklch(90.8% 0.044 38);
+    --red-20: oklch(84.0% 0.084 38);
+    --red-30: oklch(77.2% 0.137 38);
+    --red-40: oklch(70.5% 0.177 38);
+    --red-50: oklch(63.7% 0.190 38);
+    --red-60: oklch(57.0% 0.177 38);
+    --red-70: oklch(50.2% 0.160 38);
+    --red-80: oklch(43.5% 0.137 38);
+    --red-90: oklch(36.7% 0.116 38);
+    --red-100: oklch(30.0% 0.086 38);
+
+    /* CATEGORY: ADULT
      *
-     * The themes used to invert one neutral ramp, which gave dark only two
-     * levels and a hard jump from #1f1f1f to #3d3d3d — enough to make a card
-     * read as washed grey rather than as a raised plane.  These are a
-     * dedicated elevation ladder, faintly cool so the green accent reads as
-     * the one saturated thing on screen.  Adjacent steps sit at 1.05-1.45
-     * contrast: visible as depth, never as a border. */
-    --surface-950: #0b0d11;
-    --surface-900: #10131a;
-    --surface-850: #151922;
-    --surface-800: #1b2029;
-    --surface-700: #232935;
-    --surface-600: #2f3646;
-    --surface-500: #3f4859;
-    --surface-400: #556075;
+     * Not a UI accent — the interface uses four hues, and this is not one of
+     * them.  It exists solely so the parental-control series is separable from
+     * the other three in a chart, and it is used nowhere else.  Formerly
+     * --product-secondary, which named it as a brand colour it never was. */
+    --violet-0: oklch(97.5% 0.008 321);
+    --violet-10: oklch(90.8% 0.030 321);
+    --violet-20: oklch(84.0% 0.057 321);
+    --violet-30: oklch(77.2% 0.094 321);
+    --violet-40: oklch(70.5% 0.121 321);
+    --violet-50: oklch(63.7% 0.130 321);
+    --violet-60: oklch(57.0% 0.121 321);
+    --violet-70: oklch(50.2% 0.109 321);
+    --violet-80: oklch(43.5% 0.094 321);
+    --violet-90: oklch(36.7% 0.079 321);
+    --violet-100: oklch(30.0% 0.059 321);
 
-    --surface-0: #ffffff;
-    --surface-25: #fbfcfd;
-    --surface-50: #f6f8fa;
-    --surface-100: #eef1f5;
-    --surface-150: #e5e9ef;
-    --surface-200: #d9dfe7;
-    --surface-300: #c3ccd8;
+    /* NEUTRALS */
+    --gray-0: oklch(100.0% 0.000 0);
+    --gray-10: oklch(91.5% 0.000 0);
+    --gray-20: oklch(82.9% 0.000 0);
+    --gray-30: oklch(74.4% 0.000 0);
+    --gray-40: oklch(65.8% 0.000 0);
+    --gray-50: oklch(57.2% 0.000 0);
+    --gray-60: oklch(48.7% 0.000 0);
+    --gray-70: oklch(40.2% 0.000 0);
+    --gray-80: oklch(31.6% 0.000 0);
+    --gray-90: oklch(23.0% 0.000 0);
+    --gray-100: oklch(14.5% 0.000 0);
+
+    /* SURFACES — DARK LADDER
+     *
+     * Depth in a dark theme comes from surfaces getting lighter, not from
+     * shadows, which barely register on near-black.  The steps compress
+     * towards black on purpose: near the floor a small lightness change already
+     * reads as a full level of elevation. */
+    --surface-950: oklch(15.9% 0.008 264);
+    --surface-900: oklch(18.7% 0.012 264);
+    --surface-850: oklch(21.4% 0.016 264);
+    --surface-800: oklch(24.3% 0.020 264);
+    --surface-700: oklch(28.0% 0.024 264);
+    --surface-600: oklch(33.3% 0.028 264);
+    --surface-500: oklch(40.0% 0.032 264);
+    --surface-400: oklch(48.8% 0.036 264);
+
+    /* SURFACES — LIGHT LADDER
+     *
+     * A separate ladder that happens to share the prefix: --surface-300 and
+     * --surface-400 are not neighbouring steps of one scale, they are the
+     * bottom of this one and the top of the dark one. */
+    --surface-0: oklch(100.0% 0.000 256);
+    --surface-25: oklch(99.1% 0.002 256);
+    --surface-50: oklch(97.8% 0.004 256);
+    --surface-100: oklch(95.7% 0.006 256);
+    --surface-150: oklch(93.3% 0.009 256);
+    --surface-200: oklch(90.1% 0.013 256);
+    --surface-300: oklch(84.2% 0.019 256);
 }

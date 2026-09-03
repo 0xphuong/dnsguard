@@ -2,9 +2,9 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    font-size: 14px;
+    font-size: var(--fs-text-t3);
     font-weight: var(--weight-semi-bold);
-    line-height: 24px;
+    line-height: var(--lh-t3-normal);
     gap: 8px;
     color: var(--default-description-text);
     padding: 16px 0;
@@ -12,12 +12,8 @@
 
     @media (min-width: 768px) {
         padding: 32px 0 24px;
-        font-size: 16px;
+        font-size: var(--fs-text-t2);
         gap: 16px;
-    }
-
-    @media (min-width: 1200px) {
-        max-width: calc(var(--container) + 24px);
     }
 
     @media (min-width: 1400px) {

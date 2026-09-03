@@ -4,13 +4,10 @@
     --hovered-page-background: var(--surface-100);
     --pressed-page-background: var(--surface-150);
     --page-background-additional: var(--surface-100);
-    --page-background-additional-pressed: var(--surface-200);
     /* Cards background */
     --default-cards-background: var(--surface-0);
     /* Popup background */
     --default-popup-background: var(--surface-0);
-    /* Footer background */
-    --default-footer-background: var(--gray-80);
     /* Item divider */
     --default-item-divider: var(--surface-200);
     /* Main text */
@@ -22,23 +19,25 @@
     --default-labels: var(--gray-70);
     /* Input */
     --default-input-background: var(--surface-100);
-    --default-active-input-stroke: var(--gray-50);
-    --default-inactive-input-stroke: var(--surface-200);
-    --default-placeholder: var(--gray-65);
-    --default-input-on-card-background: var(--surface-100);
-    --disabled-input-on-card-background: var(--gray-10);
+    --default-active-input-stroke: var(--gray-60);
+    --default-inactive-input-stroke: var(--gray-40);
+    --default-placeholder: var(--gray-60);
     /* Dropdown */
     --default-dropdown-menu-background: var(--surface-0);
     --hovered-dropdown-menu-background: var(--surface-100);
     --pressed-dropdown-menu-background: var(--surface-150);
-    /* Main button */
-    --default-main-button: var(--product-primary-50);
-    --hovered-main-button: var(--product-primary-60);
-    --pressed-main-button: var(--product-primary-70);
+    /* Main button
+     *
+     * The fill darkens away from the brand step for one reason: the label is
+     * white, and white on -50 is 3.33:1.  On -70 it is 5.83:1, and the fill
+     * still separates from the card by the same 5.83:1.  Identity keeps -50
+     * wherever nothing is written on top of it — the icon, the switch, the
+     * focus ring. */
+    --default-main-button: var(--product-primary-70);
+    --hovered-main-button: var(--product-primary-80);
+    --pressed-main-button: var(--product-primary-90);
     --disabled-main-button: var(--product-primary-30);
     --default-primary-button-text: var(--gray-0);
-    --disabled-primary-button-text: var(--product-primary-0);
-    --default-primary-button-icon: var(--gray-0);
     /* Secondary button */
     --default-secondary-button: var(--gray-0);
     --hovered-secondary-button: var(--gray-10);
@@ -46,35 +45,29 @@
     --disabled-secondary-button: var(--gray-0);
     --default-secondary-button-stroke: var(--gray-80);
     --disabled-secondary-button-stroke: var(--gray-50);
-    /* Secondary card button */
-    --default-secondary-card-button: var(--gray-0);
-    --hovered-secondary-card-button: var(--gray-10);
-    --pressed-secondary-card-button: var(--gray-20);
-    --disabled-secondary-card-button: var(--gray-0);
     /* Danger button */
-    --default-danger-button: var(--red-50);
-    --hovered-danger-button: var(--red-60);
-    --pressed-danger-button: var(--red-70);
+    --default-danger-button-text: var(--gray-0);
+    --default-danger-button: var(--red-60);
+    --hovered-danger-button: var(--red-70);
+    --pressed-danger-button: var(--red-80);
     --disabled-danger-button: var(--red-30);
-    /* Link */
-    /* -50 measures 3.43:1 on white, short of AA for text.  -70 clears it at
-     * 5.52:1 while keeping the chroma that -80 loses. */
+    /* Link
+     *
+     * -50 is the brand step, but text is read against it, and in this theme it
+     * only reaches 3.33:1 under white.  -70 clears AA at 5.83:1 and hover
+     * steps further to 7.80:1, so hover is unambiguously stronger. */
     --default-link: var(--product-primary-70);
-    --hovered-link: var(--product-primary-60);
-    --pressed-link: var(--product-primary-70);
-    --visited-link: var(--product-primary-80);
-    /* Attention link */
-    /* These three carry text — counts, "Ads blocked", "6 blocked total" — so
-     * they need 4.5:1, not the 3:1 a graphic gets.  At -50 they measured
-     * 2.92:1, 3.29:1 and 3.73:1 on white, all below AA.  The chart strokes are
-     * separate --chart-* tokens, so darkening the text does not dull the
-     * lines. */
+    --hovered-link: var(--product-primary-80);
+    --pressed-link: var(--product-primary-90);
+    /* Attention link
+     *
+     * Carries text — counts, "Ads blocked", "6 blocked total" — so it needs
+     * 4.5:1, not the 3:1 a graphic gets.  -80 measures 8.15:1 on a card.  The
+     * chart strokes are separate --chart-* tokens, so darkening the text does
+     * not dull the lines. */
     --default-attention-link: var(--orange-80);
-    --hovered-attention-link: var(--orange-90);
-    --pressed-attention-link: var(--orange-90);
-    --disabled-attention-link: var(--orange-40);
     /* Additional link */
-    --default-additional-link: var(--product-secondary-70);
+    --category-adult: var(--violet-70);
     /* Error link */
     --default-error-link: var(--red-80);
     /* Icons */
@@ -83,48 +76,11 @@
     --default-gray-icons: var(--gray-60);
     --disabled-gray-icons: var(--gray-30);
     --default-error-icon: var(--red-50);
-    --stroke-icons-white-icons-default: var(--gray-0);
-    --stroke-icons-tertiary-icon-disabled: var(--product-tertiary-30);
-    --stroke-icons-secondary-icon-disabled: var(--product-secondary-30);
-    --default-product-secondary-icon-stroke: var(--product-secondary-50);
+    --category-adult-icon: var(--violet-50);
     --default-attention-icon-stroke: var(--orange-50);
     /* Stat */
-    --default-stats-background: var(--gray-20);
-    --default-red-stat: var(--red-50);
     --default-tertiary-stat: var(--gray-60);
-    /* Modal */
-    --modal-iframe-overlay: #ffffff50;
-    --modal-overlay: #00000050;
-    /* Notifications */
-    --default-notifications-attention: var(--orange-10);
-    /* Logo key */
-    --default-logo-key-color: var(--gray-90);
-    /* Loaders */
-    --default-loaders-background: var(--gray-20);
-    --default-loaders-background-dark: var(--gray-70);
-    --default-loaders-primary: var(--product-primary-50);
-    /* Toplines */
-    --default-text-toplines-main: var(--gray-0);
-    --disabled-text-toplines-main: var(--gray-20);
-    --default-fills-toplines-adblocker: var(--gray-100);
-    --default-fills-toplines-vpn: var(--gray-10);
-    /* Breadcrumbs */
-    --default-breadcrumbs: var(--gray-50);
     /* Promo top line */
-    --fills-toplines-topline-background: var(--gray-100);
-    --text-toplines-topline-title: var(--gray-0);
-    --text-toplines-topline-description: var(--gray-0);
-    --text-toplines-topline-button-text-default: var(--gray-0);
-    --fills-toplines-topline-background-image: none;
-    --fills-toplines-topline-button-default: var(--product-primary-50);
-    --fills-toplines-topline-button-hovered: var(--product-primary-60);
-    --fills-toplines-topline-button-pressed: var(--product-primary-70);
-    --stroke-toplines-button-stroke-default: var(--product-primary-50);
-    --stroke-toplines-button-stroke-hovered: var(--product-primary-60);
-    --stroke-toplines-button-stroke-pressed: var(--product-primary-70);
-    --stroke-toplines-close-icon-default: var(--gray-0);
-    --stroke-toplines-close-icon-hovered: var(--gray-10);
-    --stroke-toplines-close-icon-pressed: var(--gray-20);
     --fills-backgrounds-recent-activity: var(--product-primary-10);
     --fills-backgrounds-recent-activity-changed: var(--orange-10);
     --fills-backgrounds-recent-activity-blocked: var(--red-10);
@@ -132,8 +88,8 @@
     --fills-switch-on-default: var(--product-primary-50);
     --fills-switch-on-hovered: var(--product-primary-60);
     --fills-switch-on-disabled: var(--product-primary-30);
-    --fills-switch-off-default: var(--gray-40);
-    --fills-switch-off-hovered: var(--gray-50);
+    --fills-switch-off-default: var(--gray-50);
+    --fills-switch-off-hovered: var(--gray-60);
     --fills-switch-off-disabled: var(--gray-30);
     --fills-switch-knob: var(--gray-0);
     --fills-switch-knob-disabled: var(--gray-50);
@@ -141,20 +97,29 @@
     --default-logo-color: var(--gray-100);
     /* Data visualisation
      *
-     * These are the only colours the charts read.  They are separate from the
-     * --default-*-link text tokens because a 1px data line and a text label
-     * need different weights to stay legible against the card surface. */
+     * Separate from the --default-*-link text tokens because a 1px data line
+     * and a text label need different weights against the same surface.
+     *
+     * These steps are not taste; they came out of a colour-blindness check.
+     * The obvious pairing — ads on -50 red and threats on -60 amber — put the
+     * two marks 12.6 ΔE apart for normal vision and 1.4 ΔE apart under
+     * protanopia, which is to say identical.  Red and amber are only 32
+     * degrees of hue apart, so the separation has to come from lightness:
+     * pushing threats down to -80 gives 16.7 ΔE normal and 9.3 ΔE protan,
+     * and every mark still clears 3:1 against the card.
+     *
+     * Amber that dark reads as ochre on white.  That is what amber looks like
+     * at the lightness a white surface demands; the alternative was a chart
+     * two of its four series cannot be told apart in. */
     --chart-queries: var(--gray-60);
     --chart-ads: var(--red-50);
-    --chart-threats: var(--orange-60);
-    --chart-adult: var(--product-secondary-50);
-    --chart-grid: var(--gray-20);
+    --chart-threats: var(--orange-80);
+    --chart-adult: var(--violet-50);
     /* Success / allowed
      *
      * statusGreen and statusBlue in the query log both resolved to the brand
      * colour, so a resolved query and an informational one rendered
      * identically.  Green now carries the first on its own. */
     --default-success-text: var(--success-80);
-    --default-success-icon: var(--success-70);
     --fills-success: var(--success-70);
 }

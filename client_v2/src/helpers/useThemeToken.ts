@@ -60,6 +60,15 @@ export function useThemeTokens<K extends string>(
 export function withAlpha(color: string, alpha: number): string {
     const hex = color.trim();
 
+    // The palette is authored in oklch(), so this is the notation the tokens
+    // actually resolve to.  Without this branch every gradient stop fell
+    // through to the flat-colour fallback below and the chart fills lost their
+    // fade — a silent regression, since a flat fill still renders.
+    const oklch = /^(oklch|oklab|lch|lab|color)\(([^)]*)\)$/i.exec(hex);
+    if (oklch && !oklch[2].includes('/')) {
+        return `${oklch[1]}(${oklch[2].trim()} / ${alpha})`;
+    }
+
     const short = /^#([\da-f])([\da-f])([\da-f])$/i.exec(hex);
     if (short) {
         const [, r, g, b] = short;

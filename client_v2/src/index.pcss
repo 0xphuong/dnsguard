@@ -5,9 +5,15 @@
 @import './common/styles/fonts.css';
 
 :root {
-    --font-family-monospace: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
+    /* Mono was an unbundled system stack, which meant the same table of
+     * addresses rendered at a different width on every platform: ten capital
+     * Ms measured 96.02px in Monaco on macOS and 142.27px in Consolas on
+     * Windows, a 48% difference, so columns, truncation and card widths all
+     * shifted with the reader's operating system.  Bundling one face fixes the
+     * text a DNS firewall exists to show. */
+    --font-family-monospace: 'Geist Mono', ui-monospace, Menlo, Consolas, monospace;
     --font-family-base:
-        Rubik, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 }
 
 *,
@@ -21,6 +27,10 @@ body {
     padding: 0;
     font-family: var(--font-family-base);
     font-weight: var(--weight-regular);
+    /* Geist already defaults to tabular figures; stating it here means a
+     * future change of typeface cannot silently reintroduce the jitter that
+     * proportional digits caused, without any component having to opt in. */
+    font-variant-numeric: tabular-nums;
     color: var(--default-main-text);
     line-height: 1.4;
     background-color: var(--default-page-background);

@@ -4,13 +4,10 @@
     --hovered-page-background: var(--surface-850);
     --pressed-page-background: var(--surface-800);
     --page-background-additional: var(--surface-900);
-    --page-background-additional-pressed: var(--surface-800);
     /* Cards background */
     --default-cards-background: var(--surface-800);
     /* Popup background */
     --default-popup-background: var(--surface-700);
-    /* Footer background */
-    --default-footer-background: var(--surface-900);
     /* Item divider */
     --default-item-divider: var(--surface-600);
     /* Main text */
@@ -20,25 +17,32 @@
     --default-description-text: var(--gray-40);
     /* Forms */
     --default-labels: var(--gray-40);
-    /* Input */
+    /* Input
+     *
+     * The placeholder shares a step with the description text.  One step
+     * dimmer reaches only 4.21:1 against the input surface and the ramp has no
+     * half step to reach for, so hierarchy inside a field comes from position
+     * and weight instead. */
     --default-input-background: var(--surface-900);
-    --default-active-input-stroke: var(--surface-400);
-    --default-inactive-input-stroke: var(--surface-600);
-    --default-placeholder: var(--gray-50);
-    --default-input-on-card-background: var(--surface-700);
-    --disabled-input-on-card-background: var(--surface-700);
+    --default-active-input-stroke: var(--gray-40);
+    --default-inactive-input-stroke: var(--gray-50);
+    --default-placeholder: var(--gray-40);
     /* Dropdown */
     --default-dropdown-menu-background: var(--surface-700);
     --hovered-dropdown-menu-background: var(--surface-600);
     --pressed-dropdown-menu-background: var(--surface-500);
-    /* Main button */
-    --default-main-button: var(--product-primary-50);
-    --hovered-main-button: var(--product-primary-60);
-    --pressed-main-button: var(--product-primary-70);
+    /* Main button
+     *
+     * A light fill with a dark label, the inverse of the light theme and the
+     * only arrangement that satisfies both constraints at once: the near-black
+     * label reads 7.58:1 against the fill, and the fill still separates from
+     * the card at 6.36:1.  A fill dark enough to carry white text would have
+     * sunk into the card. */
+    --default-main-button: var(--product-primary-40);
+    --hovered-main-button: var(--product-primary-30);
+    --pressed-main-button: var(--product-primary-20);
     --disabled-main-button: var(--product-primary-90);
-    --default-primary-button-text: var(--gray-0);
-    --disabled-primary-button-text: var(--product-primary-20);
-    --default-primary-button-icon: var(--gray-0);
+    --default-primary-button-text: var(--surface-950);
     /* Secondary button */
     --default-secondary-button: var(--gray-90);
     --hovered-secondary-button: var(--gray-80);
@@ -46,33 +50,23 @@
     --disabled-secondary-button: var(--gray-90);
     --default-secondary-button-stroke: var(--gray-20);
     --disabled-secondary-button-stroke: var(--gray-50);
-    /* Secondary card button */
-    --default-secondary-card-button: var(--gray-80);
-    --hovered-secondary-card-button: var(--gray-70);
-    --pressed-secondary-card-button: var(--gray-60);
-    --disabled-secondary-card-button: var(--gray-80);
     /* Danger button */
-    --default-danger-button: var(--red-50);
-    --hovered-danger-button: var(--red-60);
-    --pressed-danger-button: var(--red-70);
+    --default-danger-button-text: var(--surface-950);
+    --default-danger-button: var(--red-40);
+    --hovered-danger-button: var(--red-30);
+    --pressed-danger-button: var(--red-20);
     --disabled-danger-button: var(--red-30);
-    /* Link */
-    /* -50 measures 4.25:1 on the popup surface, just short of AA; the menus
-     * are where links appear most. */
+    /* Link
+     *
+     * Dark moves the opposite way from light: lighter, not darker.  -40 is
+     * 6.36:1 on a card and hover lifts to -30 at 8.03:1. */
     --default-link: var(--product-primary-40);
-    --hovered-link: var(--product-primary-60);
-    --pressed-link: var(--product-primary-70);
-    --visited-link: var(--product-primary-30);
-    /* Attention link */
-    /* The dark theme inherited the light theme's values verbatim, which left
-     * them at 3.30:1, 3.72:1 and 2.91:1 on the card surface.  Dark needs the
-     * opposite direction from light: lighter, not darker. */
+    --hovered-link: var(--product-primary-30);
+    --pressed-link: var(--product-primary-20);
+    /* Attention link — 6.06:1 on a card. */
     --default-attention-link: var(--orange-40);
-    --hovered-attention-link: var(--orange-30);
-    --pressed-attention-link: var(--orange-20);
-    --disabled-attention-link: var(--orange-60);
     /* Additional link */
-    --default-additional-link: var(--product-secondary-20);
+    --category-adult: var(--violet-20);
     /* Error link */
     --default-error-link: var(--red-30);
     /* Icons */
@@ -81,48 +75,11 @@
     --default-gray-icons: var(--gray-40);
     --disabled-gray-icons: var(--gray-70);
     --default-error-icon: var(--red-50);
-    --stroke-icons-white-icons-default: var(--gray-0);
-    --stroke-icons-secondary-icon-disabled: var(--product-secondary-100);
-    --stroke-icons-tertiary-icon-disabled: var(--product-tertiary-100);
-    --default-product-secondary-icon-stroke: var(--product-secondary-50);
+    --category-adult-icon: var(--violet-50);
     --default-attention-icon-stroke: var(--orange-50);
     /* Stat */
-    --default-stats-background: var(--gray-70);
-    --default-red-stat: var(--red-50);
     --default-tertiary-stat: var(--gray-60);
-    /* Modal */
-    --modal-iframe-overlay: #00000075;
-    --modal-overlay: #00000075;
-    /* Notifications */
-    --default-notifications-attention: var(--orange-100);
-    /* Logo key */
-    --default-logo-key-color: var(--gray-10);
-    /* Loaders */
-    --default-loaders-background: var(--gray-70);
-    --default-loaders-background-dark: var(--gray-70);
-    --default-loaders-primary: var(--product-primary-50);
-    /* Toplines */
-    --default-text-toplines-main: var(--gray-0);
-    --disabled-text-toplines-main: var(--gray-20);
-    --default-fills-toplines-adblocker: var(--gray-100);
-    --default-fills-toplines-vpn: var(--gray-80);
-    /* Breadcrumbs */
-    --default-breadcrumbs: var(--gray-50);
     /* Promo top line */
-    --fills-toplines-topline-background: var(--gray-100);
-    --text-toplines-topline-title: var(--gray-0);
-    --text-toplines-topline-description: var(--gray-0);
-    --text-toplines-topline-button-text-default: var(--gray-0);
-    --fills-toplines-topline-background-image: none;
-    --fills-toplines-topline-button-default: var(--product-primary-50);
-    --fills-toplines-topline-button-hovered: var(--product-primary-60);
-    --fills-toplines-topline-button-pressed: var(--product-primary-70);
-    --stroke-toplines-button-stroke-default: var(--product-primary-50);
-    --stroke-toplines-button-stroke-hovered: var(--product-primary-60);
-    --stroke-toplines-button-stroke-pressed: var(--product-primary-70);
-    --stroke-toplines-close-icon-default: var(--gray-0);
-    --stroke-toplines-close-icon-hovered: var(--gray-10);
-    --stroke-toplines-close-icon-pressed: var(--gray-20);
     --fills-backgrounds-recent-activity: var(--product-primary-90);
     --fills-backgrounds-recent-activity-changed: var(--orange-90);
     --fills-backgrounds-recent-activity-blocked: var(--red-90);
@@ -130,8 +87,8 @@
     --fills-switch-on-default: var(--product-primary-50);
     --fills-switch-on-hovered: var(--product-primary-60);
     --fills-switch-on-disabled: var(--product-primary-90);
-    --fills-switch-off-default: var(--gray-60);
-    --fills-switch-off-hovered: var(--gray-70);
+    --fills-switch-off-default: var(--gray-50);
+    --fills-switch-off-hovered: var(--gray-40);
     --fills-switch-off-disabled: var(--gray-70);
     --fills-switch-knob: var(--gray-0);
     --fills-switch-knob-disabled: var(--gray-50);
@@ -139,16 +96,18 @@
     --default-logo-color: var(--gray-0);
     /* Data visualisation
      *
-     * One step lighter than the light theme: on the dark card surface the
-     * light-theme values drop to roughly 4:1, which clears WCAG 1.4.11 but
-     * reads faint for a hairline chart stroke. */
+     * Chosen for this theme rather than flipped from the light one, and for
+     * the same colour-blindness reason: here the lightness separation runs the
+     * other way, with ads pushed down to -60 red and threats left high at -30
+     * amber.  That gives 19.2 ΔE for normal vision and 14.0 ΔE under
+     * deuteranopia, against 7.5 and 0.4 for the pairing this replaces — two of
+     * the four series were the same colour to a red-green colourblind reader.
+     * All four clear 3:1 against the card. */
     --chart-queries: var(--gray-40);
-    --chart-ads: var(--red-30);
+    --chart-ads: var(--red-60);
     --chart-threats: var(--orange-30);
-    --chart-adult: var(--product-secondary-30);
-    --chart-grid: var(--gray-80);
+    --chart-adult: var(--violet-40);
     /* Success / allowed — see the light theme for why this exists. */
     --default-success-text: var(--success-40);
-    --default-success-icon: var(--success-40);
     --fills-success: var(--success-50);
 }

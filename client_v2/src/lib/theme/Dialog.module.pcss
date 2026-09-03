@@ -58,7 +58,9 @@
 .buttonLoader {
     width: 20px;
     height: 20px;
-    color: var(--gray-0);
+    /* Spins inside a filled button, so it has to follow the button's label
+     * rather than assume white. */
+    color: var(--default-primary-button-text);
 }
 
 /* Was a bare colour with no affordance: nothing changed under the pointer, so

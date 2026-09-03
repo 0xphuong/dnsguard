@@ -1,13 +1,4 @@
 :root {
-    /* CONTAINER */
-
-    --column-width: 76px;
-    --column-gap: 24px;
-    --container-width-12-col: calc((var(--column-width) * 12) + (var(--column-gap) * 11));
-    --container-width-10-col: calc((var(--column-width) * 10) + (var(--column-gap) * 9));
-    --container-width-8-col: calc((var(--column-width) * 8) + (var(--column-gap) * 7));
-    --container-width-6-col: calc((var(--column-width) * 6) + (var(--column-gap) * 5));
-
     /* FONT WEIGHT */
 
     --weight-regular: 400;
@@ -57,11 +48,6 @@
     --t3: 0.3s ease;
     --t2: 0.2s ease;
 
-    /* BOX-SHADOW */
-
-    --main-box-shadow: rgba(166, 166, 166, 0.2);
-    --dropdown-box-shadow: rgba(23, 39, 75, 0.12);
-
     /* RADIUS */
 
     --radius-sm: 6px;
@@ -97,10 +83,8 @@
      * The KPI numbers are the reason the page exists; at 24px they read as
      * body copy that happens to be bold.  Tracking tightens as size grows,
      * which is what keeps large numerals from looking loose. */
-    --fs-display-lg: 44px;
     --fs-display-md: 36px;
     --fs-display-sm: 28px;
-    --lh-display-lg: 48px;
     --lh-display-md: 40px;
     --lh-display-sm: 32px;
     --tracking-display: -0.02em;
