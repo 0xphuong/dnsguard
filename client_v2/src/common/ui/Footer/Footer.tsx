@@ -8,7 +8,7 @@ import intl, { type LocalesType } from 'panel/common/intl';
 
 import { LOCAL_STORAGE_KEYS, LocalStorageHelper } from 'panel/helpers/localStorageHelper';
 import { LanguageDropdown } from '../LanguageDropdown/LanguageDropdown';
-import { REPOSITORY, PRIVACY_POLICY_LINK, THEMES } from 'panel/helpers/constants';
+import { THEMES } from 'panel/helpers/constants';
 import { LANGUAGES, LANGUAGE_NAMES } from 'panel/helpers/twosky';
 import { setHtmlLangAttr, setUITheme } from 'panel/helpers/helpers';
 import {
@@ -27,12 +27,6 @@ export const Footer = () => {
     const profileName = () => dashboardState.name || '';
     const currentLanguage = () => dashboardState.language || intl.getUILanguage();
     const isLoggedIn = () => profileName() !== '';
-
-    const linksData = createMemo(() => [
-        { href: PRIVACY_POLICY_LINK, name: intl.getMessage('privacy_policy') },
-        { href: REPOSITORY.ISSUES, name: intl.getMessage('report_an_issue') },
-        { href: REPOSITORY.RELEASE_NOTES, name: intl.getMessage('release_notes') },
-    ]);
 
     const themeTranslations = createMemo<Record<string, string>>(() => ({
         auto: intl.getMessage('system_theme'),
@@ -106,21 +100,6 @@ export const Footer = () => {
                             </Show>
                         </div>
                     </Show>
-
-                    <div class={s.links}>
-                        <For each={linksData()}>
-                            {({ name, href }) => (
-                                <a
-                                    href={href}
-                                    class={cn(theme.link.link, theme.link.noDecoration)}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {name}
-                                </a>
-                            )}
-                        </For>
-                    </div>
                 </div>
 
                 <div class={s.dropdownWrapper}>
