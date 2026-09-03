@@ -19,6 +19,7 @@ import { SAFE_SEARCH_PROVIDERS } from 'panel/helpers/constants';
 import { addSuccessToast } from 'panel/stores/toasts';
 
 import { SettingRow } from 'panel/common/ui/SettingRow';
+import { Switch } from 'panel/common/controls/Switch';
 import { StatsConfig } from './StatsConfig';
 import { LogsConfig } from './LogsConfig';
 import { FiltersConfig } from './FiltersConfig';
@@ -149,7 +150,7 @@ export const Settings = () => {
 
     return (
         <div class={theme.layout.container}>
-            <div class={cn(theme.layout.containerIn, theme.layout.containerIn_one_col, s.wide)}>
+            <div class={cn(theme.layout.containerIn, theme.layout.containerIn_one_col, s.page)}>
                 <h1 class={cn(theme.layout.title, theme.title.h4, theme.title.h3_tablet, s.title)}>
                     {intl.getMessage('settings_general_short')}
                 </h1>
@@ -158,58 +159,68 @@ export const Settings = () => {
                     when={isLoading()}
                     fallback={
                         <>
-                            <div class={s.fullWidthSection}>
-                            <h2
-                                id="filtering"
-                                class={cn(
-                                    theme.layout.subtitle,
-                                    theme.title.h5,
-                                    theme.title.h4_tablet,
-                                    s.title,
-                                )}
-                            >
-                                {intl.getMessage('settings_filtering_and_security')}
-                            </h2>
+                            <section class={s.card} id="filtering">
+                                {/* No switch beside this title: "Filter
+                                    requests" is one filter among several
+                                    below, not a master for the section. */}
+                                <header class={s.cardHeader}>
+                                    <div class={s.cardHeading}>
+                                        <h2 class={cn(theme.title.h5, s.cardTitle)}>
+                                            {intl.getMessage('settings_filtering_and_security')}
+                                        </h2>
+                                    </div>
+                                </header>
 
-                            <FiltersConfig
-                                initialValues={{
-                                    interval: filteringState.interval,
-                                    enabled: filteringState.enabled,
-                                }}
-                                processing={filteringState.processingSetConfig}
-                            />
+                                <div class={s.cardBody}>
+                                    <FiltersConfig
+                                        initialValues={{
+                                            interval: filteringState.interval,
+                                            enabled: filteringState.enabled,
+                                        }}
+                                        processing={filteringState.processingSetConfig}
+                                    />
 
-                            <SettingRow
-                                variant="switch"
-                                id="safebrowsing"
-                                title={intl.getMessage('settings_browsing_security')}
-                                description={intl.getMessage('settings_browsing_security_desc')}
-                                checked={!!settingsState.settingsList?.safebrowsing?.enabled}
-                                onChange={(v) => toggleSetting('safebrowsing', !v)}
-                            />
+                                    <SettingRow
+                                        variant="switch"
+                                        id="safebrowsing"
+                                        title={intl.getMessage('settings_browsing_security')}
+                                        description={intl.getMessage(
+                                            'settings_browsing_security_desc',
+                                        )}
+                                        checked={
+                                            !!settingsState.settingsList?.safebrowsing?.enabled
+                                        }
+                                        onChange={(v) => toggleSetting('safebrowsing', !v)}
+                                    />
 
-                            <SettingRow
-                                variant="switch"
-                                id="parental"
-                                title={intl.getMessage('settings_parental_control')}
-                                description={intl.getMessage('settings_parental_control_desc')}
-                                checked={!!settingsState.settingsList?.parental?.enabled}
-                                onChange={(v) => toggleSetting('parental', !v)}
-                            />
+                                    <SettingRow
+                                        variant="switch"
+                                        id="parental"
+                                        title={intl.getMessage('settings_parental_control')}
+                                        description={intl.getMessage(
+                                            'settings_parental_control_desc',
+                                        )}
+                                        checked={!!settingsState.settingsList?.parental?.enabled}
+                                        onChange={(v) => toggleSetting('parental', !v)}
+                                    />
 
-                            <SettingRow
-                                variant="switch-link"
-                                id="safesearch"
-                                title={intl.getMessage('settings_safe_search')}
-                                description={intl.getMessage('settings_safe_search_desc')}
-                                checked={safesearchEnabled()}
-                                value={safesearchSummary()}
-                                onChange={(v) => {
-                                    const ss = untrack(() => settingsState.settingsList.safesearch);
-                                    toggleSetting('safesearch', { ...ss, enabled: v });
-                                }}
-                                onClick={() => setSafesearchProvidersOpen(true)}
-                            />
+                                    <SettingRow
+                                        variant="switch-link"
+                                        id="safesearch"
+                                        title={intl.getMessage('settings_safe_search')}
+                                        description={intl.getMessage('settings_safe_search_desc')}
+                                        checked={safesearchEnabled()}
+                                        value={safesearchSummary()}
+                                        onChange={(v) => {
+                                            const ss = untrack(
+                                                () => settingsState.settingsList.safesearch,
+                                            );
+                                            toggleSetting('safesearch', { ...ss, enabled: v });
+                                        }}
+                                        onClick={() => setSafesearchProvidersOpen(true)}
+                                    />
+                                </div>
+                            </section>
 
                             <SafeSearchModal
                                 open={safesearchProvidersOpen()}
@@ -222,78 +233,81 @@ export const Settings = () => {
                                 onSave={handleSafeSearchSave}
                             />
 
-                            </div>
+                            <section class={s.card} id="query-log">
+                                <header class={s.cardHeader}>
+                                    <div class={s.cardHeading}>
+                                        <h2
+                                            id="query-log-title"
+                                            class={cn(theme.title.h5, s.cardTitle)}
+                                        >
+                                            {intl.getMessage('query_log')}
+                                        </h2>
+                                    </div>
 
-                            <div class={s.columns}>
-                            <div class={cn(s.section, s.columnBlock)} id="query-log">
-                                <SettingRow
-                                    variant="switch"
-                                    id="querylog_enabled"
-                                    title={intl.getMessage('query_log')}
-                                    titleAs="h2"
-                                    titleId="query-log-title"
-                                    titleClass={cn(
-                                        theme.title.h5,
-                                        theme.title.h4_tablet,
-                                        theme.text.bold,
-                                        s.sectionTitle,
-                                    )}
-                                    align="center"
-                                    checked={queryLogsState.enabled}
-                                    onChange={(v) =>
-                                        setLogsConfig(
-                                            buildQueryLogConfig(queryLogsState, { enabled: v }),
-                                        )
-                                    }
-                                    inputClass={s.queryLogSwitch}
-                                />
+                                    <Switch
+                                        id="querylog_enabled"
+                                        class={s.cardSwitch}
+                                        aria-labelledby="query-log-title"
+                                        checked={queryLogsState.enabled}
+                                        onChange={(e) =>
+                                            setLogsConfig(
+                                                buildQueryLogConfig(queryLogsState, {
+                                                    enabled: (e.currentTarget as HTMLInputElement)
+                                                        .checked,
+                                                }),
+                                            )
+                                        }
+                                    />
+                                </header>
 
-                                <SettingRow
-                                    variant="switch"
-                                    id="querylog_anonymize"
-                                    title={intl.getMessage('settings_anonymize_client_ip')}
-                                    description={intl.getMessage(
-                                        'settings_anonymize_client_ip_desc',
-                                    )}
-                                    checked={queryLogsState.anonymize_client_ip}
-                                    disabled={!queryLogsState.enabled}
-                                    onChange={(v) =>
-                                        setLogsConfig(
-                                            buildQueryLogConfig(queryLogsState, {
-                                                anonymize_client_ip: v,
-                                            }),
-                                        )
-                                    }
-                                />
+                                <div class={s.cardBody}>
+                                    <SettingRow
+                                        variant="switch"
+                                        id="querylog_anonymize"
+                                        title={intl.getMessage('settings_anonymize_client_ip')}
+                                        description={intl.getMessage(
+                                            'settings_anonymize_client_ip_desc',
+                                        )}
+                                        checked={queryLogsState.anonymize_client_ip}
+                                        disabled={!queryLogsState.enabled}
+                                        onChange={(v) =>
+                                            setLogsConfig(
+                                                buildQueryLogConfig(queryLogsState, {
+                                                    anonymize_client_ip: v,
+                                                }),
+                                            )
+                                        }
+                                    />
 
-                                <SettingRow
-                                    variant="link"
-                                    id="querylog_retention"
-                                    title={intl.getMessage('query_log_retention')}
-                                    value={logsRetentionSummary()}
-                                    disabled={!queryLogsState.enabled}
-                                    onClick={() => setLogsModalOpen(true)}
-                                />
+                                    <SettingRow
+                                        variant="link"
+                                        id="querylog_retention"
+                                        title={intl.getMessage('query_log_retention')}
+                                        value={logsRetentionSummary()}
+                                        disabled={!queryLogsState.enabled}
+                                        onClick={() => setLogsModalOpen(true)}
+                                    />
 
-                                <SettingRow
-                                    variant="switch-link"
-                                    id="querylog_ignored"
-                                    title={intl.getMessage('ignore_domains_title')}
-                                    description={intl.getMessage('ignore_domains_desc_log')}
-                                    checked={queryLogsState.ignored_enabled}
-                                    value={logsIgnoredSummary()}
-                                    disabled={!queryLogsState.enabled}
-                                    onChange={(v) =>
-                                        setLogsConfig(
-                                            buildQueryLogConfig(queryLogsState, {
-                                                ignored_enabled: v,
-                                            }),
-                                        )
-                                    }
-                                    onClick={() => setLogsIgnoredModalOpen(true)}
-                                />
+                                    <SettingRow
+                                        variant="switch-link"
+                                        id="querylog_ignored"
+                                        title={intl.getMessage('ignore_domains_title')}
+                                        description={intl.getMessage('ignore_domains_desc_log')}
+                                        checked={queryLogsState.ignored_enabled}
+                                        value={logsIgnoredSummary()}
+                                        disabled={!queryLogsState.enabled}
+                                        onChange={(v) =>
+                                            setLogsConfig(
+                                                buildQueryLogConfig(queryLogsState, {
+                                                    ignored_enabled: v,
+                                                }),
+                                            )
+                                        }
+                                        onClick={() => setLogsIgnoredModalOpen(true)}
+                                    />
+                                </div>
 
-                                <div class={cn(s.actionRow, theme.form.dangerRow)}>
+                                <div class={s.cardFooter}>
                                     <Button
                                         variant="secondary-danger"
                                         class={s.clearButton}
@@ -303,7 +317,7 @@ export const Settings = () => {
                                         {intl.getMessage('clear_query_log')}
                                     </Button>
                                 </div>
-                            </div>
+                            </section>
 
                             <LogsConfig
                                 interval={queryLogsState.interval}
@@ -334,52 +348,64 @@ export const Settings = () => {
                                 />
                             </Show>
 
-                            <div class={cn(s.section, s.columnBlock)} id="statistics">
-                                <SettingRow
-                                    variant="switch"
-                                    id="stats_enabled"
-                                    title={intl.getMessage('settings_statistics')}
-                                    description={intl.getMessage('settings_statistics_desc')}
-                                    titleAs="h2"
-                                    titleId="statistics-title"
-                                    titleClass={cn(
-                                        theme.title.h5,
-                                        theme.title.h4_tablet,
-                                        theme.text.bold,
-                                        s.statsTitle,
-                                    )}
-                                    checked={statsState.enabled}
-                                    onChange={(v) =>
-                                        setStatsConfig(buildStatsConfig(statsState, { enabled: v }))
-                                    }
-                                />
+                            <section class={s.card} id="statistics">
+                                <header class={s.cardHeader}>
+                                    <div class={s.cardHeading}>
+                                        <h2
+                                            id="statistics-title"
+                                            class={cn(theme.title.h5, s.cardTitle)}
+                                        >
+                                            {intl.getMessage('settings_statistics')}
+                                        </h2>
+                                        <p class={cn(theme.text.t3, s.cardDesc)}>
+                                            {intl.getMessage('settings_statistics_desc')}
+                                        </p>
+                                    </div>
 
-                                <SettingRow
-                                    variant="link"
-                                    id="stats_retention"
-                                    title={intl.getMessage('settings_statistics_retention')}
-                                    value={statsRetentionSummary()}
-                                    disabled={!statsState.enabled}
-                                    onClick={() => setStatsModalOpen(true)}
-                                />
+                                    <Switch
+                                        id="stats_enabled"
+                                        class={s.cardSwitch}
+                                        aria-labelledby="statistics-title"
+                                        checked={statsState.enabled}
+                                        onChange={(e) =>
+                                            setStatsConfig(
+                                                buildStatsConfig(statsState, {
+                                                    enabled: (e.currentTarget as HTMLInputElement)
+                                                        .checked,
+                                                }),
+                                            )
+                                        }
+                                    />
+                                </header>
 
-                                <SettingRow
-                                    variant="switch-link"
-                                    id="stats_ignored"
-                                    title={intl.getMessage('ignore_domains_title')}
-                                    description={intl.getMessage('ignore_domains_desc_stats')}
-                                    checked={statsState.ignored_enabled}
-                                    value={statsIgnoredSummary()}
-                                    disabled={!statsState.enabled}
-                                    onChange={(v) =>
-                                        setStatsConfig(
-                                            buildStatsConfig(statsState, { ignored_enabled: v }),
-                                        )
-                                    }
-                                    onClick={() => setStatsIgnoredModalOpen(true)}
-                                />
+                                <div class={s.cardBody}>
+                                    <SettingRow
+                                        variant="link"
+                                        id="stats_retention"
+                                        title={intl.getMessage('settings_statistics_retention')}
+                                        value={statsRetentionSummary()}
+                                        disabled={!statsState.enabled}
+                                        onClick={() => setStatsModalOpen(true)}
+                                    />
 
-                                <div class={cn(s.actionRow, theme.form.dangerRow)}>
+                                    <SettingRow
+                                        variant="switch-link"
+                                        id="stats_ignored"
+                                        title={intl.getMessage('ignore_domains_title')}
+                                        description={intl.getMessage('ignore_domains_desc_stats')}
+                                        checked={statsState.ignored_enabled}
+                                        value={statsIgnoredSummary()}
+                                        disabled={!statsState.enabled}
+                                        onChange={(v) =>
+                                            setStatsConfig(
+                                                buildStatsConfig(statsState, { ignored_enabled: v }),
+                                            )
+                                        }
+                                        onClick={() => setStatsIgnoredModalOpen(true)}
+                                    />
+                                </div>
+
+                                <div class={s.cardFooter}>
                                     <Button
                                         variant="secondary-danger"
                                         class={s.clearButton}
@@ -389,39 +415,36 @@ export const Settings = () => {
                                         {intl.getMessage('settings_statistics_clear')}
                                     </Button>
                                 </div>
+                            </section>
 
-                                <StatsConfig
-                                    interval={statsState.interval}
-                                    customInterval={statsState.customInterval}
-                                    processing={statsState.processingSetConfig}
-                                    modalOpen={statsModalOpen()}
-                                    onModalClose={() => setStatsModalOpen(false)}
+                            <StatsConfig
+                                interval={statsState.interval}
+                                customInterval={statsState.customInterval}
+                                processing={statsState.processingSetConfig}
+                                modalOpen={statsModalOpen()}
+                                onModalClose={() => setStatsModalOpen(false)}
+                            />
+
+                            <IgnoredDomainsModal
+                                open={statsIgnoredModalOpen()}
+                                title={intl.getMessage('ignore_domains_title')}
+                                ignored={statsState.ignored}
+                                processing={statsState.processingSetConfig}
+                                onClose={() => setStatsIgnoredModalOpen(false)}
+                                onSave={handleStatsIgnoredSave}
+                            />
+
+                            <Show when={showClearStatsConfirm()}>
+                                <ConfirmDialog
+                                    title={intl.getMessage('settings_confirm_clear_statistics')}
+                                    text={intl.getMessage('settings_confirm_clear_statistics_desc')}
+                                    buttonText={intl.getMessage('settings_yes_clear')}
+                                    cancelText={intl.getMessage('cancel')}
+                                    buttonVariant="danger"
+                                    onClose={() => setShowClearStatsConfirm(false)}
+                                    onConfirm={handleClearStats}
                                 />
-
-                                <IgnoredDomainsModal
-                                    open={statsIgnoredModalOpen()}
-                                    title={intl.getMessage('ignore_domains_title')}
-                                    ignored={statsState.ignored}
-                                    processing={statsState.processingSetConfig}
-                                    onClose={() => setStatsIgnoredModalOpen(false)}
-                                    onSave={handleStatsIgnoredSave}
-                                />
-
-                                <Show when={showClearStatsConfirm()}>
-                                    <ConfirmDialog
-                                        title={intl.getMessage('settings_confirm_clear_statistics')}
-                                        text={intl.getMessage(
-                                            'settings_confirm_clear_statistics_desc',
-                                        )}
-                                        buttonText={intl.getMessage('settings_yes_clear')}
-                                        cancelText={intl.getMessage('cancel')}
-                                        buttonVariant="danger"
-                                        onClose={() => setShowClearStatsConfirm(false)}
-                                        onConfirm={handleClearStats}
-                                    />
-                                </Show>
-                            </div>
-                            </div>
+                            </Show>
                         </>
                     }
                 >

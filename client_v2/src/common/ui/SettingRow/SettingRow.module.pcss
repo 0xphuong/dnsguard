@@ -143,6 +143,25 @@
     color: var(--default-description-text);
 }
 
+/* The switch-link affordance: it sits beside a switch, so it stays quiet and
+ * takes no pointer of its own — the whole row is the target.
+ *
+ * The slot is reserved on rows that have no chevron too.  Adding it only
+ * where it appears pushed those rows' switches 36px inboard of every other
+ * switch on the page, which is the ragged edge this pass set out to remove. */
+.staticArrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    flex: none;
+    pointer-events: none;
+}
+
+.staticArrowEmpty {
+    visibility: hidden;
+}
+
 .content {
     padding: 8px 0;
 }

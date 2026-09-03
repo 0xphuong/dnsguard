@@ -1,94 +1,97 @@
-.linkRow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 0;
-    cursor: pointer;
-}
-
-.linkValue {
-    font-weight: var(--weight-semi-bold);
-    color: var(--default-main-text);
-}
-
-.linkArrow {
-    color: var(--default-description-text);
-    flex-shrink: 0;
-}
-
-/* Destructive and irreversible, sitting in the same reading flow as the
- * toggles above it.  A 200px outlined button gave it the weight of a primary
- * action; this keeps it reachable but stops it competing.  The confirm dialog
- * was already in place. */
-.clearButton {
-    width: auto;
-    min-width: 0;
-    align-self: flex-start;
-}
-
-.section {
-    padding-top: var(--space-5);
-}
-
-/* The content column measured 584px inside a 1440px viewport, leaving 568px
- * — about 40% of the screen — empty to the right of sixteen toggles.  Two
- * columns from 1280px roughly halve the scroll without touching any of the
- * content.  Sections are kept whole with break-inside so a heading never
- * separates from its rows. */
-.columns {
-    @media (min-width: 1280px) {
-        /* Grid rather than column-count: with interactive blocks a fragmented
-         * column can split a section across the fold, and grid keeps each
-         * section whole with its heading.  The dialogs nested in here are
-         * position: fixed, so they never become grid items. */
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-6);
-        align-items: start;
+/* One column, and every section in a card.
+ *
+ * The page used to be two widths at once: a 1080px container with the
+ * filtering block capped at 640px inside it, which left about 456px empty
+ * beside four switches.  Worse, controls landed on three different right
+ * edges — 796, 912 and 1352 — so there was no single column to run an eye
+ * down, which is the only way a settings page is ever read.
+ *
+ * A card per section also brings this page into the language the rest of the
+ * app already speaks; it was the only screen whose content sat bare on the
+ * page background.
+ */
+.page.page {
+    /* Wider than the shared 584px one-column cap, because these rows carry a
+     * title, a description and a value; narrower than the full container, so
+     * no control drifts away from the thing it controls. */
+    @media (min-width: 1024px) {
+        max-width: 760px;
     }
-}
-
-/* Kept as a hook: sections are whole grid items, so nothing needs
- * break-inside, but the class marks which blocks are column candidates. */
-.columnBlock {
-    min-width: 0;
-}
-
-/* The shared containerIn_one_col caps content at 584px and ten pages rely on
- * it, so it is widened here only, and only where the second column appears.
- * Doubled selector to win over the shared class regardless of emit order. */
-/* The filtering section spans the full widened container, which pushed its
- * switches over 1000px away from their labels — the row uses
- * justify-content: space-between, so widening the page widened the gap.
- * Capping it keeps every control beside the thing it controls. */
-.fullWidthSection {
-    @media (min-width: 1280px) {
-        max-width: 640px;
-    }
-}
-
-.wide.wide {
-    @media (min-width: 1280px) {
-        max-width: 1080px;
-    }
-}
-
-.actionRow {
-    padding: 8px 16px;
-}
-
-.statsTitle {
-    margin-bottom: 8px;
 }
 
 .title {
     padding-bottom: 16px;
 }
 
-.sectionTitle {
-    line-height: 32px;
+.card {
+    border: 1px solid var(--default-item-divider);
+    border-radius: var(--radius-lg);
+    background-color: var(--default-cards-background);
+    box-shadow: var(--elev-1);
+    overflow: hidden;
+
+    & + & {
+        margin-top: var(--space-4);
+    }
 }
 
-.queryLogSwitch {
-    padding-top: 12px;
+/* Identical in all three sections: the name on the left, and on the right the
+ * one switch that turns the whole section off, where the section has one.
+ * Two of these titles used to be a row's title carrying its own switch and
+ * one was a bare heading above the rows, so the same thing looked like three
+ * different things. */
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    /* Matches the 16px SettingRow indents itself by, so the master switch
+     * sits on the same edge as the switches it governs. */
+    padding: var(--space-4) var(--space-4) var(--space-3);
+    border-bottom: 1px solid var(--default-item-divider);
+}
+
+.cardHeading {
+    min-width: 0;
+}
+
+.cardTitle {
+    margin: 0;
+}
+
+.cardDesc {
+    margin: 2px 0 0;
+    color: var(--default-description-text);
+}
+
+/* Pulled in by exactly the width SettingRow reserves for its chevron slot
+ * (20px) plus its gap (12px), so a section's master switch lands on the same
+ * vertical line as every switch it governs. */
+.cardSwitch {
+    flex: none;
+    margin-right: 32px;
+}
+
+/* No horizontal padding: SettingRow already carries 16px of its own, and
+ * adding another 16 here indented every row past the card header, so the
+ * header switch and the row switches landed on different edges. */
+.cardBody {
+    padding: var(--space-2) 0;
+}
+
+/* Destructive and irreversible, so it gets its own band on a recessed ground
+ * at the foot of the card rather than being one more row in the same reading
+ * flow as the toggles.  The confirm dialog was already in place. */
+.cardFooter {
+    display: flex;
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--default-item-divider);
+    background-color: var(--default-page-background);
+}
+
+/* A 200px outlined button gave this the weight of a primary action. */
+.clearButton {
+    width: auto;
+    min-width: 0;
+    align-self: flex-start;
 }

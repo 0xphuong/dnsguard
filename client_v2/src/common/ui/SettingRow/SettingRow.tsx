@@ -194,6 +194,20 @@ export const SettingRow = (props: Props) => {
                             }}
                         />
                     </Show>
+                    {/* The row wrapper is already role="button", so a
+                        switch-link row is clickable — but nothing said so, and
+                        Safe search and both Ignored domains lists were
+                        reachable only by guessing.  Decorative rather than a
+                        second control: the row carries the accessible name,
+                        and the switch beside it is its own control. */}
+                    <Show when={isSwitchVariant()}>
+                        <span
+                            class={cn(s.staticArrow, { [s.staticArrowEmpty]: !isSwitchLink() })}
+                            aria-hidden="true"
+                        >
+                            <Icon icon="arrow" class={s.arrow} />
+                        </span>
+                    </Show>
                     <Show when={isLinkVariant()}>
                         <button
                             type="button"
