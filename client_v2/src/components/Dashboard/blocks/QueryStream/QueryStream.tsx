@@ -5,7 +5,8 @@ import intl from 'panel/common/intl';
 import theme from 'panel/lib/theme';
 import { Button } from 'panel/common/ui/Button';
 import { FILTERED_STATUS } from 'panel/helpers/constants';
-import { blockDomain } from 'panel/stores/filtering';
+import { blockDomain, removeDomainBlock, filteringState } from 'panel/stores/filtering';
+import { getDomainRuleState } from 'panel/helpers/domainRules';
 import { addErrorToast } from 'panel/stores/toasts';
 import {
     liveStreamState,
@@ -98,10 +99,13 @@ export const QueryStream = () => {
         liveStreamState.items.filter((item) => matchesChip(item, chip())),
     );
 
-    const handleBlock = async (domain: string) => {
+    const ruleState = (domain: string) =>
+        getDomainRuleState(filteringState.userRules, domain);
+
+    const run = async (domain: string, action: () => Promise<boolean>) => {
         setPending((prev) => [...prev, domain]);
         try {
-            await blockDomain(domain);
+            await action();
         } catch (error) {
             addErrorToast({ error });
         } finally {
@@ -207,24 +211,61 @@ export const QueryStream = () => {
                                         {item.client}
                                     </span>
 
-                                    {/* Blocking what is already blocked is a
-                                        no-op, so the action only appears where
-                                        it would change something. */}
+                                    {/* The row's status says what happened to
+                                        this query; the action is about the
+                                        rule.  A query blocked by a subscribed
+                                        list offers nothing, because removing
+                                        someone else's rule is not something
+                                        this button can do. */}
                                     <span class={s.action}>
-                                        <Show when={status() !== 'blocked' && item.domain}>
+                                        <Show
+                                            when={ruleState(item.domain) === 'blocked'}
+                                            fallback={
+                                                <Show
+                                                    when={
+                                                        status() !== 'blocked' && item.domain
+                                                    }
+                                                >
+                                                    <Button
+                                                        variant="secondary-danger"
+                                                        size="very-small"
+                                                        compact
+                                                        class={s.blockButton}
+                                                        disabled={pending().includes(
+                                                            item.domain,
+                                                        )}
+                                                        aria-label={intl.getMessage(
+                                                            'live_stream_block_domain',
+                                                            { value: item.domain },
+                                                        )}
+                                                        onClick={() =>
+                                                            void run(item.domain, () =>
+                                                                blockDomain(item.domain),
+                                                            )
+                                                        }
+                                                    >
+                                                        {intl.getMessage('block')}
+                                                    </Button>
+                                                </Show>
+                                            }
+                                        >
                                             <Button
-                                                variant="secondary-danger"
+                                                variant="secondary"
                                                 size="very-small"
                                                 compact
                                                 class={s.blockButton}
                                                 disabled={pending().includes(item.domain)}
                                                 aria-label={intl.getMessage(
-                                                    'live_stream_block_domain',
+                                                    'top_talkers_unblock_domain',
                                                     { value: item.domain },
                                                 )}
-                                                onClick={() => void handleBlock(item.domain)}
+                                                onClick={() =>
+                                                    void run(item.domain, () =>
+                                                        removeDomainBlock(item.domain),
+                                                    )
+                                                }
                                             >
-                                                {intl.getMessage('block')}
+                                                {intl.getMessage('unblock')}
                                             </Button>
                                         </Show>
                                     </span>

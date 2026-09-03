@@ -8,6 +8,7 @@ import { dashboardState, toggleProtection, getClients } from 'panel/stores/dashb
 import { statsState, getStats, getStatsConfig } from 'panel/stores/stats';
 import { accessState, getAccessList } from 'panel/stores/access';
 import { encryptionState, getTlsStatus } from 'panel/stores/encryption';
+import { getFilteringStatus } from 'panel/stores/filtering';
 import {
     ONE_SECOND_IN_MS,
     HOUR,
@@ -114,6 +115,10 @@ export const Dashboard = () => {
         // handleTLSStatus only marshals already-cached config, so this costs a
         // round trip and no server work.
         getTlsStatus();
+        // Both the stream and the shortlist offer to block a domain, and
+        // neither can tell whether one is already blocked without the user's
+        // own rules: the statistics describe a period, not the present.
+        getFilteringStatus();
     });
 
     const handleRefreshStats = () => {
@@ -199,10 +204,7 @@ export const Dashboard = () => {
                 <div class={s.console}>
                     <QueryStream />
 
-                    <TopTalkers
-                        topQueriedDomains={statsState.topQueriedDomains}
-                        numDnsQueries={statsState.numDnsQueries}
-                    />
+                    <TopTalkers topQueriedDomains={statsState.topQueriedDomains} />
                 </div>
 
                 <Show

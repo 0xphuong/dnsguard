@@ -1,11 +1,12 @@
-import { createMemo, createSignal, For, Show } from 'solid-js';
+import { createMemo, createSignal, For, Match, Show, Switch } from 'solid-js';
 import cn from 'clsx';
 
 import intl from 'panel/common/intl';
 import theme from 'panel/lib/theme';
 import { Button } from 'panel/common/ui/Button';
 import { formatCompactNumber } from 'panel/helpers/helpers';
-import { blockDomain } from 'panel/stores/filtering';
+import { blockDomain, removeDomainBlock, filteringState } from 'panel/stores/filtering';
+import { getDomainRuleState } from 'panel/helpers/domainRules';
 import { addErrorToast } from 'panel/stores/toasts';
 
 import s from './TopTalkers.module.pcss';
@@ -27,7 +28,6 @@ type Props = {
      * button meaningful.
      */
     topQueriedDomains: DomainInfo[];
-    numDnsQueries: number;
 };
 
 /**
@@ -37,19 +37,22 @@ type Props = {
  */
 export const TopTalkers = (props: Props) => {
     const [pending, setPending] = createSignal<string[]>([]);
-    const [blocked, setBlocked] = createSignal<string[]>([]);
 
     const rows = createMemo(() => props.topQueriedDomains.slice(0, ROWS));
 
-    const handleBlock = async (domain: string) => {
+    /**
+     * Read from the user's rules rather than remembered locally.  A signal in
+     * this component was the original defect: it could not survive a refresh,
+     * knew nothing about rules made on the Logs or User rules pages, and left
+     * a blocked row with no way back.
+     */
+    const ruleState = (domain: string) =>
+        getDomainRuleState(filteringState.userRules, domain);
+
+    const run = async (domain: string, action: () => Promise<boolean>) => {
         setPending((prev) => [...prev, domain]);
         try {
-            const ok = await blockDomain(domain);
-            if (ok) {
-                // The statistics only drop the domain on their next refresh,
-                // so the row says so itself in the meantime.
-                setBlocked((prev) => [...prev, domain]);
-            }
+            await action();
         } catch (error) {
             addErrorToast({ error });
         } finally {
@@ -76,16 +79,16 @@ export const TopTalkers = (props: Props) => {
             >
                 <For each={rows()}>
                     {(row) => {
-                        const share = createMemo(() =>
-                            props.numDnsQueries > 0 ? (row.count / props.numDnsQueries) * 100 : 0,
-                        );
-
                         return (
                             <div class={s.row}>
                                 <span class={cn(theme.text.t3, s.domain)} title={row.name}>
                                     {row.name}
                                 </span>
 
+                                {/* No share here.  A blocked row carries a
+                                    state and an undo as well, and four things
+                                    do not fit the rail — the full table below
+                                    is where the percentages belong. */}
                                 <span
                                     class={cn(theme.text.t4, s.count)}
                                     title={intl.getMessage('queries_tooltip', {
@@ -93,31 +96,64 @@ export const TopTalkers = (props: Props) => {
                                     })}
                                 >
                                     {formatCompactNumber(row.count)}
-                                    <span class={s.share}> ({share().toFixed(1)}%)</span>
                                 </span>
 
-                                <Show
-                                    when={!blocked().includes(row.name)}
-                                    fallback={
-                                        <span class={cn(theme.text.t4, s.blockedLabel)}>
-                                            {intl.getMessage('blocked')}
+                                {/* Three states, because "nothing blocks
+                                    this" and "you allowed this on purpose"
+                                    are different facts in a firewall and used
+                                    to look identical. */}
+                                <Switch>
+                                    <Match when={ruleState(row.name) === 'blocked'}>
+                                        <span class={s.stateCell}>
+                                            <span class={cn(theme.text.t4, s.blockedLabel)}>
+                                                {intl.getMessage('blocked')}
+                                            </span>
+                                            <Button
+                                                variant="secondary"
+                                                size="very-small"
+                                                compact
+                                                class={s.blockButton}
+                                                disabled={pending().includes(row.name)}
+                                                aria-label={intl.getMessage(
+                                                    'top_talkers_unblock_domain',
+                                                    { value: row.name },
+                                                )}
+                                                onClick={() =>
+                                                    void run(row.name, () =>
+                                                        removeDomainBlock(row.name),
+                                                    )
+                                                }
+                                            >
+                                                {intl.getMessage('unblock')}
+                                            </Button>
                                         </span>
-                                    }
-                                >
-                                    <Button
-                                        variant="secondary-danger"
-                                        size="very-small"
-                                        compact
-                                        class={s.blockButton}
-                                        disabled={pending().includes(row.name)}
-                                        aria-label={intl.getMessage('live_stream_block_domain', {
-                                            value: row.name,
-                                        })}
-                                        onClick={() => void handleBlock(row.name)}
-                                    >
-                                        {intl.getMessage('block')}
-                                    </Button>
-                                </Show>
+                                    </Match>
+
+                                    <Match when={ruleState(row.name) === 'allowed'}>
+                                        <span class={cn(theme.text.t4, s.allowedLabel)}>
+                                            {intl.getMessage('top_talkers_allowed_by_rule')}
+                                        </span>
+                                    </Match>
+
+                                    <Match when={true}>
+                                        <Button
+                                            variant="secondary-danger"
+                                            size="very-small"
+                                            compact
+                                            class={s.blockButton}
+                                            disabled={pending().includes(row.name)}
+                                            aria-label={intl.getMessage(
+                                                'live_stream_block_domain',
+                                                { value: row.name },
+                                            )}
+                                            onClick={() =>
+                                                void run(row.name, () => blockDomain(row.name))
+                                            }
+                                        >
+                                            {intl.getMessage('block')}
+                                        </Button>
+                                    </Match>
+                                </Switch>
                             </div>
                         );
                     }}

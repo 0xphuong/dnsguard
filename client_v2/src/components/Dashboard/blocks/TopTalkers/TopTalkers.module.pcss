@@ -63,10 +63,6 @@
     white-space: nowrap;
 }
 
-.share {
-    color: var(--default-description-text);
-}
-
 /* Same reason as in the query stream: Button's 200px minimum is sized for a
  * form footer, and here it would leave the domain a single character wide. */
 .blockButton {
@@ -84,4 +80,20 @@
     padding: var(--space-5) var(--space-4);
     color: var(--default-description-text);
     text-align: center;
+}
+
+/* The blocked state carries a label and its undo side by side, so the row
+ * says what is true before it says what you can do about it. */
+.stateCell {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    white-space: nowrap;
+}
+
+/* "Allowed because you wrote a rule" is not the same as "allowed because
+ * nothing blocks it", and only the first one gets a label. */
+.allowedLabel {
+    color: var(--default-success-text);
+    white-space: nowrap;
 }

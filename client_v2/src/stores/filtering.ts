@@ -13,6 +13,7 @@ import {
 import { addErrorToast, addSuccessToast, createUndoToast } from './toasts';
 import type { Filter } from 'panel/helpers/helpers';
 import { normalizeFilteringStatus, normalizeRulesTextarea } from 'panel/helpers/helpers';
+import { hasDomainBlock, withoutDomainBlock } from 'panel/helpers/domainRules';
 import intl from 'panel/common/intl';
 import type { FilterCheckHostResponse } from 'panel/api/model/filterCheckHostResponse';
 import type { FilterSetUrlData } from 'panel/api/model/filterSetUrlData';
@@ -128,6 +129,51 @@ export const blockDomain = async (domain: string): Promise<boolean> => {
         ),
     );
     await getFilteringStatus();
+    return true;
+};
+
+/**
+ * Undoes a block this interface wrote, by deleting the rule rather than
+ * layering an exception over it.
+ *
+ * `unblockDomain` below adds `@@||domain^$important`, which is the right move
+ * for a domain a subscribed blocklist caught — you cannot delete someone
+ * else's rule, so you override it.  It is the wrong move for undoing your own
+ * click: it leaves the block and its exception sitting in the list
+ * contradicting each other, and the operator has to work out which wins.
+ */
+export const removeDomainBlock = async (domain: string): Promise<boolean> => {
+    const previousRules = state.userRules || '';
+
+    // Asking the helper rather than comparing strings: this module and the
+    // helper normalise blank lines differently, so a string comparison would
+    // sometimes save a rule set identical to the one already stored.
+    if (!hasDomainBlock(previousRules, domain)) {
+        return true;
+    }
+
+    const updatedRules = withoutDomainBlock(previousRules, domain);
+
+    const didSave = await setRules(updatedRules ? `${updatedRules}\n` : '');
+
+    if (!didSave) {
+        return false;
+    }
+
+    addSuccessToast(
+        createUndoToast(
+            intl.getMessage('user_rules_rule_removed'),
+            intl.getMessage('notify_undo'),
+            async () => {
+                const didUndo = await setRules(previousRules);
+                if (didUndo) {
+                    await getFilteringStatus();
+                }
+            },
+        ),
+    );
+    await getFilteringStatus();
+
     return true;
 };
 
