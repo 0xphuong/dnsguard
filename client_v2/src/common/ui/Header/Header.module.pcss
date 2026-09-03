@@ -103,7 +103,9 @@
     height: 100%;
     z-index: 1502;
     padding: 16px 0;
-    background-color: var(--page-background-additional);
+    /* The mobile drawer is the sidebar on a small screen, so it paints the
+     * same dark ground; its links already read from the sidebar tokens. */
+    background-color: var(--sidebar-background);
     overflow-y: auto;
 }
 

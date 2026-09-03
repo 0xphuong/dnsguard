@@ -1,4 +1,24 @@
 :root {
+    /* SIDEBAR
+     *
+     * Dark in both themes, which is how the NexGuard portal is built: its
+     * $aside-background-color is slate-900 against a slate-100 canvas, and
+     * that two-tone split is the most recognisable thing about the layout.
+     * These are separate tokens because the page's text colours cannot be
+     * reused on a dark ground — the sidebar and the mobile drawer are the
+     * only chrome that stays dark when the page does not.
+     *
+     * The idle label is slate-400 rather than the slate-500 NexGuard uses:
+     * slate-500 measures 3.75:1 on this ground, under AA for text, while
+     * slate-400 reaches 6.96:1. */
+    --sidebar-background: var(--gray-90);
+    --sidebar-hover-background: var(--gray-100);
+    --sidebar-text: var(--gray-40);
+    --sidebar-text-active: var(--gray-0);
+    --sidebar-icon: var(--gray-40);
+    --sidebar-logo: var(--gray-0);
+    --sidebar-logo-muted: var(--gray-40);
+
     /* Page background */
     --default-page-background: var(--surface-100);
     --hovered-page-background: var(--surface-150);

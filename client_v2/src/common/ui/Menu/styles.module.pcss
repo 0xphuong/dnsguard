@@ -42,7 +42,7 @@
     font-size: 16px;
     line-height: 21px;
     font-weight: var(--weight-regular);
-    color: var(--default-main-text);
+    color: var(--sidebar-text);
     text-decoration: none;
     max-width: 100%;
     white-space: nowrap;
@@ -56,16 +56,19 @@
 
     &:hover,
     &:focus {
-        color: var(--default-main-text);
-        background-color: var(--pressed-page-background);
+        color: var(--sidebar-text-active);
+        background-color: var(--sidebar-hover-background);
         text-decoration: none;
     }
 
+    /* Active is near-white on a darker ground rather than the brand hue:
+     * cyan on slate-900 is the one place the link colour cannot be read. */
     &.activeLink {
-        color: var(--default-link);
+        color: var(--sidebar-text-active);
+        background-color: var(--sidebar-hover-background);
 
         .linkIcon {
-            color: var(--default-link);
+            color: var(--sidebar-text-active);
         }
     }
 }
@@ -75,7 +78,7 @@
 }
 
 .linkIcon {
-    color: var(--default-gray-icons);
+    color: var(--sidebar-icon);
     transition: color var(--t2);
 }
 
@@ -103,7 +106,7 @@
 
 .accordionArrow {
     margin-left: auto;
-    color: var(--default-gray-icons);
+    color: var(--sidebar-icon);
     transition:
         transform var(--t2),
         color var(--t2);
